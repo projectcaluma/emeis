@@ -1,19 +1,14 @@
-FROM python:3.6.9
-
+FROM python:3.6.10-slim-buster@sha256:6689433d2e67177976cf043501ed177f312af586a09071092ee65745a2a63ab4
 WORKDIR /app
 
-RUN wget -q https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh -P /usr/local/bin \
+RUN apt-get update && apt-get install -y --no-install-recommends libpq-dev wget build-essential \
+&& wget -q https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh -P /usr/local/bin \
 && chmod +x /usr/local/bin/wait-for-it.sh \
 && mkdir -p /app \
 && useradd -u 901 -r emeis --create-home \
 # all project specific folders need to be accessible by newly created user but also for unknown users (when UID is set manually). Such users are in group root.
 && chown -R emeis:root /home/emeis \
 && chmod -R 770 /home/emeis
-
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-  # needed for psycopg2
-  libpq-dev
 
 # needs to be set for users with manually set UID
 ENV HOME=/home/emeis
