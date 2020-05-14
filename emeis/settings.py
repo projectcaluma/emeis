@@ -29,9 +29,10 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=default(["*"]))
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.postgres",
+    "psqlextra",
+    "localized_fields",
     "emeis.core.apps.DefaultConfig",
 ]
 
@@ -53,9 +54,7 @@ WSGI_APPLICATION = "emeis.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": env.str(
-            "DATABASE_ENGINE", default="django.db.backends.postgresql_psycopg2"
-        ),
+        "ENGINE": "psqlextra.backend",
         "NAME": env.str("DATABASE_NAME", default="emeis"),
         "USER": env.str("DATABASE_USER", default="emeis"),
         "PASSWORD": env.str("DATABASE_PASSWORD", default=default("emeis")),
@@ -64,18 +63,6 @@ DATABASES = {
         "OPTIONS": env.dict("DATABASE_OPTIONS", default={}),
     }
 }
-
-# Password validation
-# https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
-    },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
-]
 
 
 # Internationalization
@@ -86,8 +73,6 @@ TIME_ZONE = env.str("TIME_ZONE", "UTC")
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
-AUTH_USER_MODEL = "core.User"
 
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "rest_framework_json_api.exceptions.exception_handler",
@@ -102,10 +87,10 @@ REST_FRAMEWORK = {
         "rest_framework_json_api.renderers.JSONRenderer",
         "rest_framework.renderers.JSONRenderer",
     ),
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),
+    # "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    # "DEFAULT_AUTHENTICATION_CLASSES": (
+    #     "rest_framework_simplejwt.authentication.JWTAuthentication",
+    # ),
     "DEFAULT_METADATA_CLASS": "rest_framework_json_api.metadata.JSONAPIMetadata",
     "DEFAULT_FILTER_BACKENDS": (
         "rest_framework_json_api.filters.QueryParameterValidationFilter",
