@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.6.9
 
 WORKDIR /app
 
@@ -23,8 +23,8 @@ ENV DJANGO_SETTINGS_MODULE emeis.settings
 ENV APP_HOME=/app
 ENV UWSGI_INI /app/uwsgi.ini
 
-ARG REQUIREMENTS=requirements.txt
-COPY requirements.txt requirements-dev.txt $APP_HOME/
+ARG REQUIREMENTS=requirements-prod.txt
+COPY requirements-base.txt requirements-prod.txt requirements-dev.txt $APP_HOME/
 RUN pip install --upgrade --no-cache-dir --requirement $REQUIREMENTS --disable-pip-version-check
 
 USER emeis

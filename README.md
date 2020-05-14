@@ -24,7 +24,7 @@ You can now access the api at [http://localhost:8000/api/v1/](http://localhost:8
 
 ### Configuration
 
-Document Merge Service is a [12factor app](https://12factor.net/) which means that configuration is stored in environment variables.
+emeis is a [12factor app](https://12factor.net/) which means that configuration is stored in environment variables.
 Different environment variable types are explained at [django-environ](https://github.com/joke2k/django-environ#supported-types).
 
 #### Common

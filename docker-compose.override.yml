@@ -5,7 +5,7 @@ services:
       - POSTGRES_PASSWORD=emeis
     ports:
       - "5432:5432"
-  backend:
+  emeis:
     build:
       context: .
       args:
@@ -17,7 +17,7 @@ services:
       [
         "/bin/sh",
         "-c",
-        "wait-for-it.sh db:5432 -- ./manage.py migrate && ./manage.py runserver 0.0.0.0:8000",
+        "wait-for-it.sh db:5432 -- ./manage.py migrate && ./manage.py runserver_plus --nostatic 0.0.0.0:8000",
       ]
     environment:
       - ENV=dev

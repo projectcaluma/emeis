@@ -9,7 +9,7 @@ services:
       # - POSTGRES_PASSWORD=
     volumes:
       - dbdata:/var/lib/postgresql/data
-  backend:
+  emeis:
     image: projectcaluma/emeis
     ports:
       - "8000:8000"

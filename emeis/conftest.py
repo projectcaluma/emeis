@@ -8,7 +8,7 @@ from rest_framework.test import APIClient
 
 
 def register_module(module):
-    for name, obj in inspect.getmembers(module):
+    for _, obj in inspect.getmembers(module):
         if isinstance(obj, FactoryMetaClass) and not obj._meta.abstract:
             # name needs to be compatible with
             # `rest_framework.routers.SimpleRouter` naming for easier testing
@@ -16,11 +16,7 @@ def register_module(module):
             register(obj, base_name)
 
 
-register_module(
-    importlib.import_module(
-        ".core.factories", "emeis"
-    )
-)
+register_module(importlib.import_module(".core.factories", "emeis"))
 
 
 @pytest.fixture
