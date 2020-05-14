@@ -6,6 +6,8 @@
 
 user management
 
+[Original RFC that led to emeis](docs/original_emeis_rfc.md)
+
 ## Getting started
 
 ### Installation
