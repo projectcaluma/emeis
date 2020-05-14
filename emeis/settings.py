@@ -35,6 +35,9 @@ INSTALLED_APPS = [
     "emeis.core.apps.DefaultConfig",
 ]
 
+if ENV == "dev":
+    INSTALLED_APPS.append("django_extensions")
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -55,9 +58,7 @@ DATABASES = {
         ),
         "NAME": env.str("DATABASE_NAME", default="emeis"),
         "USER": env.str("DATABASE_USER", default="emeis"),
-        "PASSWORD": env.str(
-            "DATABASE_PASSWORD", default=default("emeis")
-        ),
+        "PASSWORD": env.str("DATABASE_PASSWORD", default=default("emeis")),
         "HOST": env.str("DATABASE_HOST", default="localhost"),
         "PORT": env.str("DATABASE_PORT", default=""),
         "OPTIONS": env.dict("DATABASE_OPTIONS", default={}),
