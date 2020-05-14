@@ -1,8 +1,9 @@
 # emeis
 
-[![Build Status](https://travis-ci.com/projectcaluma/emeis.svg?branch=master)](https://travis-ci.com/projectcaluma/emeis)
-[![Pyup](https://pyup.io/repos/github/projectcaluma/emeis/shield.svg)](https://pyup.io/account/repos/github/projectcaluma/emeis/)
+[![Build Status](https://github.com/projectcaluma/emeis/workflows/Tests/badge.svg)](https://github.com/projectcaluma/emeis/actions?query=workflow%3ATests)
+[![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](https://github.com/projectcaluma/emeis/blob/master/setup.cfg#L50)
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/projectcaluma/emeis)
+[![License: GPL-3.0-or-later](https://img.shields.io/github/license/projectcaluma/emeis)](https://spdx.org/licenses/GPL-3.0-or-later.html)
 
 user management
 
