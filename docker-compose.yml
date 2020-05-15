@@ -1,7 +1,7 @@
 version: "3"
 services:
   db:
-    image: postgres:alpine
+    image: postgres:12.2-alpine@sha256:9ea72265275674225b1eaa2ae897dd244028af4ee7ef6e4e89fe474938e0992e
     environment:
       - POSTGRES_USER=emeis
       # following option is a must to configure on production system:
@@ -10,7 +10,7 @@ services:
     volumes:
       - dbdata:/var/lib/postgresql/data
   emeis:
-    image: projectcaluma/emeis
+    image: projectcaluma/emeis:latest
     ports:
       - "8000:8000"
     depends_on:
