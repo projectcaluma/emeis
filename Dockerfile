@@ -1,4 +1,4 @@
-FROM python:3.6.10-slim-buster@sha256:6689433d2e67177976cf043501ed177f312af586a09071092ee65745a2a63ab4
+FROM python:3.8.3-slim-buster@sha256:836f9dd208ce67d0b675ea1a05d1ff05c65449c0e56071cab67b9e5b03dc2557
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends libpq-dev wget build-essential \
