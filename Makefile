@@ -14,7 +14,7 @@ start: ## Start the development server
 
 .PHONY: test
 test: ## Test the backend
-	@docker-compose run emeis sh -c pytest --no-cov-on-fail --cov --create-db
+	@docker-compose run emeis pytest --no-cov-on-fail --cov --create-db
 
 .PHONY: lint
 lint: ## Lint the backend
