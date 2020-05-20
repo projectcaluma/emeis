@@ -24,3 +24,7 @@ update_configs:
       include_scope: true
     default_reviewers:
       - "open-dynaMIX"
+    ignored_updates:
+      - match:
+          dependency_name: "python"
+          version_requirement: ">=3.7"
