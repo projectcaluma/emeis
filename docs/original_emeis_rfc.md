@@ -1,11 +1,3 @@
-# Original RFC
-
-Below is the original RFC that led to the creation of emeis.
-
-This RFC was discussed in a [caluma issue](https://github.com/projectcaluma/caluma/issues/1047).
-
-
-
 ## Rationale
 
 In Projects with rather complex ACL structures, the ACL model of Keycloak (our mainly
@@ -82,7 +74,7 @@ extensible through a `meta` field.
 
 The selection of fields on the `User` model will be subject to further discussions.
 
-### Group
+### Scope
 
 | Column        | Type                  | Comment    |
 | ------------- | --------------------- | ---------- |
@@ -90,7 +82,7 @@ The selection of fields on the `User` model will be subject to further discussio
 | `name`        | LocalizedField        |            |
 | `description` | LocalizedField        |            |
 | `parent`      | self ForeignKey       |            |
-| `child`       | self reverse relation |            |
+| `children`       | self reverse relation |            |
 | `acls`        | reverse relation      |            |
 
 ### Role
@@ -118,10 +110,10 @@ The selection of fields on the `User` model will be subject to further discussio
 | ------- | ---------- | ----------- |
 | `UUID`  | UUID       | primary key |
 | `user`  | ForeignKey |             |
-| `group` | ForeignKey |             |
+| `scope` | ForeignKey |             |
 | `role`  | ForeignKey |             |
 
-Unique together `user`, `group`, `role`.
+Unique together `user`, `scope`, `role`.
 
 ## API
 
@@ -144,25 +136,45 @@ Update existing user.
 
 Delete an existing user.
 
-### /group list
+### /scope list
 
-List and filter groups
+List and filter scopes
 
-### /group retrieve
+### /scope retrieve
 
-Retrieve information about a group.
+Retrieve information about a scope.
 
-### /group create
+### /scope create
 
-Create a new group.
+Create a new scope.
 
-### /group update
+### /scope update
 
-Update existing group.
+Update existing scope.
 
-### /group delete
+### /scope delete
 
-Delete an existing group.
+Delete an existing scope.
+
+### /permission list
+
+List and filter permissions
+
+### /scope retrieve
+
+Retrieve information about a permission.
+
+### /permission create
+
+Create a new permission.
+
+### /permission update
+
+Update existing permission.
+
+### /permission delete
+
+Delete an existing permission.
 
 ### /role list
 
