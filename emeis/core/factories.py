@@ -7,7 +7,7 @@ from . import models
 class UserFactory(DjangoModelFactory):
     first_name = Faker("first_name")
     last_name = Faker("last_name")
-    username = Faker("uuid")
+    username = Faker("user_name")
     email = Faker("safe_email")
 
     class Meta:
