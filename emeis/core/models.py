@@ -7,6 +7,20 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from localized_fields.fields import LocalizedCharField, LocalizedTextField
+from mptt.models import MPTTModel, TreeForeignKey
+
+
+def make_uuid():
+    """Return a new random UUID value.
+
+    This indirection is done for testing purposes, so test code can mock
+    uuid.uuid4(). If we wouldn't do this, then the models would have a direct
+    reference that doesn't get mocked away.
+
+    We can't replace it with a lambda because Django Migrations can't handle them.
+    """
+    return uuid.uuid4()
 
 
 class BaseModel(models.Model):
@@ -25,7 +39,21 @@ class UUIDModel(BaseModel):
     Defined as emeis default
     """
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=make_uuid, editable=False)
+
+    class Meta:
+        abstract = True
+
+
+class SlugModel(BaseModel):
+    """
+    Models which use a slug as primary key.
+
+    Defined as Caluma default for configuration so it is possible
+    to merge between developer and user configuration.
+    """
+
+    slug = models.SlugField(max_length=255, primary_key=True)
 
     class Meta:
         abstract = True
@@ -118,3 +146,54 @@ class User(UUIDModel):
         This is a way to tell if the user has been authenticated in templates.
         """
         return True
+
+
+class Scope(MPTTModel, UUIDModel):
+    name = LocalizedCharField(_("scope name"), blank=False, null=False, required=False)
+    description = LocalizedTextField(
+        _("scope description"), null=True, blank=True, required=False
+    )
+    parent = TreeForeignKey(
+        "self",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="children",
+    )
+
+
+class Role(SlugModel):
+    name = LocalizedCharField(_("role name"), blank=False, null=False, required=False)
+    description = LocalizedTextField(
+        _("role description"), null=True, blank=True, required=False
+    )
+    permissions = models.ManyToManyField("Permission", related_name="roles")
+
+    class Meta:
+        ordering = ["slug"]
+
+
+class Permission(SlugModel):
+    name = LocalizedCharField(
+        _("permission name"), blank=False, null=False, required=False
+    )
+    description = LocalizedTextField(
+        _("permission description"), null=True, blank=True, required=False
+    )
+
+
+class ACL(UUIDModel):
+    user = models.ForeignKey("User", on_delete=models.CASCADE, related_name="acls")
+    scope = models.ForeignKey("Scope", on_delete=models.CASCADE, related_name="acls")
+    role = models.ForeignKey("Role", on_delete=models.CASCADE, related_name="acls")
+
+    def __str__(self):
+        return "%s object (%s - %s - %s)" % (
+            self.__class__.__name__,
+            self.user.username,
+            self.scope,
+            self.role,
+        )
+
+    class Meta:
+        unique_together = ["user", "scope", "role"]

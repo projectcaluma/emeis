@@ -1,12 +1,12 @@
 from unicodedata import normalize
 
+import pytest
 from django.contrib.auth.base_user import BaseUserManager
-from django.urls import reverse
 from hypothesis import given
 from hypothesis.strategies import emails, text
-from rest_framework import status
+from mptt.exceptions import InvalidMove
 
-from ..models import User
+from ..models import Scope, User
 
 
 def test_user_model():
@@ -30,13 +30,12 @@ def test_user_model_normalization(username, email):
     assert user.email == email_normal
 
 
-def test_user_detail(admin_user, admin_client):
-    url = reverse("user-detail", args=[admin_user.id])
+def test_scope_model(db):
+    parent_scope = Scope.objects.create(name="parent scope")
+    scope = Scope.objects.create(name="child scope", parent=parent_scope)
 
-    response = admin_client.get(url)
+    assert scope.parent.name["en"] == "parent scope"
 
-    assert response.status_code == status.HTTP_200_OK
-
-    json = response.json()
-    assert json["data"]["id"] == str(admin_user.id)
-    assert "password" not in json["data"]["attributes"]
+    parent_scope.parent = scope
+    with pytest.raises(InvalidMove):
+        parent_scope.save()

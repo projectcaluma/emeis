@@ -5,9 +5,24 @@ from . import models, serializers
 
 class UserViewSet(views.ModelViewSet):
     serializer_class = serializers.UserSerializer
-    queryset = models.User.objects
+    queryset = models.User.objects.all()
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        user = self.request.user
-        return queryset.filter(id=user.id)
+
+class ScopeViewSet(views.ModelViewSet):
+    serializer_class = serializers.ScopeSerializer
+    queryset = models.Scope.objects.all()
+
+
+class RoleViewSet(views.ModelViewSet):
+    serializer_class = serializers.RoleSerializer
+    queryset = models.Role.objects.all()
+
+
+class PermissionViewSet(views.ModelViewSet):
+    serializer_class = serializers.PermissionSerializer
+    queryset = models.Permission.objects.all()
+
+
+class ACLViewSet(views.ModelViewSet):
+    serializer_class = serializers.ACLSerializer
+    queryset = models.ACL.objects.all()
