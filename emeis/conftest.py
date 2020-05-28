@@ -2,6 +2,7 @@ import importlib
 import inspect
 
 import pytest
+from django.core.cache import cache
 from factory.base import FactoryMetaClass
 from pytest_factoryboy import register
 from rest_framework.test import APIClient
@@ -29,3 +30,8 @@ def admin_client(db, admin_user):
     client = APIClient()
     client.force_authenticate(user=admin_user)
     return client
+
+
+@pytest.fixture(scope="function", autouse=True)
+def _autoclear_cache():
+    cache.clear()
