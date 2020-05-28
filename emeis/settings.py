@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     "localized_fields",
     "psqlextra",
     "django.contrib.contenttypes",
+    "django.contrib.auth",
+    "mozilla_django_oidc",
     "mptt",
     "emeis.core.apps.DefaultConfig",
 ]
@@ -85,6 +87,23 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+# Authentication
+AUTH_USER_MODEL = "core.User"
+
+OIDC_OP_USER_ENDPOINT = env.str("OIDC_OP_USER_ENDPOINT", default=None)
+OIDC_OP_TOKEN_ENDPOINT = env.str("OIDC_OP_TOKEN_ENDPOINT", default=None)
+OIDC_VERIFY_SSL = env.bool("OIDC_VERIFY_SSL", default=True)
+OIDC_USERNAME_CLAIM = env.str("OIDC_USERNAME_CLAIM", default="sub")
+OIDC_EMAIL_CLAIM = env.str("OIDC_EMAIL_CLAIM", default="email")
+OIDC_BEARER_TOKEN_REVALIDATION_TIME = env.int(
+    "OIDC_BEARER_TOKEN_REVALIDATION_TIME", default=0
+)
+OIDC_CREATE_USER = env.bool("OIDC_CREATE_USER", False)
+OIDC_OP_INTROSPECT_ENDPOINT = env.str("OIDC_OP_INTROSPECT_ENDPOINT", default=None)
+OIDC_RP_CLIENT_ID = env.str("OIDC_RP_CLIENT_ID", default=None)
+OIDC_RP_CLIENT_SECRET = env.str("OIDC_RP_CLIENT_SECRET", default=None)
+OIDC_DRF_AUTH_BACKEND = "emeis.oidc_auth.authentication.EmeisAuthenticationBackend"
+
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "rest_framework_json_api.exceptions.exception_handler",
     "DEFAULT_PAGINATION_CLASS": "rest_framework_json_api.pagination.JsonApiPageNumberPagination",
@@ -98,10 +117,9 @@ REST_FRAMEWORK = {
         "rest_framework_json_api.renderers.JSONRenderer",
         "rest_framework.renderers.JSONRenderer",
     ),
-    # "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
-    # "DEFAULT_AUTHENTICATION_CLASSES": (
-    #     "rest_framework_simplejwt.authentication.JWTAuthentication",
-    # ),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "mozilla_django_oidc.contrib.drf.OIDCAuthentication",
+    ),
     "DEFAULT_METADATA_CLASS": "rest_framework_json_api.metadata.JSONAPIMetadata",
     "DEFAULT_FILTER_BACKENDS": (
         "rest_framework_json_api.filters.QueryParameterValidationFilter",
