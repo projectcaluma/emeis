@@ -1,4 +1,6 @@
-from rest_framework.mixins import RetrieveModelMixin
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import get_object_or_404
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
 
@@ -12,6 +14,23 @@ class MeViewSet(RetrieveModelMixin, GenericViewSet):
 
     def get_object(self, *args, **kwargs):
         return self.request.user
+
+
+class MyACLViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet):
+    """MyACL view returns current users ACLs."""
+
+    queryset = models.ACL.objects.all()
+    serializer_class = serializers.MyACLSerializer
+
+    def get_object(self):
+        pk = self.kwargs.pop("pk")
+        acl = get_object_or_404(models.ACL, pk=pk)
+        if acl.user != self.request.user:
+            raise PermissionDenied()
+        return acl
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
 
 
 class UserViewSet(views.ModelViewSet):

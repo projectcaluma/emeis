@@ -12,7 +12,13 @@ r.register(r"permissions", views.PermissionViewSet)
 r.register(r"acls", views.ACLViewSet)
 
 urlpatterns = [
-    url(r"^me", views.MeViewSet.as_view({"get": "retrieve"}), name="me-detail")
+    url(r"^me", views.MeViewSet.as_view({"get": "retrieve"}), name="me-detail"),
+    url(
+        r"^myacls/(?P<pk>[^/.]+)$",
+        views.MyACLViewSet.as_view({"get": "retrieve"}),
+        name="myacls-detail",
+    ),
+    url(r"^myacls", views.MyACLViewSet.as_view({"get": "list"}), name="myacls-list"),
 ]
 
 urlpatterns.extend(r.urls)
