@@ -22,13 +22,19 @@ register_module(importlib.import_module(".core.factories", "emeis"))
 
 @pytest.fixture
 def admin_user(db, user_factory):
-    return user_factory()
+    return user_factory(username="admin")
 
 
 @pytest.fixture
 def admin_client(db, admin_user):
     client = APIClient()
     client.force_authenticate(user=admin_user)
+    return client
+
+
+@pytest.fixture
+def client(db):
+    client = APIClient()
     return client
 
 

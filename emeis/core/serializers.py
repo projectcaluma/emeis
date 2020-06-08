@@ -8,6 +8,26 @@ class BaseSerializer(serializers.ModelSerializer):
     modified_at = serializers.DateTimeField(read_only=True)
     created_by_user = serializers.ResourceRelatedField(read_only=True)
 
+    def create(self, validated_data):
+        user = self.context["request"].user
+        validated_data["created_by_user"] = user
+
+        return super().create(validated_data)
+
+    class Meta:
+        fields = ("created_at", "modified_at", "created_by_user")
+
+
+class MeSerializer(BaseSerializer):
+    acls = serializers.ResourceRelatedField(many=True, read_only=True)
+    included_serializers = {
+        "acls": "emeis.core.serializers.ACLSerializer",
+    }
+
+    class Meta:
+        model = User
+        fields = "__all__"
+
 
 class UserSerializer(BaseSerializer):
     acls = serializers.ResourceRelatedField(many=True, read_only=True)
@@ -22,21 +42,15 @@ class UserSerializer(BaseSerializer):
 
 
 class ScopeSerializer(BaseSerializer):
-    acls = serializers.ResourceRelatedField(many=True, read_only=True)
-
-    included_serializers = {
-        "acls": "emeis.core.serializers.ACLSerializer",
-    }
-
     class Meta:
         model = Scope
-        exclude = ("level", "lft", "rght", "tree_id")
+        fields = BaseSerializer.Meta.fields + ("name", "description", "parent")
 
 
 class PermissionSerializer(BaseSerializer):
     class Meta:
         model = Permission
-        fields = "__all__"
+        fields = BaseSerializer.Meta.fields + ("name", "description")
 
 
 class RoleSerializer(BaseSerializer):
@@ -46,7 +60,7 @@ class RoleSerializer(BaseSerializer):
 
     class Meta:
         model = Role
-        fields = "__all__"
+        fields = BaseSerializer.Meta.fields + ("name", "description", "permissions")
 
 
 class ACLSerializer(BaseSerializer):

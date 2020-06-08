@@ -1,6 +1,17 @@
+from rest_framework.mixins import RetrieveModelMixin
+from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
 
 from . import models, serializers
+
+
+class MeViewSet(RetrieveModelMixin, GenericViewSet):
+    """Me view returns current user."""
+
+    serializer_class = serializers.MeSerializer
+
+    def get_object(self, *args, **kwargs):
+        return self.request.user
 
 
 class UserViewSet(views.ModelViewSet):
