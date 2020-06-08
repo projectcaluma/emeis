@@ -22,7 +22,7 @@ register_module(importlib.import_module(".core.factories", "emeis"))
 
 @pytest.fixture
 def admin_user(db, user_factory):
-    return user_factory()
+    return user_factory(username="admin")
 
 
 @pytest.fixture
