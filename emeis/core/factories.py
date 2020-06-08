@@ -1,4 +1,4 @@
-from factory import Faker, RelatedFactory, SubFactory
+from factory import Faker, SubFactory
 from factory.django import DjangoModelFactory
 
 from . import models
@@ -10,7 +10,6 @@ class UserFactory(DjangoModelFactory):
     username = Faker("user_name")
     email = Faker("safe_email")
     language = "en"
-    acls = RelatedFactory("emeis.core.factories.ACLFactory", "user")
 
     class Meta:
         model = models.User
