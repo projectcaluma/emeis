@@ -18,6 +18,17 @@ class BaseSerializer(serializers.ModelSerializer):
         fields = ("created_at", "modified_at", "created_by_user")
 
 
+class MeSerializer(BaseSerializer):
+    acls = serializers.ResourceRelatedField(many=True, read_only=True)
+    included_serializers = {
+        "acls": "emeis.core.serializers.ACLSerializer",
+    }
+
+    class Meta:
+        model = User
+        fields = "__all__"
+
+
 class UserSerializer(BaseSerializer):
     acls = serializers.ResourceRelatedField(many=True, read_only=True)
 

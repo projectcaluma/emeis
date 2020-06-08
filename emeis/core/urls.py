@@ -1,3 +1,4 @@
+from django.conf.urls import url
 from rest_framework.routers import SimpleRouter
 
 from . import views
@@ -10,4 +11,8 @@ r.register(r"roles", views.RoleViewSet)
 r.register(r"permissions", views.PermissionViewSet)
 r.register(r"acls", views.ACLViewSet)
 
-urlpatterns = r.urls
+urlpatterns = [
+    url(r"^me", views.MeViewSet.as_view({"get": "retrieve"}), name="me-detail")
+]
+
+urlpatterns.extend(r.urls)

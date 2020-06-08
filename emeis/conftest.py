@@ -32,6 +32,12 @@ def admin_client(db, admin_user):
     return client
 
 
+@pytest.fixture
+def client(db):
+    client = APIClient()
+    return client
+
+
 @pytest.fixture(scope="function", autouse=True)
 def _autoclear_cache():
     cache.clear()
