@@ -29,6 +29,17 @@ class MeSerializer(BaseSerializer):
         fields = "__all__"
 
 
+class MyACLSerializer(BaseSerializer):
+    included_serializers = {
+        "scope": "emeis.core.serializers.ScopeSerializer",
+        "role": "emeis.core.serializers.RoleSerializer",
+    }
+
+    class Meta:
+        model = ACL
+        fields = "__all__"
+
+
 class UserSerializer(BaseSerializer):
     acls = serializers.ResourceRelatedField(many=True, read_only=True)
 
