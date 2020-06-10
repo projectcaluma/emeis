@@ -69,6 +69,13 @@ DATABASES = {
 }
 
 
+# Extensions
+
+VISIBILITY_CLASSES = env.list(
+    "VISIBILITY_CLASSES", default=default(["emeis.core.visibilities.Any"])
+)
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 

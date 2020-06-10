@@ -7,6 +7,12 @@ from rest_framework_json_api import views
 from . import models, serializers
 
 
+class BaseViewset(views.ModelViewSet):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.model.visibility_queryset_filter(queryset, self.request)
+
+
 class MeViewSet(RetrieveModelMixin, GenericViewSet):
     """Me view returns current user."""
 
@@ -33,26 +39,26 @@ class MyACLViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet):
         return self.queryset.filter(user=self.request.user)
 
 
-class UserViewSet(views.ModelViewSet):
+class UserViewSet(BaseViewset):
     serializer_class = serializers.UserSerializer
     queryset = models.User.objects.all()
 
 
-class ScopeViewSet(views.ModelViewSet):
+class ScopeViewSet(BaseViewset):
     serializer_class = serializers.ScopeSerializer
     queryset = models.Scope.objects.all()
 
 
-class RoleViewSet(views.ModelViewSet):
+class RoleViewSet(BaseViewset):
     serializer_class = serializers.RoleSerializer
     queryset = models.Role.objects.all()
 
 
-class PermissionViewSet(views.ModelViewSet):
+class PermissionViewSet(BaseViewset):
     serializer_class = serializers.PermissionSerializer
     queryset = models.Permission.objects.all()
 
 
-class ACLViewSet(views.ModelViewSet):
+class ACLViewSet(BaseViewset):
     serializer_class = serializers.ACLSerializer
     queryset = models.ACL.objects.all()
