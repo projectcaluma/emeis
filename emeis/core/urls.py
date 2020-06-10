@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import re_path
 from rest_framework.routers import SimpleRouter
 
 from . import views
@@ -12,13 +12,15 @@ r.register(r"permissions", views.PermissionViewSet)
 r.register(r"acls", views.ACLViewSet)
 
 urlpatterns = [
-    url(r"^me", views.MeViewSet.as_view({"get": "retrieve"}), name="me-detail"),
-    url(
+    re_path(r"^me", views.MeViewSet.as_view({"get": "retrieve"}), name="me-detail"),
+    re_path(
         r"^myacls/(?P<pk>[^/.]+)$",
         views.MyACLViewSet.as_view({"get": "retrieve"}),
         name="myacls-detail",
     ),
-    url(r"^myacls", views.MyACLViewSet.as_view({"get": "list"}), name="myacls-list"),
+    re_path(
+        r"^myacls", views.MyACLViewSet.as_view({"get": "list"}), name="myacls-list"
+    ),
 ]
 
 urlpatterns.extend(r.urls)
