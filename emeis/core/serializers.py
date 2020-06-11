@@ -15,7 +15,7 @@ class BaseSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
     class Meta:
-        fields = ("created_at", "modified_at", "created_by_user")
+        fields = ("created_at", "modified_at", "created_by_user", "meta")
 
 
 class MeSerializer(BaseSerializer):

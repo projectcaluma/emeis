@@ -44,6 +44,7 @@ class BaseModel(VisibilityMixin, models.Model):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     modified_at = models.DateTimeField(auto_now=True, db_index=True)
     created_by_user = models.ForeignKey("User", null=True, on_delete=models.SET_NULL)
+    meta = JSONField(_("meta"), default=dict)
 
     class Meta:
         abstract = True
@@ -66,7 +67,7 @@ class SlugModel(BaseModel):
     """
     Models which use a slug as primary key.
 
-    Defined as Caluma default for configuration so it is possible
+    Defined as Emeis default for configuration so it is possible
     to merge between developer and user configuration.
     """
 
@@ -103,7 +104,6 @@ class User(UUIDModel):
         help_text=_("Designates whether this user should be treated as active."),
     )
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
-    meta = JSONField(_("meta"), default=dict)
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "username"
