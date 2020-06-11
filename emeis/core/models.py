@@ -10,6 +10,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from localized_fields.fields import LocalizedCharField, LocalizedTextField
 from mptt.models import MPTTModel, TreeForeignKey
+from rest_framework import exceptions
 
 
 def make_uuid():
@@ -40,7 +41,29 @@ class VisibilityMixin:
         return queryset
 
 
-class BaseModel(VisibilityMixin, models.Model):
+class PermissionMixin:
+    permission_classes = None
+
+    @classmethod
+    def check_permissions(cls, request, **kwargs):
+        if cls.permission_classes is None:
+            raise ImproperlyConfigured(
+                "check that app `emeis.core.DefaultConfig` is part of your `INSTALLED_APPS`."
+            )
+
+        for permission_class in cls.permission_classes:
+            if not permission_class().has_permission(cls, request):
+                raise exceptions.PermissionDenied()
+
+    def check_object_permissions(self, request):
+        for permission_class in self.permission_classes:
+            if not permission_class().has_object_permission(
+                self.__class__, request, self
+            ):
+                raise exceptions.PermissionDenied()
+
+
+class BaseModel(VisibilityMixin, PermissionMixin, models.Model):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     modified_at = models.DateTimeField(auto_now=True, db_index=True)
     created_by_user = models.ForeignKey("User", null=True, on_delete=models.SET_NULL)
