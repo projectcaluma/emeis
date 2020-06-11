@@ -42,23 +42,56 @@ class MyACLViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet):
 class UserViewSet(BaseViewset):
     serializer_class = serializers.UserSerializer
     queryset = models.User.objects.all()
+    search_fields = (
+        "username",
+        "first_name",
+        "last_name",
+        "email",
+        "=zip",
+        "city",
+    )
 
 
 class ScopeViewSet(BaseViewset):
     serializer_class = serializers.ScopeSerializer
     queryset = models.Scope.objects.all()
+    search_fields = (
+        "name",
+        "description",
+    )
 
 
 class RoleViewSet(BaseViewset):
     serializer_class = serializers.RoleSerializer
     queryset = models.Role.objects.all()
+    search_fields = (
+        "slug",
+        "name",
+        "description",
+    )
 
 
 class PermissionViewSet(BaseViewset):
     serializer_class = serializers.PermissionSerializer
     queryset = models.Permission.objects.all()
+    search_fields = (
+        "slug",
+        "name",
+        "description",
+    )
 
 
 class ACLViewSet(BaseViewset):
     serializer_class = serializers.ACLSerializer
     queryset = models.ACL.objects.all()
+    search_fields = (
+        "scope__name",
+        "scope__description",
+        "role__name",
+        "role__description",
+        "user__username",
+        "user__first_name",
+        "user__last_name",
+        "=user__zip",
+        "user__city",
+    )
