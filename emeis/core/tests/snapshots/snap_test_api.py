@@ -8,16 +8,16 @@ snapshots = Snapshot()
 
 snapshots["test_api_list[ACLViewSet] 1"] = {
     "queries": [
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl"',
-        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined", "core_user"."meta" FROM "core_user" WHERE "core_user"."id" IN (\'0b0cfc07-fca8-1c95-6ab9-181d8576f4a8\'::uuid, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid)',
-        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'aba369f7-d2b2-8a90-98a0-a26feb7dc965\'::uuid, \'dad3a37a-a9d5-0688-b515-7698acfd7aee\'::uuid)',
-        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."slug" IN (\'industry-call\', \'nearly-food-skill\', \'political-young\') ORDER BY "core_role"."slug" ASC',
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
-        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'industry-call\'',
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" = \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid',
-        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'political-young\'',
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" = \'0b0cfc07-fca8-1c95-6ab9-181d8576f4a8\'::uuid',
-        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'nearly-food-skill\'',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl"',
+        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."meta", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined" FROM "core_user" WHERE "core_user"."id" IN (\'0b0cfc07-fca8-1c95-6ab9-181d8576f4a8\'::uuid, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid)',
+        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."meta", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'aba369f7-d2b2-8a90-98a0-a26feb7dc965\'::uuid, \'dad3a37a-a9d5-0688-b515-7698acfd7aee\'::uuid)',
+        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."meta", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."slug" IN (\'industry-call\', \'nearly-food-skill\', \'political-young\') ORDER BY "core_role"."slug" ASC',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
+        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'industry-call\'',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" = \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid',
+        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'political-young\'',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" = \'0b0cfc07-fca8-1c95-6ab9-181d8576f4a8\'::uuid',
+        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'nearly-food-skill\'',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -31,6 +31,7 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
             {
                 "attributes": {
                     "created-at": "2017-05-21T00:00:00Z",
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                 },
                 "id": "f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad",
@@ -55,6 +56,7 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
             {
                 "attributes": {
                     "created-at": "2017-05-21T00:00:00Z",
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                 },
                 "id": "04adb4e2-f055-c978-c9bb-101ee1bc5cd4",
@@ -79,6 +81,7 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
             {
                 "attributes": {
                     "created-at": "2017-05-21T00:00:00Z",
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                 },
                 "id": "336311a0-1618-4326-ddbd-d61edd4eeb52",
@@ -110,6 +113,7 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
                         "en": "Of themselves garden weight table same method work. Mean finally realize us movie. Truth deep public these.",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "David Benson", "fr": ""},
                 },
@@ -128,6 +132,7 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
                         "en": "Participant call strategy life such system artist. Raise gun second base hear human high word. Boy per news traditional article.",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Kimberly Martin", "fr": ""},
                 },
@@ -148,6 +153,7 @@ Check official care or conference break. Remain daughter single.
 For brother weight upon.""",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Mary Cook", "fr": ""},
                 },
@@ -167,6 +173,7 @@ For brother weight upon.""",
 Kid avoid player relationship to range whose. Draw free property consider.""",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Jessica Holloway", "fr": ""},
                 },
@@ -185,6 +192,7 @@ Kid avoid player relationship to range whose. Draw free property consider.""",
                         "en": "Worry take value eye sell them he. Less power relate fine. Where loss increase firm friend ability sing.",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Kevin Lane", "fr": ""},
                 },
@@ -204,6 +212,7 @@ Kid avoid player relationship to range whose. Draw free property consider.""",
 Officer player possible issue ahead suffer. Standard remember after away control expert without assume.""",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Jeffrey Zhang", "fr": ""},
                 },
@@ -317,7 +326,7 @@ Officer player possible issue ahead suffer. Standard remember after away control
 
 snapshots["test_api_list[PermissionViewSet] 1"] = {
     "queries": [
-        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission"'
+        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission"'
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -336,6 +345,7 @@ snapshots["test_api_list[PermissionViewSet] 1"] = {
                         "en": "Bit among again across environment long line. Team suggest traditional boy above.",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
                 },
@@ -351,6 +361,7 @@ snapshots["test_api_list[PermissionViewSet] 1"] = {
                         "en": "Size lead run then project find white. Those player foreign idea. Area media increase meeting article.",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Angela Brown", "fr": ""},
                 },
@@ -366,6 +377,7 @@ snapshots["test_api_list[PermissionViewSet] 1"] = {
                         "en": "Wide happy air represent. Cup debate medical. Today morning standard effort summer.",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Justin Hunt", "fr": ""},
                 },
@@ -380,8 +392,8 @@ snapshots["test_api_list[PermissionViewSet] 1"] = {
 
 snapshots["test_api_list[RoleViewSet] 1"] = {
     "queries": [
-        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" ORDER BY "core_role"."slug" ASC',
-        'SELECT ("core_role_permissions"."role_id") AS "_prefetch_related_val_role_id", "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" IN (\'mrs-shake-recent\', \'reason-son-current\', \'structure\')',
+        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."meta", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" ORDER BY "core_role"."slug" ASC',
+        'SELECT ("core_role_permissions"."role_id") AS "_prefetch_related_val_role_id", "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" IN (\'mrs-shake-recent\', \'reason-son-current\', \'structure\')',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -400,6 +412,7 @@ snapshots["test_api_list[RoleViewSet] 1"] = {
                         "en": "Bit among again across environment long line. Team suggest traditional boy above.",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
                 },
@@ -421,6 +434,7 @@ snapshots["test_api_list[RoleViewSet] 1"] = {
                         "en": "Size lead run then project find white. Those player foreign idea. Area media increase meeting article.",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Angela Brown", "fr": ""},
                 },
@@ -439,6 +453,7 @@ snapshots["test_api_list[RoleViewSet] 1"] = {
                         "en": "Wide happy air represent. Cup debate medical. Today morning standard effort summer.",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Justin Hunt", "fr": ""},
                 },
@@ -459,6 +474,7 @@ snapshots["test_api_list[RoleViewSet] 1"] = {
                         "en": "Thing for east later still. Number inside put fire try cell.",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Courtney Brewer", "fr": ""},
                 },
@@ -473,7 +489,7 @@ snapshots["test_api_list[RoleViewSet] 1"] = {
 
 snapshots["test_api_list[ScopeViewSet] 1"] = {
     "queries": [
-        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" ORDER BY "core_scope"."tree_id" ASC, "core_scope"."lft" ASC'
+        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."meta", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" ORDER BY "core_scope"."tree_id" ASC, "core_scope"."lft" ASC'
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -493,6 +509,7 @@ snapshots["test_api_list[ScopeViewSet] 1"] = {
 Argue move appear catch toward help wind. Material minute ago get.""",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Pamela Horton", "fr": ""},
                 },
@@ -512,6 +529,7 @@ Argue move appear catch toward help wind. Material minute ago get.""",
 Son success provide beyond. Officer player possible issue ahead suffer.""",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Rebecca Gonzalez", "fr": ""},
                 },
@@ -532,6 +550,7 @@ Can bed notice range. Minute can second prove every check official. Stay culture
 Daughter single product trade.""",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Lorraine Reynolds", "fr": ""},
                 },
@@ -549,8 +568,8 @@ Daughter single product trade.""",
 
 snapshots["test_api_list[UserViewSet] 1"] = {
     "queries": [
-        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined", "core_user"."meta" FROM "core_user"',
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'ea416ed0-759d-46a8-de58-f63a59077499\'::uuid, \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid)',
+        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."meta", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined" FROM "core_user"',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'ea416ed0-759d-46a8-de58-f63a59077499\'::uuid, \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid)',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -664,12 +683,12 @@ snapshots["test_api_list[UserViewSet] 1"] = {
 
 snapshots["test_api_detail[ACLViewSet] 1"] = {
     "queries": [
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
-        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined", "core_user"."meta" FROM "core_user" WHERE "core_user"."id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
-        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid)',
-        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."slug" IN (\'industry-call\') ORDER BY "core_role"."slug" ASC',
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
-        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'industry-call\'',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
+        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."meta", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined" FROM "core_user" WHERE "core_user"."id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
+        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."meta", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid)',
+        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."meta", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."slug" IN (\'industry-call\') ORDER BY "core_role"."slug" ASC',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
+        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'industry-call\'',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -682,6 +701,7 @@ snapshots["test_api_detail[ACLViewSet] 1"] = {
         "data": {
             "attributes": {
                 "created-at": "2017-05-21T00:00:00Z",
+                "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
             },
             "id": "f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad",
@@ -712,6 +732,7 @@ snapshots["test_api_detail[ACLViewSet] 1"] = {
                         "en": "Of themselves garden weight table same method work. Mean finally realize us movie. Truth deep public these.",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "David Benson", "fr": ""},
                 },
@@ -731,6 +752,7 @@ snapshots["test_api_detail[ACLViewSet] 1"] = {
 Kid avoid player relationship to range whose. Draw free property consider.""",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Jessica Holloway", "fr": ""},
                 },
@@ -780,7 +802,7 @@ Kid avoid player relationship to range whose. Draw free property consider.""",
 
 snapshots["test_api_detail[PermissionViewSet] 1"] = {
     "queries": [
-        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" WHERE "core_permission"."slug" = \'mrs-shake-recent\''
+        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" WHERE "core_permission"."slug" = \'mrs-shake-recent\''
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -798,6 +820,7 @@ snapshots["test_api_detail[PermissionViewSet] 1"] = {
                     "en": "Bit among again across environment long line. Team suggest traditional boy above.",
                     "fr": "",
                 },
+                "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
                 "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
             },
@@ -811,8 +834,8 @@ snapshots["test_api_detail[PermissionViewSet] 1"] = {
 
 snapshots["test_api_detail[RoleViewSet] 1"] = {
     "queries": [
-        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."slug" = \'mrs-shake-recent\'',
-        'SELECT ("core_role_permissions"."role_id") AS "_prefetch_related_val_role_id", "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" IN (\'mrs-shake-recent\')',
+        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."meta", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."slug" = \'mrs-shake-recent\'',
+        'SELECT ("core_role_permissions"."role_id") AS "_prefetch_related_val_role_id", "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" IN (\'mrs-shake-recent\')',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -830,6 +853,7 @@ snapshots["test_api_detail[RoleViewSet] 1"] = {
                     "en": "Bit among again across environment long line. Team suggest traditional boy above.",
                     "fr": "",
                 },
+                "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
                 "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
             },
@@ -852,6 +876,7 @@ snapshots["test_api_detail[RoleViewSet] 1"] = {
                         "en": "Thing for east later still. Number inside put fire try cell.",
                         "fr": "",
                     },
+                    "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Courtney Brewer", "fr": ""},
                 },
@@ -866,7 +891,7 @@ snapshots["test_api_detail[RoleViewSet] 1"] = {
 
 snapshots["test_api_detail[ScopeViewSet] 1"] = {
     "queries": [
-        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid'
+        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."meta", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid'
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -885,6 +910,7 @@ snapshots["test_api_detail[ScopeViewSet] 1"] = {
 Argue move appear catch toward help wind. Material minute ago get.""",
                     "fr": "",
                 },
+                "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
                 "name": {"de": "", "en": "Pamela Horton", "fr": ""},
             },
@@ -901,8 +927,8 @@ Argue move appear catch toward help wind. Material minute ago get.""",
 
 snapshots["test_api_detail[UserViewSet] 1"] = {
     "queries": [
-        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined", "core_user"."meta" FROM "core_user" WHERE "core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
+        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."meta", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined" FROM "core_user" WHERE "core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -942,14 +968,14 @@ snapshots["test_api_detail[UserViewSet] 1"] = {
 
 snapshots["test_api_create[ACLViewSet] 1"] = {
     "queries": [
-        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined", "core_user"."meta" FROM "core_user" WHERE "core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
-        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid',
-        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."slug" = \'industry-call\'',
+        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."meta", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined" FROM "core_user" WHERE "core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
+        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."meta", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid',
+        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."meta", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."slug" = \'industry-call\'',
         'SELECT (1) AS "a" FROM "core_acl" WHERE ("core_acl"."role_id" = \'industry-call\' AND "core_acl"."scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid AND "core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)  LIMIT 1',
-        'INSERT INTO "core_acl" ("created_at", "modified_at", "created_by_user_id", "id", "user_id", "scope_id", "role_id") VALUES (\'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'ea416ed0-759d-46a8-de58-f63a59077499\'::uuid, \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'industry-call\')',
+        'INSERT INTO "core_acl" ("created_at", "modified_at", "created_by_user_id", "meta", "id", "user_id", "scope_id", "role_id") VALUES (\'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'ea416ed0-759d-46a8-de58-f63a59077499\'::uuid, \'{}\', \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'industry-call\')',
     ],
     "request": {
-        "CONTENT_LENGTH": "416",
+        "CONTENT_LENGTH": "426",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/acls",
         "QUERY_STRING": "",
@@ -960,6 +986,7 @@ snapshots["test_api_create[ACLViewSet] 1"] = {
         "data": {
             "attributes": {
                 "created-at": "2017-05-21T00:00:00Z",
+                "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
             },
             "id": "fb0e22c7-9ac7-5679-e988-1e6ba183b354",
@@ -992,10 +1019,10 @@ snapshots["test_api_create[ACLViewSet] 1"] = {
 
 snapshots["test_api_create[PermissionViewSet] 1"] = {
     "queries": [
-        "INSERT INTO \"core_permission\" (\"created_at\", \"modified_at\", \"created_by_user_id\", \"slug\", \"name\", \"description\") VALUES ('2017-05-21T00:00:00+00:00'::timestamptz, '2017-05-21T00:00:00+00:00'::timestamptz, '9dd4e461-268c-8034-f5c8-564e155c67a6'::uuid, '', hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']))"
+        "INSERT INTO \"core_permission\" (\"created_at\", \"modified_at\", \"created_by_user_id\", \"meta\", \"slug\", \"name\", \"description\") VALUES ('2017-05-21T00:00:00+00:00'::timestamptz, '2017-05-21T00:00:00+00:00'::timestamptz, '9dd4e461-268c-8034-f5c8-564e155c67a6'::uuid, '{}', '', hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']))"
     ],
     "request": {
-        "CONTENT_LENGTH": "362",
+        "CONTENT_LENGTH": "372",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/permissions",
         "QUERY_STRING": "",
@@ -1011,6 +1038,7 @@ snapshots["test_api_create[PermissionViewSet] 1"] = {
                     "en": "Bit among again across environment long line. Team suggest traditional boy above.",
                     "fr": "",
                 },
+                "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
                 "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
             },
@@ -1031,15 +1059,15 @@ snapshots["test_api_create[PermissionViewSet] 1"] = {
 
 snapshots["test_api_create[RoleViewSet] 1"] = {
     "queries": [
-        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" WHERE "core_permission"."slug" = \'rather-cost-admit\'',
-        "INSERT INTO \"core_role\" (\"created_at\", \"modified_at\", \"created_by_user_id\", \"slug\", \"name\", \"description\") VALUES ('2017-05-21T00:00:00+00:00'::timestamptz, '2017-05-21T00:00:00+00:00'::timestamptz, '9dd4e461-268c-8034-f5c8-564e155c67a6'::uuid, '', hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']))",
+        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" WHERE "core_permission"."slug" = \'rather-cost-admit\'',
+        "INSERT INTO \"core_role\" (\"created_at\", \"modified_at\", \"created_by_user_id\", \"meta\", \"slug\", \"name\", \"description\") VALUES ('2017-05-21T00:00:00+00:00'::timestamptz, '2017-05-21T00:00:00+00:00'::timestamptz, '9dd4e461-268c-8034-f5c8-564e155c67a6'::uuid, '{}', '', hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']))",
         'SELECT "core_permission"."slug" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'\'',
         'SELECT "core_role_permissions"."permission_id" FROM "core_role_permissions" WHERE ("core_role_permissions"."permission_id" IN (\'rather-cost-admit\') AND "core_role_permissions"."role_id" = \'\')',
         'INSERT INTO "core_role_permissions" ("role_id", "permission_id") VALUES (\'\', \'rather-cost-admit\') RETURNING "core_role_permissions"."id"',
-        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'\'',
+        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'\'',
     ],
     "request": {
-        "CONTENT_LENGTH": "448",
+        "CONTENT_LENGTH": "458",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/roles",
         "QUERY_STRING": "",
@@ -1055,6 +1083,7 @@ snapshots["test_api_create[RoleViewSet] 1"] = {
                     "en": "Bit among again across environment long line. Team suggest traditional boy above.",
                     "fr": "",
                 },
+                "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
                 "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
             },
@@ -1080,11 +1109,11 @@ snapshots["test_api_create[RoleViewSet] 1"] = {
 snapshots["test_api_create[ScopeViewSet] 1"] = {
     "queries": [
         'SELECT MAX("core_scope"."tree_id") AS "tree_id__max" FROM "core_scope"',
-        """INSERT INTO "core_scope" ("created_at", "modified_at", "created_by_user_id", "id", "name", "description", "parent_id", "lft", "rght", "tree_id", "level") VALUES (\'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid, hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Pamela Horton\',\'\',\'\']), hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Effort meet relationship far. Option program interesting station. First where during teach country talk across.
+        """INSERT INTO "core_scope" ("created_at", "modified_at", "created_by_user_id", "meta", "id", "name", "description", "parent_id", "lft", "rght", "tree_id", "level") VALUES (\'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'{}\', \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid, hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Pamela Horton\',\'\',\'\']), hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Effort meet relationship far. Option program interesting station. First where during teach country talk across.
 Argue move appear catch toward help wind. Material minute ago get.','','']), NULL, 1, 2, 1, 0)""",
     ],
     "request": {
-        "CONTENT_LENGTH": "496",
+        "CONTENT_LENGTH": "506",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/scopes",
         "QUERY_STRING": "",
@@ -1101,6 +1130,7 @@ Argue move appear catch toward help wind. Material minute ago get.','','']), NUL
 Argue move appear catch toward help wind. Material minute ago get.""",
                     "fr": "",
                 },
+                "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
                 "name": {"de": "", "en": "Pamela Horton", "fr": ""},
             },
@@ -1123,8 +1153,8 @@ Argue move appear catch toward help wind. Material minute ago get.""",
 snapshots["test_api_create[UserViewSet] 1"] = {
     "queries": [
         'SELECT (1) AS "a" FROM "core_user" WHERE "core_user"."username" = \'mark48\'  LIMIT 1',
-        'INSERT INTO "core_user" ("created_at", "modified_at", "created_by_user_id", "id", "username", "first_name", "last_name", "email", "phone", "language", "address", "city", "zip", "is_active", "date_joined", "meta") VALUES (\'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid, \'mark48\', \'Amanda\', \'Gallagher\', \'banderson@example.com\', NULL, \'en\', NULL, NULL, NULL, true, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'{}\')',
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
+        'INSERT INTO "core_user" ("created_at", "modified_at", "created_by_user_id", "meta", "id", "username", "first_name", "last_name", "email", "phone", "language", "address", "city", "zip", "is_active", "date_joined") VALUES (\'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'{}\', \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid, \'mark48\', \'Amanda\', \'Gallagher\', \'banderson@example.com\', NULL, \'en\', NULL, NULL, NULL, true, \'2017-05-21T00:00:00+00:00\'::timestamptz)',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
     ],
     "request": {
         "CONTENT_LENGTH": "474",
@@ -1170,15 +1200,15 @@ snapshots["test_api_create[UserViewSet] 1"] = {
 
 snapshots["test_api_patch[ACLViewSet] 1"] = {
     "queries": [
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
-        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined", "core_user"."meta" FROM "core_user" WHERE "core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
-        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid',
-        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."slug" = \'industry-call\'',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
+        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."meta", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined" FROM "core_user" WHERE "core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
+        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."meta", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid',
+        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."meta", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."slug" = \'industry-call\'',
         'SELECT (1) AS "a" FROM "core_acl" WHERE ("core_acl"."role_id" = \'industry-call\' AND "core_acl"."scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid AND "core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid AND NOT ("core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid))  LIMIT 1',
-        'UPDATE "core_acl" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, "scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, "role_id" = \'industry-call\' WHERE "core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
+        'UPDATE "core_acl" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "meta" = \'{}\', "user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, "scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, "role_id" = \'industry-call\' WHERE "core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
     ],
     "request": {
-        "CONTENT_LENGTH": "416",
+        "CONTENT_LENGTH": "426",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/acls/f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad",
         "QUERY_STRING": "",
@@ -1189,6 +1219,7 @@ snapshots["test_api_patch[ACLViewSet] 1"] = {
         "data": {
             "attributes": {
                 "created-at": "2017-05-21T00:00:00Z",
+                "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
             },
             "id": "f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad",
@@ -1216,11 +1247,11 @@ snapshots["test_api_patch[ACLViewSet] 1"] = {
 
 snapshots["test_api_patch[PermissionViewSet] 1"] = {
     "queries": [
-        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" WHERE "core_permission"."slug" = \'mrs-shake-recent\'',
-        "UPDATE \"core_permission\" SET \"created_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"modified_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"created_by_user_id\" = NULL, \"name\" = hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), \"description\" = hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']) WHERE \"core_permission\".\"slug\" = 'mrs-shake-recent'",
+        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" WHERE "core_permission"."slug" = \'mrs-shake-recent\'',
+        "UPDATE \"core_permission\" SET \"created_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"modified_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"created_by_user_id\" = NULL, \"meta\" = '{}', \"name\" = hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), \"description\" = hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']) WHERE \"core_permission\".\"slug\" = 'mrs-shake-recent'",
     ],
     "request": {
-        "CONTENT_LENGTH": "362",
+        "CONTENT_LENGTH": "372",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/permissions/mrs-shake-recent",
         "QUERY_STRING": "",
@@ -1236,6 +1267,7 @@ snapshots["test_api_patch[PermissionViewSet] 1"] = {
                     "en": "Bit among again across environment long line. Team suggest traditional boy above.",
                     "fr": "",
                 },
+                "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
                 "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
             },
@@ -1249,14 +1281,14 @@ snapshots["test_api_patch[PermissionViewSet] 1"] = {
 
 snapshots["test_api_patch[RoleViewSet] 1"] = {
     "queries": [
-        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."slug" = \'mrs-shake-recent\'',
-        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" WHERE "core_permission"."slug" = \'rather-cost-admit\'',
-        "UPDATE \"core_role\" SET \"created_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"modified_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"created_by_user_id\" = NULL, \"name\" = hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), \"description\" = hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']) WHERE \"core_role\".\"slug\" = 'mrs-shake-recent'",
+        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."meta", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."slug" = \'mrs-shake-recent\'',
+        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" WHERE "core_permission"."slug" = \'rather-cost-admit\'',
+        "UPDATE \"core_role\" SET \"created_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"modified_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"created_by_user_id\" = NULL, \"meta\" = '{}', \"name\" = hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), \"description\" = hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']) WHERE \"core_role\".\"slug\" = 'mrs-shake-recent'",
         'SELECT "core_permission"."slug" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'mrs-shake-recent\'',
-        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'mrs-shake-recent\'',
+        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'mrs-shake-recent\'',
     ],
     "request": {
-        "CONTENT_LENGTH": "448",
+        "CONTENT_LENGTH": "458",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/roles/mrs-shake-recent",
         "QUERY_STRING": "",
@@ -1272,6 +1304,7 @@ snapshots["test_api_patch[RoleViewSet] 1"] = {
                     "en": "Bit among again across environment long line. Team suggest traditional boy above.",
                     "fr": "",
                 },
+                "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
                 "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
             },
@@ -1291,12 +1324,12 @@ snapshots["test_api_patch[RoleViewSet] 1"] = {
 
 snapshots["test_api_patch[ScopeViewSet] 1"] = {
     "queries": [
-        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
-        """UPDATE "core_scope" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "name" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Pamela Horton\',\'\',\'\']), "description" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Effort meet relationship far. Option program interesting station. First where during teach country talk across.
+        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."meta", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
+        """UPDATE "core_scope" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "meta" = \'{}\', "name" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Pamela Horton\',\'\',\'\']), "description" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Effort meet relationship far. Option program interesting station. First where during teach country talk across.
 Argue move appear catch toward help wind. Material minute ago get.\',\'\',\'\']), "parent_id" = NULL WHERE "core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid""",
     ],
     "request": {
-        "CONTENT_LENGTH": "496",
+        "CONTENT_LENGTH": "506",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/scopes/9dd4e461-268c-8034-f5c8-564e155c67a6",
         "QUERY_STRING": "",
@@ -1313,6 +1346,7 @@ Argue move appear catch toward help wind. Material minute ago get.\',\'\',\'\'])
 Argue move appear catch toward help wind. Material minute ago get.""",
                     "fr": "",
                 },
+                "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
                 "name": {"de": "", "en": "Pamela Horton", "fr": ""},
             },
@@ -1329,10 +1363,10 @@ Argue move appear catch toward help wind. Material minute ago get.""",
 
 snapshots["test_api_patch[UserViewSet] 1"] = {
     "queries": [
-        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined", "core_user"."meta" FROM "core_user" WHERE "core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
+        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."meta", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined" FROM "core_user" WHERE "core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         'SELECT (1) AS "a" FROM "core_user" WHERE ("core_user"."username" = \'mark48\' AND NOT ("core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid))  LIMIT 1',
-        'UPDATE "core_user" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "username" = \'mark48\', "first_name" = \'Amanda\', "last_name" = \'Gallagher\', "email" = \'banderson@example.com\', "phone" = NULL, "language" = \'en\', "address" = NULL, "city" = NULL, "zip" = NULL, "is_active" = true, "date_joined" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "meta" = \'{}\' WHERE "core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
+        'UPDATE "core_user" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "meta" = \'{}\', "username" = \'mark48\', "first_name" = \'Amanda\', "last_name" = \'Gallagher\', "email" = \'banderson@example.com\', "phone" = NULL, "language" = \'en\', "address" = NULL, "city" = NULL, "zip" = NULL, "is_active" = true, "date_joined" = \'2017-05-21T00:00:00+00:00\'::timestamptz WHERE "core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
     ],
     "request": {
         "CONTENT_LENGTH": "474",
@@ -1373,7 +1407,7 @@ snapshots["test_api_patch[UserViewSet] 1"] = {
 
 snapshots["test_api_destroy[ACLViewSet] 1"] = {
     "queries": [
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
         'DELETE FROM "core_acl" WHERE "core_acl"."id" IN (\'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid)',
     ],
     "request": {
@@ -1387,7 +1421,7 @@ snapshots["test_api_destroy[ACLViewSet] 1"] = {
 
 snapshots["test_api_destroy[PermissionViewSet] 1"] = {
     "queries": [
-        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" WHERE "core_permission"."slug" = \'mrs-shake-recent\'',
+        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" WHERE "core_permission"."slug" = \'mrs-shake-recent\'',
         'SELECT "core_role_permissions"."id", "core_role_permissions"."role_id", "core_role_permissions"."permission_id" FROM "core_role_permissions" WHERE "core_role_permissions"."permission_id" IN (\'mrs-shake-recent\')',
         'DELETE FROM "core_permission" WHERE "core_permission"."slug" IN (\'mrs-shake-recent\')',
     ],
@@ -1402,9 +1436,9 @@ snapshots["test_api_destroy[PermissionViewSet] 1"] = {
 
 snapshots["test_api_destroy[RoleViewSet] 1"] = {
     "queries": [
-        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."slug" = \'mrs-shake-recent\'',
+        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."meta", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."slug" = \'mrs-shake-recent\'',
         'SELECT "core_role_permissions"."id", "core_role_permissions"."role_id", "core_role_permissions"."permission_id" FROM "core_role_permissions" WHERE "core_role_permissions"."role_id" IN (\'mrs-shake-recent\')',
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."role_id" IN (\'mrs-shake-recent\')',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."role_id" IN (\'mrs-shake-recent\')',
         'DELETE FROM "core_role_permissions" WHERE "core_role_permissions"."id" IN (1)',
         'DELETE FROM "core_role" WHERE "core_role"."slug" IN (\'mrs-shake-recent\')',
     ],
@@ -1419,7 +1453,7 @@ snapshots["test_api_destroy[RoleViewSet] 1"] = {
 
 snapshots["test_api_destroy[ScopeViewSet] 1"] = {
     "queries": [
-        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
+        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."meta", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         'SELECT "core_scope"."id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id" FROM "core_scope" WHERE "core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         """
             UPDATE "core_scope"
@@ -1433,8 +1467,8 @@ snapshots["test_api_destroy[ScopeViewSet] 1"] = {
                     ELSE "rght" END
             WHERE "tree_id" = 1
               AND ("lft" > 2 OR "rght" > 2)""",
-        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."parent_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."scope_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
+        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."meta", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."parent_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."scope_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
         'DELETE FROM "core_scope" WHERE "core_scope"."id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
     ],
     "request": {
@@ -1448,13 +1482,13 @@ snapshots["test_api_destroy[ScopeViewSet] 1"] = {
 
 snapshots["test_api_destroy[UserViewSet] 1"] = {
     "queries": [
-        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined", "core_user"."meta" FROM "core_user" WHERE "core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
-        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined", "core_user"."meta" FROM "core_user" WHERE "core_user"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
-        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
-        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid) ORDER BY "core_role"."slug" ASC',
-        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" WHERE "core_permission"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
-        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
+        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."meta", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined" FROM "core_user" WHERE "core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
+        'SELECT "core_user"."created_at", "core_user"."modified_at", "core_user"."created_by_user_id", "core_user"."meta", "core_user"."id", "core_user"."username", "core_user"."first_name", "core_user"."last_name", "core_user"."email", "core_user"."phone", "core_user"."language", "core_user"."address", "core_user"."city", "core_user"."zip", "core_user"."is_active", "core_user"."date_joined" FROM "core_user" WHERE "core_user"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
+        'SELECT "core_scope"."created_at", "core_scope"."modified_at", "core_scope"."created_by_user_id", "core_scope"."meta", "core_scope"."id", "core_scope"."name", "core_scope"."description", "core_scope"."parent_id", "core_scope"."lft", "core_scope"."rght", "core_scope"."tree_id", "core_scope"."level" FROM "core_scope" WHERE "core_scope"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
+        'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."meta", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid) ORDER BY "core_role"."slug" ASC',
+        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" WHERE "core_permission"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
+        'SELECT "core_acl"."created_at", "core_acl"."modified_at", "core_acl"."created_by_user_id", "core_acl"."meta", "core_acl"."id", "core_acl"."user_id", "core_acl"."scope_id", "core_acl"."role_id" FROM "core_acl" WHERE "core_acl"."user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
         'DELETE FROM "core_user" WHERE "core_user"."id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
     ],
     "request": {
