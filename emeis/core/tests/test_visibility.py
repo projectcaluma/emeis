@@ -3,7 +3,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 
-from emeis.core.models import BaseModel, Scope, User, VisibilityMixin
+from emeis.core.models import BaseModel, Permission, Role, Scope, User, VisibilityMixin
 from emeis.core.visibilities import BaseVisibility, Union, filter_queryset_for
 
 
@@ -121,6 +121,32 @@ def test_custom_visibility_override_specificity(db, user_factory):
     queryset = CustomVisibility().filter_queryset(BaseModel, User.objects, None)
     assert queryset.count() == 0
     queryset = CustomVisibility().filter_queryset(User, User.objects, None)
+    assert queryset.count() == 1
+
+
+def test_custom_visibility_chained_decorators(db, permission_factory, role_factory):
+    class CustomVisibility(BaseVisibility):
+        @filter_queryset_for(BaseModel)
+        def filter_queryset_for_all(self, queryset, request):
+            return queryset.none()
+
+        @filter_queryset_for(Role)
+        @filter_queryset_for(Permission)
+        def filter_queryset_for_custom_node(self, queryset, request):
+            return queryset.filter(slug="name1")
+
+    r1 = role_factory(slug="name1")
+    r2 = role_factory(slug="name2")
+    r1.permissions.add(permission_factory(slug="name1"))
+    r2.permissions.add(permission_factory(slug="name2"))
+
+    assert Role.objects.count() == 2
+    assert Permission.objects.count() == 2
+    queryset = CustomVisibility().filter_queryset(BaseModel, Role.objects, None)
+    assert queryset.count() == 0
+    queryset = CustomVisibility().filter_queryset(Role, Role.objects, None)
+    assert queryset.count() == 1
+    queryset = CustomVisibility().filter_queryset(Permission, Permission.objects, None)
     assert queryset.count() == 1
 
 
