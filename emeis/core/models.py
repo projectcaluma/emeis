@@ -1,6 +1,7 @@
 import unicodedata
 import uuid
 
+from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.postgres.fields import JSONField
@@ -22,6 +23,10 @@ def make_uuid():
     We can't replace it with a lambda because Django Migrations can't handle them.
     """
     return uuid.uuid4()
+
+
+def get_language_code():
+    return settings.LANGUAGE_CODE
 
 
 class VisibilityMixin:
@@ -90,11 +95,13 @@ class User(UUIDModel):
         validators=[username_validator],
         error_messages={"unique": _("A user with that username already exists.")},
     )
-    first_name = models.CharField(_("first name"), max_length=255, blank=True)
-    last_name = models.CharField(_("last name"), max_length=255, blank=True)
-    email = models.EmailField(_("email address"), blank=True)
+    first_name = models.CharField(
+        _("first name"), max_length=255, blank=True, null=True
+    )
+    last_name = models.CharField(_("last name"), max_length=255, blank=True, null=True)
+    email = models.EmailField(_("email address"), blank=True, null=True)
     phone = models.CharField(_("phone"), max_length=100, blank=True, null=True)
-    language = models.CharField(_("language"), max_length=2)
+    language = models.CharField(_("language"), max_length=2, default=get_language_code)
     address = models.CharField(_("address"), max_length=255, blank=True, null=True)
     city = models.CharField(_("city"), max_length=255, blank=True, null=True)
     zip = models.CharField(_("zip"), max_length=10, blank=True, null=True)
