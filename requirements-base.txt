@@ -8,4 +8,4 @@ djangorestframework==3.11.0
 djangorestframework-jsonapi==3.1.0
 mozilla-django-oidc==1.2.3
 requests==2.23.0
-uwsgi==2.0.18
+uwsgi==2.0.19
