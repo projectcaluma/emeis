@@ -1,6 +1,7 @@
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_204_NO_CONTENT
 from rest_framework.viewsets import GenericViewSet
@@ -27,6 +28,7 @@ class MeViewSet(RetrieveModelMixin, GenericViewSet):
     """Me view returns current user."""
 
     serializer_class = serializers.MeSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_object(self, *args, **kwargs):
         return self.request.user
@@ -37,6 +39,7 @@ class MyACLViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet):
 
     queryset = models.ACL.objects.all()
     serializer_class = serializers.MyACLSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_object(self):
         pk = self.kwargs.pop("pk")

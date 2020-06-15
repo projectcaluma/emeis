@@ -176,6 +176,15 @@ SIMPLE_AUTH = {
 }
 
 
+# Anonymous writing
+ALLOW_ANONYMOUS_WRITE = env.bool("ALLOW_ANONYMOUS_WRITE", default=False)
+
+if not ALLOW_ANONYMOUS_WRITE:  # pragma: no cover
+    REST_FRAMEWORK["DEFAULT_PERMISSION_CLASSES"] = [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+    ]
+
+
 def parse_admins(admins):
     """
     Parse env admins to django admins.

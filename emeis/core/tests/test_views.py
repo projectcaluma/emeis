@@ -4,6 +4,7 @@ import pytest
 from django.urls import reverse
 from rest_framework.status import (
     HTTP_200_OK,
+    HTTP_201_CREATED,
     HTTP_403_FORBIDDEN,
     HTTP_404_NOT_FOUND,
     HTTP_405_METHOD_NOT_ALLOWED,
@@ -166,4 +167,34 @@ def test_acl_search_filter(db, acl_factory, client):
         result["data"][0]["relationships"]["user"]["data"]["id"]
         == result["data"][1]["relationships"]["user"]["data"]["id"]
         == str(acl.user.pk)
+    )
+
+
+@pytest.mark.parametrize("allow_anon", [True, False])
+@pytest.mark.parametrize("method", ["post", "patch"])
+def test_anonymous_writing(db, client, settings, user, allow_anon, method):
+    settings.ALLOW_ANONYMOUS_WRITE = allow_anon
+    if not allow_anon:
+        settings.REST_FRAMEWORK["DEFAULT_PERMISSION_CLASSES"] = [
+            "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+        ]
+
+    data = {
+        "data": {
+            "type": "users",
+            "attributes": {"username": "winstonsmith", "language": "en"},
+        }
+    }
+
+    url = reverse("user-list")
+
+    if method == "patch":
+        data["data"]["id"] = str(user.pk)
+        url = reverse("user-detail", args=[user.pk])
+
+    resp = getattr(client, method)(url, data=data)
+    assert (
+        resp.status_code == HTTP_201_CREATED or HTTP_200_OK
+        if allow_anon
+        else HTTP_403_FORBIDDEN
     )

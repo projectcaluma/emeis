@@ -21,3 +21,4 @@ services:
       ]
     environment:
       - ENV=dev
+      - ALLOW_ANONYMOUS_WRITE=true
