@@ -104,14 +104,14 @@ class EmeisAuthenticationBackend(OIDCAuthenticationBackend):
 
     def create_user(self, claims):
         """Return object for a newly created user account."""
-        email = claims.get(self.OIDC_EMAIL_CLAIM, "")
+        email = claims.get(self.OIDC_EMAIL_CLAIM)
         username = self.get_username(claims)
         return self.UserModel.objects.create(username=username, email=email)
 
     def update_user(self, user, claims):
         """Update existing user with new claims, if necessary save, and return user."""
-        email = claims.get(self.OIDC_EMAIL_CLAIM, "")
-        if user.email != email:
+        email = claims.get(self.OIDC_EMAIL_CLAIM)
+        if email and user.email != email:
             user.email = email
             user.save()
         return user
