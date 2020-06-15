@@ -61,17 +61,25 @@ class ScopeSerializer(BaseSerializer):
 class PermissionSerializer(BaseSerializer):
     class Meta:
         model = Permission
-        fields = BaseSerializer.Meta.fields + ("name", "description")
+        fields = BaseSerializer.Meta.fields + ("slug", "name", "description")
 
 
 class RoleSerializer(BaseSerializer):
+    permissions = serializers.ResourceRelatedField(
+        queryset=Permission.objects.all(), required=False, many=True
+    )
     included_serializers = {
         "permissions": PermissionSerializer,
     }
 
     class Meta:
         model = Role
-        fields = BaseSerializer.Meta.fields + ("name", "description", "permissions")
+        fields = BaseSerializer.Meta.fields + (
+            "slug",
+            "name",
+            "description",
+            "permissions",
+        )
 
 
 class ACLSerializer(BaseSerializer):
