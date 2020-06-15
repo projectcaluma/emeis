@@ -75,6 +75,19 @@ ADMIN_ROLE_SLUG = env.str("ADMIN_ROLE_SLUG", default="admin")
 ADMIN_SCOPE_NAME = env.str("ADMIN_SCOPE_NAME", default="admin")
 
 
+# Cache
+# https://docs.djangoproject.com/en/1.11/ref/settings/#caches
+
+CACHES = {
+    "default": {
+        "BACKEND": env.str(
+            "CACHE_BACKEND", default="django.core.cache.backends.locmem.LocMemCache"
+        ),
+        "LOCATION": env.str("CACHE_LOCATION", ""),
+    }
+}
+
+
 # Extensions
 
 VISIBILITY_CLASSES = env.list(
@@ -96,7 +109,7 @@ def parse_languages(languages):
 
 LANGUAGE_CODE = env.str("LANGUAGE_CODE", "en")
 LANGUAGES = (
-    parse_languages(env.list("LANGUAGES", default=[])) or global_settings.LANGUAGES
+    parse_languages(env.list("LANGUAGES", default=["en"])) or global_settings.LANGUAGES
 )
 
 TIME_ZONE = env.str("TIME_ZONE", "UTC")
@@ -183,3 +196,8 @@ def parse_admins(admins):
 
 
 ADMINS = parse_admins(env.list("ADMINS", default=[]))
+
+
+# Cors headers
+CORS_ORIGIN_ALLOW_ALL = env.bool("CORS_ORIGIN_ALLOW_ALL", default=False)
+CORS_ORIGIN_WHITELIST = env.list("CORS_ORIGIN_WHITELIST", default=[])
