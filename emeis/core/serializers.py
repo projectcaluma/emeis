@@ -14,6 +14,14 @@ class BaseSerializer(serializers.ModelSerializer):
 
         return super().create(validated_data)
 
+    def validate(self, *args, **kwargs):
+        validated_data = super().validate(*args, **kwargs)
+        self.Meta.model.check_permissions(self.context["request"])
+        if self.instance is not None:
+            self.instance.check_object_permissions(self.context["request"])
+
+        return validated_data
+
     class Meta:
         fields = ("created_at", "modified_at", "created_by_user", "meta")
 

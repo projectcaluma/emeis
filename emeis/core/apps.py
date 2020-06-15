@@ -7,10 +7,13 @@ class DefaultConfig(AppConfig):
     name = "emeis.core"
 
     def ready(self):
-        from .models import VisibilityMixin
+        from .models import VisibilityMixin, PermissionMixin
 
         # to avoid recursive import error, load extension classes
         # only once the app is ready
+        PermissionMixin.permission_classes = [
+            import_string(cls) for cls in settings.PERMISSION_CLASSES
+        ]
         VisibilityMixin.visibility_classes = [
             import_string(cls) for cls in settings.VISIBILITY_CLASSES
         ]
