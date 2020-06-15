@@ -116,6 +116,7 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "David Benson", "fr": ""},
+                    "slug": "industry-call",
                 },
                 "id": "industry-call",
                 "relationships": {
@@ -135,6 +136,7 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Kimberly Martin", "fr": ""},
+                    "slug": "nearly-food-skill",
                 },
                 "id": "nearly-food-skill",
                 "relationships": {
@@ -156,6 +158,7 @@ For brother weight upon.""",
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Mary Cook", "fr": ""},
+                    "slug": "political-young",
                 },
                 "id": "political-young",
                 "relationships": {
@@ -348,6 +351,7 @@ snapshots["test_api_list[PermissionViewSet] 1"] = {
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
+                    "slug": "mrs-shake-recent",
                 },
                 "id": "mrs-shake-recent",
                 "relationships": {"created-by-user": {"data": None}},
@@ -364,6 +368,7 @@ snapshots["test_api_list[PermissionViewSet] 1"] = {
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Angela Brown", "fr": ""},
+                    "slug": "reason-son-current",
                 },
                 "id": "reason-son-current",
                 "relationships": {"created-by-user": {"data": None}},
@@ -380,6 +385,7 @@ snapshots["test_api_list[PermissionViewSet] 1"] = {
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Justin Hunt", "fr": ""},
+                    "slug": "structure",
                 },
                 "id": "structure",
                 "relationships": {"created-by-user": {"data": None}},
@@ -415,6 +421,7 @@ snapshots["test_api_list[RoleViewSet] 1"] = {
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
+                    "slug": "mrs-shake-recent",
                 },
                 "id": "mrs-shake-recent",
                 "relationships": {
@@ -437,6 +444,7 @@ snapshots["test_api_list[RoleViewSet] 1"] = {
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Angela Brown", "fr": ""},
+                    "slug": "reason-son-current",
                 },
                 "id": "reason-son-current",
                 "relationships": {
@@ -456,6 +464,7 @@ snapshots["test_api_list[RoleViewSet] 1"] = {
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Justin Hunt", "fr": ""},
+                    "slug": "structure",
                 },
                 "id": "structure",
                 "relationships": {
@@ -477,6 +486,7 @@ snapshots["test_api_list[RoleViewSet] 1"] = {
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Courtney Brewer", "fr": ""},
+                    "slug": "rather-cost-admit",
                 },
                 "id": "rather-cost-admit",
                 "relationships": {"created-by-user": {"data": None}},
@@ -735,6 +745,7 @@ snapshots["test_api_detail[ACLViewSet] 1"] = {
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "David Benson", "fr": ""},
+                    "slug": "industry-call",
                 },
                 "id": "industry-call",
                 "relationships": {
@@ -823,6 +834,7 @@ snapshots["test_api_detail[PermissionViewSet] 1"] = {
                 "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
                 "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
+                "slug": "mrs-shake-recent",
             },
             "id": "mrs-shake-recent",
             "relationships": {"created-by-user": {"data": None}},
@@ -856,6 +868,7 @@ snapshots["test_api_detail[RoleViewSet] 1"] = {
                 "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
                 "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
+                "slug": "mrs-shake-recent",
             },
             "id": "mrs-shake-recent",
             "relationships": {
@@ -879,6 +892,7 @@ snapshots["test_api_detail[RoleViewSet] 1"] = {
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "name": {"de": "", "en": "Courtney Brewer", "fr": ""},
+                    "slug": "rather-cost-admit",
                 },
                 "id": "rather-cost-admit",
                 "relationships": {"created-by-user": {"data": None}},
@@ -1019,10 +1033,11 @@ snapshots["test_api_create[ACLViewSet] 1"] = {
 
 snapshots["test_api_create[PermissionViewSet] 1"] = {
     "queries": [
-        "INSERT INTO \"core_permission\" (\"created_at\", \"modified_at\", \"created_by_user_id\", \"meta\", \"slug\", \"name\", \"description\") VALUES ('2017-05-21T00:00:00+00:00'::timestamptz, '2017-05-21T00:00:00+00:00'::timestamptz, '9dd4e461-268c-8034-f5c8-564e155c67a6'::uuid, '{}', '', hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']))"
+        'SELECT (1) AS "a" FROM "core_permission" WHERE "core_permission"."slug" = \'mrs-shake-recent\'  LIMIT 1',
+        "INSERT INTO \"core_permission\" (\"created_at\", \"modified_at\", \"created_by_user_id\", \"meta\", \"slug\", \"name\", \"description\") VALUES ('2017-05-21T00:00:00+00:00'::timestamptz, '2017-05-21T00:00:00+00:00'::timestamptz, '9dd4e461-268c-8034-f5c8-564e155c67a6'::uuid, '{}', 'mrs-shake-recent', hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']))",
     ],
     "request": {
-        "CONTENT_LENGTH": "372",
+        "CONTENT_LENGTH": "398",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/permissions",
         "QUERY_STRING": "",
@@ -1041,8 +1056,9 @@ snapshots["test_api_create[PermissionViewSet] 1"] = {
                 "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
                 "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
+                "slug": "mrs-shake-recent",
             },
-            "id": "",
+            "id": "mrs-shake-recent",
             "relationships": {
                 "created-by-user": {
                     "data": {
@@ -1059,15 +1075,16 @@ snapshots["test_api_create[PermissionViewSet] 1"] = {
 
 snapshots["test_api_create[RoleViewSet] 1"] = {
     "queries": [
+        'SELECT (1) AS "a" FROM "core_role" WHERE "core_role"."slug" = \'mrs-shake-recent\'  LIMIT 1',
         'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" WHERE "core_permission"."slug" = \'rather-cost-admit\'',
-        "INSERT INTO \"core_role\" (\"created_at\", \"modified_at\", \"created_by_user_id\", \"meta\", \"slug\", \"name\", \"description\") VALUES ('2017-05-21T00:00:00+00:00'::timestamptz, '2017-05-21T00:00:00+00:00'::timestamptz, '9dd4e461-268c-8034-f5c8-564e155c67a6'::uuid, '{}', '', hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']))",
-        'SELECT "core_permission"."slug" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'\'',
-        'SELECT "core_role_permissions"."permission_id" FROM "core_role_permissions" WHERE ("core_role_permissions"."permission_id" IN (\'rather-cost-admit\') AND "core_role_permissions"."role_id" = \'\')',
-        'INSERT INTO "core_role_permissions" ("role_id", "permission_id") VALUES (\'\', \'rather-cost-admit\') RETURNING "core_role_permissions"."id"',
-        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'\'',
+        "INSERT INTO \"core_role\" (\"created_at\", \"modified_at\", \"created_by_user_id\", \"meta\", \"slug\", \"name\", \"description\") VALUES ('2017-05-21T00:00:00+00:00'::timestamptz, '2017-05-21T00:00:00+00:00'::timestamptz, '9dd4e461-268c-8034-f5c8-564e155c67a6'::uuid, '{}', 'mrs-shake-recent', hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']))",
+        'SELECT "core_permission"."slug" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'mrs-shake-recent\'',
+        'SELECT "core_role_permissions"."permission_id" FROM "core_role_permissions" WHERE ("core_role_permissions"."permission_id" IN (\'rather-cost-admit\') AND "core_role_permissions"."role_id" = \'mrs-shake-recent\')',
+        'INSERT INTO "core_role_permissions" ("role_id", "permission_id") VALUES (\'mrs-shake-recent\', \'rather-cost-admit\') RETURNING "core_role_permissions"."id"',
+        'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'mrs-shake-recent\'',
     ],
     "request": {
-        "CONTENT_LENGTH": "458",
+        "CONTENT_LENGTH": "484",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/roles",
         "QUERY_STRING": "",
@@ -1086,8 +1103,9 @@ snapshots["test_api_create[RoleViewSet] 1"] = {
                 "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
                 "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
+                "slug": "mrs-shake-recent",
             },
-            "id": "",
+            "id": "mrs-shake-recent",
             "relationships": {
                 "created-by-user": {
                     "data": {
@@ -1248,10 +1266,11 @@ snapshots["test_api_patch[ACLViewSet] 1"] = {
 snapshots["test_api_patch[PermissionViewSet] 1"] = {
     "queries": [
         'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" WHERE "core_permission"."slug" = \'mrs-shake-recent\'',
+        'SELECT (1) AS "a" FROM "core_permission" WHERE ("core_permission"."slug" = \'mrs-shake-recent\' AND NOT ("core_permission"."slug" = \'mrs-shake-recent\'))  LIMIT 1',
         "UPDATE \"core_permission\" SET \"created_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"modified_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"created_by_user_id\" = NULL, \"meta\" = '{}', \"name\" = hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), \"description\" = hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']) WHERE \"core_permission\".\"slug\" = 'mrs-shake-recent'",
     ],
     "request": {
-        "CONTENT_LENGTH": "372",
+        "CONTENT_LENGTH": "398",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/permissions/mrs-shake-recent",
         "QUERY_STRING": "",
@@ -1270,6 +1289,7 @@ snapshots["test_api_patch[PermissionViewSet] 1"] = {
                 "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
                 "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
+                "slug": "mrs-shake-recent",
             },
             "id": "mrs-shake-recent",
             "relationships": {"created-by-user": {"data": None}},
@@ -1282,13 +1302,14 @@ snapshots["test_api_patch[PermissionViewSet] 1"] = {
 snapshots["test_api_patch[RoleViewSet] 1"] = {
     "queries": [
         'SELECT "core_role"."created_at", "core_role"."modified_at", "core_role"."created_by_user_id", "core_role"."meta", "core_role"."slug", "core_role"."name", "core_role"."description" FROM "core_role" WHERE "core_role"."slug" = \'mrs-shake-recent\'',
+        'SELECT (1) AS "a" FROM "core_role" WHERE ("core_role"."slug" = \'mrs-shake-recent\' AND NOT ("core_role"."slug" = \'mrs-shake-recent\'))  LIMIT 1',
         'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" WHERE "core_permission"."slug" = \'rather-cost-admit\'',
         "UPDATE \"core_role\" SET \"created_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"modified_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"created_by_user_id\" = NULL, \"meta\" = '{}', \"name\" = hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), \"description\" = hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']) WHERE \"core_role\".\"slug\" = 'mrs-shake-recent'",
         'SELECT "core_permission"."slug" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'mrs-shake-recent\'',
         'SELECT "core_permission"."created_at", "core_permission"."modified_at", "core_permission"."created_by_user_id", "core_permission"."meta", "core_permission"."slug", "core_permission"."name", "core_permission"."description" FROM "core_permission" INNER JOIN "core_role_permissions" ON ("core_permission"."slug" = "core_role_permissions"."permission_id") WHERE "core_role_permissions"."role_id" = \'mrs-shake-recent\'',
     ],
     "request": {
-        "CONTENT_LENGTH": "458",
+        "CONTENT_LENGTH": "484",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/roles/mrs-shake-recent",
         "QUERY_STRING": "",
@@ -1307,6 +1328,7 @@ snapshots["test_api_patch[RoleViewSet] 1"] = {
                 "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
                 "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
+                "slug": "mrs-shake-recent",
             },
             "id": "mrs-shake-recent",
             "relationships": {
