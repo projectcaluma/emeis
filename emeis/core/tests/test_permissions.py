@@ -9,9 +9,20 @@ from rest_framework.status import (
 )
 
 from emeis.core.models import PermissionMixin, Scope, User
-from emeis.core.permissions import BasePermission, object_permission_for, permission_for
+from emeis.core.permissions import (
+    AllowAny,
+    BasePermission,
+    object_permission_for,
+    permission_for,
+)
 
 TIMESTAMP = "2017-05-21T11:25:41.123840Z"
+
+
+@pytest.fixture
+def reset_permission_classes():
+    yield
+    PermissionMixin.permission_classes = [AllowAny]
 
 
 @pytest.mark.freeze_time(TIMESTAMP)
@@ -25,7 +36,14 @@ TIMESTAMP = "2017-05-21T11:25:41.123840Z"
 )
 @pytest.mark.parametrize("use_admin_client", [True, False])
 def test_permission(
-    user_factory, admin_user, admin_client, client, method, status, use_admin_client,
+    user_factory,
+    admin_user,
+    admin_client,
+    client,
+    method,
+    status,
+    use_admin_client,
+    reset_permission_classes,
 ):
     client = admin_client if use_admin_client else client
 
@@ -90,7 +108,7 @@ def test_permission(
         assert user.username == "mark48"
 
 
-def test_permission_no_permissions_configured(client):
+def test_permission_no_permissions_configured(client, reset_permission_classes):
     PermissionMixin.permission_classes = None
 
     data = {

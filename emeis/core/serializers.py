@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AnonymousUser
 from rest_framework_json_api import serializers
 
 from .models import ACL, Permission, Role, Scope, User
@@ -10,7 +11,8 @@ class BaseSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = self.context["request"].user
-        validated_data["created_by_user"] = user
+        if not isinstance(user, AnonymousUser):
+            validated_data["created_by_user"] = user
 
         return super().create(validated_data)
 
