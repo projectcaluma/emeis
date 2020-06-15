@@ -138,6 +138,19 @@ def test_scope_search_filter(db, scope_factory, client):
     assert len(result["data"]) == 3
 
 
+def test_acl_user_filter(db, user, acl_factory, client):
+    acl = acl_factory(user=user)
+    acl_factory()
+
+    url = reverse("acl-list")
+
+    response = client.get(url, {"filter[user]": acl.user.pk})
+    assert response.status_code == HTTP_200_OK
+    result = response.json()
+    assert len(result["data"]) == 1
+    assert result["data"][0]["relationships"]["user"]["data"]["id"] == str(acl.user.pk)
+
+
 def test_acl_search_filter(db, acl_factory, client):
     acl = acl_factory(role__name="scope1", scope__name="scope1", user__username="user1")
     acl_factory(role__name="scope1", scope__name="scope2", user=acl.user)
