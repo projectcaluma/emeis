@@ -121,7 +121,7 @@ USE_TZ = True
 AUTH_USER_MODEL = "core.User"
 
 OIDC_OP_USER_ENDPOINT = env.str("OIDC_OP_USER_ENDPOINT", default=None)
-OIDC_OP_TOKEN_ENDPOINT = env.str("OIDC_OP_TOKEN_ENDPOINT", default=None)
+OIDC_OP_TOKEN_ENDPOINT = "not supported in emeis, but a value is needed"
 OIDC_VERIFY_SSL = env.bool("OIDC_VERIFY_SSL", default=True)
 OIDC_USERNAME_CLAIM = env.str("OIDC_USERNAME_CLAIM", default="sub")
 OIDC_EMAIL_CLAIM = env.str("OIDC_EMAIL_CLAIM", default="email")

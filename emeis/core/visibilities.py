@@ -30,17 +30,17 @@ class BaseVisibility(object):
     A custom visibility class could look like this:
     ```
     >>> from emeis.core.visibilities import BaseVisibility
-    ... from emeis.core.models import User, Scope
+    ... from emeis.core.models import BaseModel, Scope
     ...
     ...
     ... class CustomVisibility(BaseVisibility):
-    ...     @filter_queryset_for(User)
+    ...     @filter_queryset_for(BaseModel)
     ...     def filter_queryset_for_all(self, queryset, request):
     ...         return queryset.filter(created_by_user=request.user.username)
     ...
     ...     @filter_queryset_for(Scope)
-    ...     def filter_queryset_for_form(self, queryset, request):
-    ...         return queryset.exclude(slug='protected-form')
+    ...     def filter_queryset_for_scope(self, queryset, request):
+    ...         return queryset.exclude(slug='protected-scope')
     """
 
     def __init__(self):
