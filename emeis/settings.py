@@ -69,6 +69,19 @@ DATABASES = {
 }
 
 
+# Cache
+# https://docs.djangoproject.com/en/1.11/ref/settings/#caches
+
+CACHES = {
+    "default": {
+        "BACKEND": env.str(
+            "CACHE_BACKEND", default="django.core.cache.backends.locmem.LocMemCache"
+        ),
+        "LOCATION": env.str("CACHE_LOCATION", ""),
+    }
+}
+
+
 # Extensions
 
 VISIBILITY_CLASSES = env.list(
