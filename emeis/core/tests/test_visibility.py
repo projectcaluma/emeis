@@ -1,10 +1,24 @@
 import pytest
+from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 
-from emeis.core.models import BaseModel, Permission, Role, Scope, User, VisibilityMixin
-from emeis.core.visibilities import BaseVisibility, Union, filter_queryset_for
+from emeis.core.models import (
+    ACL,
+    BaseModel,
+    Permission,
+    Role,
+    Scope,
+    User,
+    VisibilityMixin,
+)
+from emeis.core.visibilities import (
+    BaseVisibility,
+    OwnAndAdmin,
+    Union,
+    filter_queryset_for,
+)
 
 
 @pytest.mark.parametrize("detail", [True, False])
@@ -209,3 +223,56 @@ def test_union_visibility_none(db, user_factory):
     assert result.count() == 0
     queryset = ConfiguredUnion().filter_queryset(User, queryset, None)
     assert queryset.count() == 0
+
+
+@pytest.mark.parametrize("requesting_user", ["anon", "user", "admin"])
+def test_own_and_admin_visibility(
+    db,
+    user_factory,
+    scope_factory,
+    role_factory,
+    permission_factory,
+    acl_factory,
+    admin_user,
+    request,
+    requesting_user,
+):
+    user = user_factory()
+
+    request.user = AnonymousUser()
+    expected_count = 0
+    if requesting_user == "admin":
+        request.user = admin_user
+        expected_count = 2
+    elif requesting_user == "user":
+        request.user = user
+        expected_count = 1
+
+    scope1 = scope_factory()
+    scope2 = scope_factory()
+
+    role1 = role_factory()
+    role2 = role_factory()
+
+    perm1 = permission_factory()
+    permission_factory()
+
+    role1.permissions.add(perm1)
+
+    acl_factory(user=user, scope=scope1, role=role1)
+    acl_factory(user=admin_user, scope=scope2, role=role2)
+
+    result = OwnAndAdmin().filter_queryset(User, User.objects, request)
+    assert result.count() == expected_count
+
+    result = OwnAndAdmin().filter_queryset(Scope, Scope.objects, request)
+    assert result.count() == expected_count
+
+    queryset = OwnAndAdmin().filter_queryset(Role, Role.objects, request)
+    assert queryset.count() == expected_count
+
+    queryset = OwnAndAdmin().filter_queryset(Permission, Permission.objects, request)
+    assert queryset.count() == expected_count
+
+    queryset = OwnAndAdmin().filter_queryset(ACL, ACL.objects, request)
+    assert queryset.count() == (2 if requesting_user == "admin" else 0)
