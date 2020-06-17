@@ -118,7 +118,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Authentication
-AUTH_USER_MODEL = "core.User"
+AUTH_USER_MODEL = "emeis_core.User"
 
 OIDC_OP_USER_ENDPOINT = env.str("OIDC_OP_USER_ENDPOINT", default=None)
 OIDC_OP_TOKEN_ENDPOINT = env.str("OIDC_OP_TOKEN_ENDPOINT", default=None)

@@ -4,7 +4,7 @@ from django.db.migrations.executor import MigrationExecutor
 
 def test_data_bootstrap(transactional_db, settings):
     executor = MigrationExecutor(connection)
-    app = "core"
+    app = "emeis_core"
     migrate_from = [(app, "0001_initial")]
     migrate_to = [(app, "0002_data_bootstrap")]
 

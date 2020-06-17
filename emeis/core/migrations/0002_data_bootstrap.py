@@ -23,10 +23,10 @@ def create_admin(apps, schema_editor):
     if settings.ADMINS:
         admin_email = settings.ADMINS[0][1]
 
-    User = apps.get_model("core", "User")
-    Role = apps.get_model("core", "Role")
-    Acl = apps.get_model("core", "Acl")
-    Scope = apps.get_model("core", "Scope")
+    User = apps.get_model("emeis_core", "User")
+    Role = apps.get_model("emeis_core", "Role")
+    Acl = apps.get_model("emeis_core", "Acl")
+    Scope = apps.get_model("emeis_core", "Scope")
 
     admin_user = User.objects.create(username=admin_username, email=admin_email)
     admin_role = Role.objects.create(slug=admin_role_slug)
@@ -43,7 +43,7 @@ def create_admin(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("core", "0001_initial"),
+        ("emeis_core", "0001_initial"),
     ]
 
     operations = [
