@@ -1,4 +1,3 @@
-import datetime
 import os
 import re
 
@@ -169,11 +168,6 @@ REST_FRAMEWORK = {
 JSON_API_FORMAT_FIELD_NAMES = "dasherize"
 JSON_API_FORMAT_TYPES = "dasherize"
 JSON_API_PLURALIZE_TYPES = True
-
-SIMPLE_AUTH = {
-    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(days=2),
-    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=7),
-}
 
 
 # Anonymous writing
