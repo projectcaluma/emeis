@@ -5,6 +5,7 @@ from django.utils.module_loading import import_string
 
 class DefaultConfig(AppConfig):
     name = "emeis.core"
+    label = "emeis_core"
 
     def ready(self):
         from .models import VisibilityMixin, PermissionMixin
