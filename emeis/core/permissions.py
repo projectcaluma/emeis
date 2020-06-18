@@ -41,7 +41,7 @@ class BasePermission(object):
     A custom permission class could look like this:
     ```
     >>> from emeis.core.permissions import BasePermission
-    ... from emeis.core.models import BaseModel, User, Scope
+    ... from emeis.core.models import BaseModel, User
     ...
     ... class CustomPermission(BasePermission):
     ...     @permission_for(BaseModel)
@@ -50,12 +50,12 @@ class BasePermission(object):
     ...         # permission is defined.
     ...         return False
     ...
-    ...     @permission_for(Scope)
-    ...     def has_permission_for_save_form(self, request):
+    ...     @permission_for(User)
+    ...     def has_permission_for_user(self, request):
     ...         return True
     ...
     ...     @object_permission_for(User)
-    ...     def has_object_permission_for_save_form(self, request, instance):
+    ...     def has_object_permission_for_user(self, request, instance):
     ...         return request.user.username == 'admin'
     """
 
