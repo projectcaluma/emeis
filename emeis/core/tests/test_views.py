@@ -149,6 +149,7 @@ def test_acl_user_filter(db, user, acl_factory, client):
     assert response.status_code == HTTP_200_OK
     result = response.json()
     assert len(result["data"]) == 1
+    assert result["data"][0]["id"] == str(acl.pk)
     assert result["data"][0]["relationships"]["user"]["data"]["id"] == str(acl.user.pk)
 
 
