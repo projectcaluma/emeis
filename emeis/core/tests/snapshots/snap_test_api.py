@@ -229,7 +229,7 @@ Officer player possible issue ahead suffer. Standard remember after away control
             {
                 "attributes": {
                     "address": None,
-                    "city": None,
+                    "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
                     "email": "katherine02@example.net",
@@ -261,7 +261,7 @@ Officer player possible issue ahead suffer. Standard remember after away control
             {
                 "attributes": {
                     "address": None,
-                    "city": None,
+                    "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
                     "email": "banderson@example.com",
@@ -293,7 +293,7 @@ Officer player possible issue ahead suffer. Standard remember after away control
             {
                 "attributes": {
                     "address": None,
-                    "city": None,
+                    "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
                     "email": "brownkatherine@example.com",
@@ -593,7 +593,7 @@ snapshots["test_api_list[UserViewSet] 1"] = {
             {
                 "attributes": {
                     "address": None,
-                    "city": None,
+                    "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
                     "email": "banderson@example.com",
@@ -617,7 +617,7 @@ snapshots["test_api_list[UserViewSet] 1"] = {
             {
                 "attributes": {
                     "address": None,
-                    "city": None,
+                    "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
                     "email": "qguerra@example.net",
@@ -641,7 +641,7 @@ snapshots["test_api_list[UserViewSet] 1"] = {
             {
                 "attributes": {
                     "address": None,
-                    "city": None,
+                    "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
                     "email": "brownkatherine@example.com",
@@ -665,7 +665,7 @@ snapshots["test_api_list[UserViewSet] 1"] = {
             {
                 "attributes": {
                     "address": None,
-                    "city": None,
+                    "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
                     "email": "katherine95@example.org",
@@ -777,7 +777,7 @@ Kid avoid player relationship to range whose. Draw free property consider.""",
             {
                 "attributes": {
                     "address": None,
-                    "city": None,
+                    "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
                     "email": "banderson@example.com",
@@ -955,7 +955,7 @@ snapshots["test_api_detail[UserViewSet] 1"] = {
         "data": {
             "attributes": {
                 "address": None,
-                "city": None,
+                "city": {"de": "", "en": "", "fr": ""},
                 "created-at": "2017-05-21T00:00:00Z",
                 "date-joined": "2017-05-21T00:00:00Z",
                 "email": "banderson@example.com",
@@ -1171,11 +1171,11 @@ Argue move appear catch toward help wind. Material minute ago get.""",
 snapshots["test_api_create[UserViewSet] 1"] = {
     "queries": [
         'SELECT (1) AS "a" FROM "emeis_core_user" WHERE "emeis_core_user"."username" = \'mark48\'  LIMIT 1',
-        'INSERT INTO "emeis_core_user" ("created_at", "modified_at", "created_by_user_id", "meta", "id", "username", "first_name", "last_name", "email", "phone", "language", "address", "city", "zip", "is_active", "date_joined") VALUES (\'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'{}\', \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid, \'mark48\', \'Amanda\', \'Gallagher\', \'banderson@example.com\', NULL, \'en\', NULL, NULL, NULL, true, \'2017-05-21T00:00:00+00:00\'::timestamptz)',
+        "INSERT INTO \"emeis_core_user\" (\"created_at\", \"modified_at\", \"created_by_user_id\", \"meta\", \"id\", \"username\", \"first_name\", \"last_name\", \"email\", \"phone\", \"language\", \"address\", \"city\", \"zip\", \"is_active\", \"date_joined\") VALUES ('2017-05-21T00:00:00+00:00'::timestamptz, '2017-05-21T00:00:00+00:00'::timestamptz, '9336ebf2-5087-d91c-818e-e6e9ec29f8c1'::uuid, '{}', 'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad'::uuid, 'mark48', 'Amanda', 'Gallagher', 'banderson@example.com', NULL, 'en', NULL, hstore(ARRAY['en','de','fr'], ARRAY['','','']), NULL, true, '2017-05-21T00:00:00+00:00'::timestamptz)",
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
     ],
     "request": {
-        "CONTENT_LENGTH": "474",
+        "CONTENT_LENGTH": "495",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/users",
         "QUERY_STRING": "",
@@ -1186,7 +1186,7 @@ snapshots["test_api_create[UserViewSet] 1"] = {
         "data": {
             "attributes": {
                 "address": None,
-                "city": None,
+                "city": {"de": "", "en": "", "fr": ""},
                 "created-at": "2017-05-21T00:00:00Z",
                 "date-joined": "2017-05-21T00:00:00Z",
                 "email": "banderson@example.com",
@@ -1387,11 +1387,11 @@ snapshots["test_api_patch[UserViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."meta", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         'SELECT (1) AS "a" FROM "emeis_core_user" WHERE ("emeis_core_user"."username" = \'mark48\' AND NOT ("emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid))  LIMIT 1',
-        'UPDATE "emeis_core_user" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "meta" = \'{}\', "username" = \'mark48\', "first_name" = \'Amanda\', "last_name" = \'Gallagher\', "email" = \'banderson@example.com\', "phone" = NULL, "language" = \'en\', "address" = NULL, "city" = NULL, "zip" = NULL, "is_active" = true, "date_joined" = \'2017-05-21T00:00:00+00:00\'::timestamptz WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
+        'UPDATE "emeis_core_user" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "meta" = \'{}\', "username" = \'mark48\', "first_name" = \'Amanda\', "last_name" = \'Gallagher\', "email" = \'banderson@example.com\', "phone" = NULL, "language" = \'en\', "address" = NULL, "city" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'\',\'\',\'\']), "zip" = NULL, "is_active" = true, "date_joined" = \'2017-05-21T00:00:00+00:00\'::timestamptz WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
     ],
     "request": {
-        "CONTENT_LENGTH": "474",
+        "CONTENT_LENGTH": "495",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/users/9dd4e461-268c-8034-f5c8-564e155c67a6",
         "QUERY_STRING": "",
@@ -1402,7 +1402,7 @@ snapshots["test_api_patch[UserViewSet] 1"] = {
         "data": {
             "attributes": {
                 "address": None,
-                "city": None,
+                "city": {"de": "", "en": "", "fr": ""},
                 "created-at": "2017-05-21T00:00:00Z",
                 "date-joined": "2017-05-21T00:00:00Z",
                 "email": "banderson@example.com",

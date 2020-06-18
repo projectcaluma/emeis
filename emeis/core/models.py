@@ -126,7 +126,7 @@ class User(UUIDModel):
     phone = models.CharField(_("phone"), max_length=100, blank=True, null=True)
     language = models.CharField(_("language"), max_length=2, default=get_language_code)
     address = models.CharField(_("address"), max_length=255, blank=True, null=True)
-    city = models.CharField(_("city"), max_length=255, blank=True, null=True)
+    city = LocalizedCharField(_("city"), max_length=255, blank=True, null=True)
     zip = models.CharField(_("zip"), max_length=10, blank=True, null=True)
     is_active = models.BooleanField(
         _("active"),
