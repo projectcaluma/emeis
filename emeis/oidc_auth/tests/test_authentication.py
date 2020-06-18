@@ -69,6 +69,7 @@ def test_authentication_new_user(
     db, rf, requests_mock, settings, create_user, email, expected_count,
 ):
     settings.OIDC_CREATE_USER = create_user
+    settings.OIDC_UPDATE_USER = create_user
     user_model = get_user_model()
     assert user_model.objects.filter(username="1").count() == 0
 
@@ -94,6 +95,7 @@ def test_authentication_new_user(
 def test_authentication_email_update(
     db, rf, requests_mock, settings, user, expected_email,
 ):
+    settings.OIDC_UPDATE_USER = True
     userinfo = {"sub": "1", "email": expected_email}
     requests_mock.get(settings.OIDC_OP_USER_ENDPOINT, text=json.dumps(userinfo))
 
