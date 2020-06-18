@@ -71,7 +71,9 @@ class EmeisAuthenticationBackend(OIDCAuthenticationBackend):
         users = self.filter_users_by_claims(claims)
 
         if len(users) == 1:
-            return self.update_user(users[0], claims)
+            if self.get_settings("OIDC_UPDATE_USER", False):
+                return self.update_user(users[0], claims)
+            return users[0]
         elif self.get_settings("OIDC_CREATE_USER", False):
             return self.create_user(claims)
         else:
