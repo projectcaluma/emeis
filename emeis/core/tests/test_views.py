@@ -149,6 +149,7 @@ def test_acl_user_filter(db, user, acl_factory, client):
     assert response.status_code == HTTP_200_OK
     result = response.json()
     assert len(result["data"]) == 1
+    assert result["data"][0]["id"] == str(acl.pk)
     assert result["data"][0]["relationships"]["user"]["data"]["id"] == str(acl.user.pk)
 
 
@@ -168,6 +169,24 @@ def test_acl_search_filter(db, acl_factory, client):
         == result["data"][1]["relationships"]["user"]["data"]["id"]
         == str(acl.user.pk)
     )
+
+
+def test_permission_role_filter(db, user, role_factory, permission_factory, client):
+    permission = permission_factory()
+    role = role_factory()
+    role.permissions.add(permission)
+
+    dummy_permission = permission_factory()
+    dummy_role = role_factory()
+    dummy_role.permissions.add(dummy_permission)
+
+    url = reverse("permission-list")
+
+    response = client.get(url, {"filter[roles]": role.pk})
+    assert response.status_code == HTTP_200_OK
+    result = response.json()
+    assert len(result["data"]) == 1
+    assert result["data"][0]["id"] == str(permission.pk)
 
 
 @pytest.mark.parametrize("allow_anon", [True, False])
