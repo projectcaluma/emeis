@@ -86,7 +86,7 @@ class RoleViewSet(BaseViewset):
 
 class PermissionViewSet(BaseViewset):
     serializer_class = serializers.PermissionSerializer
-    queryset = models.Permission.objects.all()
+    queryset = models.Permission.objects.prefetch_related("roles")
     filterset_fields = ("roles",)
     search_fields = (
         "slug",
