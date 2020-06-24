@@ -329,7 +329,8 @@ Officer player possible issue ahead suffer. Standard remember after away control
 
 snapshots["test_api_list[PermissionViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission"'
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission"',
+        'SELECT ("emeis_core_role_permissions"."permission_id") AS "_prefetch_related_val_permission_id", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" IN (\'mrs-shake-recent\', \'reason-son-current\', \'structure\') ORDER BY "emeis_core_role"."slug" ASC',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -354,7 +355,10 @@ snapshots["test_api_list[PermissionViewSet] 1"] = {
                     "slug": "mrs-shake-recent",
                 },
                 "id": "mrs-shake-recent",
-                "relationships": {"created-by-user": {"data": None}},
+                "relationships": {
+                    "created-by-user": {"data": None},
+                    "roles": {"data": [], "meta": {"count": 0}},
+                },
                 "type": "permissions",
             },
             {
@@ -371,7 +375,10 @@ snapshots["test_api_list[PermissionViewSet] 1"] = {
                     "slug": "reason-son-current",
                 },
                 "id": "reason-son-current",
-                "relationships": {"created-by-user": {"data": None}},
+                "relationships": {
+                    "created-by-user": {"data": None},
+                    "roles": {"data": [], "meta": {"count": 0}},
+                },
                 "type": "permissions",
             },
             {
@@ -388,7 +395,10 @@ snapshots["test_api_list[PermissionViewSet] 1"] = {
                     "slug": "structure",
                 },
                 "id": "structure",
-                "relationships": {"created-by-user": {"data": None}},
+                "relationships": {
+                    "created-by-user": {"data": None},
+                    "roles": {"data": [], "meta": {"count": 0}},
+                },
                 "type": "permissions",
             },
         ]
@@ -400,6 +410,7 @@ snapshots["test_api_list[RoleViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" ORDER BY "emeis_core_role"."slug" ASC',
         'SELECT ("emeis_core_role_permissions"."role_id") AS "_prefetch_related_val_role_id", "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" IN (\'mrs-shake-recent\', \'reason-son-current\', \'structure\')',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'rather-cost-admit\' ORDER BY "emeis_core_role"."slug" ASC',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -489,7 +500,13 @@ snapshots["test_api_list[RoleViewSet] 1"] = {
                     "slug": "rather-cost-admit",
                 },
                 "id": "rather-cost-admit",
-                "relationships": {"created-by-user": {"data": None}},
+                "relationships": {
+                    "created-by-user": {"data": None},
+                    "roles": {
+                        "data": [{"id": "mrs-shake-recent", "type": "roles"}],
+                        "meta": {"count": 1},
+                    },
+                },
                 "type": "permissions",
             }
         ],
@@ -813,7 +830,8 @@ Kid avoid player relationship to range whose. Draw free property consider.""",
 
 snapshots["test_api_detail[PermissionViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'mrs-shake-recent\''
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'mrs-shake-recent\'',
+        'SELECT ("emeis_core_role_permissions"."permission_id") AS "_prefetch_related_val_permission_id", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" IN (\'mrs-shake-recent\') ORDER BY "emeis_core_role"."slug" ASC',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -837,7 +855,10 @@ snapshots["test_api_detail[PermissionViewSet] 1"] = {
                 "slug": "mrs-shake-recent",
             },
             "id": "mrs-shake-recent",
-            "relationships": {"created-by-user": {"data": None}},
+            "relationships": {
+                "created-by-user": {"data": None},
+                "roles": {"data": [], "meta": {"count": 0}},
+            },
             "type": "permissions",
         }
     },
@@ -848,6 +869,7 @@ snapshots["test_api_detail[RoleViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'mrs-shake-recent\'',
         'SELECT ("emeis_core_role_permissions"."role_id") AS "_prefetch_related_val_role_id", "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" IN (\'mrs-shake-recent\')',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'rather-cost-admit\' ORDER BY "emeis_core_role"."slug" ASC',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -895,7 +917,13 @@ snapshots["test_api_detail[RoleViewSet] 1"] = {
                     "slug": "rather-cost-admit",
                 },
                 "id": "rather-cost-admit",
-                "relationships": {"created-by-user": {"data": None}},
+                "relationships": {
+                    "created-by-user": {"data": None},
+                    "roles": {
+                        "data": [{"id": "mrs-shake-recent", "type": "roles"}],
+                        "meta": {"count": 1},
+                    },
+                },
                 "type": "permissions",
             }
         ],
@@ -1035,9 +1063,11 @@ snapshots["test_api_create[PermissionViewSet] 1"] = {
     "queries": [
         'SELECT (1) AS "a" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'mrs-shake-recent\'  LIMIT 1',
         "INSERT INTO \"emeis_core_permission\" (\"created_at\", \"modified_at\", \"created_by_user_id\", \"meta\", \"slug\", \"name\", \"description\") VALUES ('2017-05-21T00:00:00+00:00'::timestamptz, '2017-05-21T00:00:00+00:00'::timestamptz, '9dd4e461-268c-8034-f5c8-564e155c67a6'::uuid, '{}', 'mrs-shake-recent', hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']))",
+        'SELECT "emeis_core_role"."slug" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'mrs-shake-recent\' ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'mrs-shake-recent\' ORDER BY "emeis_core_role"."slug" ASC',
     ],
     "request": {
-        "CONTENT_LENGTH": "398",
+        "CONTENT_LENGTH": "437",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/permissions",
         "QUERY_STRING": "",
@@ -1065,7 +1095,8 @@ snapshots["test_api_create[PermissionViewSet] 1"] = {
                         "id": "9dd4e461-268c-8034-f5c8-564e155c67a6",
                         "type": "users",
                     }
-                }
+                },
+                "roles": {"data": [], "meta": {"count": 0}},
             },
             "type": "permissions",
         }
@@ -1266,11 +1297,14 @@ snapshots["test_api_patch[ACLViewSet] 1"] = {
 snapshots["test_api_patch[PermissionViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'mrs-shake-recent\'',
+        'SELECT ("emeis_core_role_permissions"."permission_id") AS "_prefetch_related_val_permission_id", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" IN (\'mrs-shake-recent\') ORDER BY "emeis_core_role"."slug" ASC',
         'SELECT (1) AS "a" FROM "emeis_core_permission" WHERE ("emeis_core_permission"."slug" = \'mrs-shake-recent\' AND NOT ("emeis_core_permission"."slug" = \'mrs-shake-recent\'))  LIMIT 1',
         "UPDATE \"emeis_core_permission\" SET \"created_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"modified_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"created_by_user_id\" = NULL, \"meta\" = '{}', \"name\" = hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), \"description\" = hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']) WHERE \"emeis_core_permission\".\"slug\" = 'mrs-shake-recent'",
+        'SELECT "emeis_core_role"."slug" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'mrs-shake-recent\' ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'mrs-shake-recent\' ORDER BY "emeis_core_role"."slug" ASC',
     ],
     "request": {
-        "CONTENT_LENGTH": "398",
+        "CONTENT_LENGTH": "437",
         "CONTENT_TYPE": "application/vnd.api+json; charset=None",
         "PATH_INFO": "/api/v1/permissions/mrs-shake-recent",
         "QUERY_STRING": "",
@@ -1292,7 +1326,10 @@ snapshots["test_api_patch[PermissionViewSet] 1"] = {
                 "slug": "mrs-shake-recent",
             },
             "id": "mrs-shake-recent",
-            "relationships": {"created-by-user": {"data": None}},
+            "relationships": {
+                "created-by-user": {"data": None},
+                "roles": {"data": [], "meta": {"count": 0}},
+            },
             "type": "permissions",
         }
     },
@@ -1444,6 +1481,7 @@ snapshots["test_api_destroy[ACLViewSet] 1"] = {
 snapshots["test_api_destroy[PermissionViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'mrs-shake-recent\'',
+        'SELECT ("emeis_core_role_permissions"."permission_id") AS "_prefetch_related_val_permission_id", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" IN (\'mrs-shake-recent\') ORDER BY "emeis_core_role"."slug" ASC',
         'SELECT "emeis_core_role_permissions"."id", "emeis_core_role_permissions"."role_id", "emeis_core_role_permissions"."permission_id" FROM "emeis_core_role_permissions" WHERE "emeis_core_role_permissions"."permission_id" IN (\'mrs-shake-recent\')',
         'DELETE FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" IN (\'mrs-shake-recent\')',
     ],
