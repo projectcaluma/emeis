@@ -1,6 +1,6 @@
 -r requirements-base.txt
 black==19.10b0
-django_extensions==3.0.6
+django_extensions==3.0.7
 factory-boy==2.12.0
 flake8==3.8.3
 flake8-blind-except==0.1.1
