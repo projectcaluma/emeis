@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 from snapshottest import Snapshot
 
+
 snapshots = Snapshot()
 
 snapshots["test_api_list[ACLViewSet] 1"] = {
@@ -11,13 +12,13 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl"',
         'SELECT "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."meta", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" IN (\'0b0cfc07-fca8-1c95-6ab9-181d8576f4a8\'::uuid, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid)',
         'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."meta", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" WHERE "emeis_core_scope"."id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'aba369f7-d2b2-8a90-98a0-a26feb7dc965\'::uuid, \'dad3a37a-a9d5-0688-b515-7698acfd7aee\'::uuid)',
-        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" IN (\'industry-call\', \'nearly-food-skill\', \'political-young\') ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" IN (\'her-occur-bank\', \'kid-owner-car\', \'nation-guy-father\') ORDER BY "emeis_core_role"."slug" ASC',
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'industry-call\'',
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'kid-owner-car\'',
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid',
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'political-young\'',
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'her-occur-bank\'',
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'0b0cfc07-fca8-1c95-6ab9-181d8576f4a8\'::uuid',
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'nearly-food-skill\'',
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'nation-guy-father\'',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -37,7 +38,7 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
                 "id": "f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad",
                 "relationships": {
                     "created-by-user": {"data": None},
-                    "role": {"data": {"id": "industry-call", "type": "roles"}},
+                    "role": {"data": {"id": "kid-owner-car", "type": "roles"}},
                     "scope": {
                         "data": {
                             "id": "9336ebf2-5087-d91c-818e-e6e9ec29f8c1",
@@ -62,7 +63,7 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
                 "id": "04adb4e2-f055-c978-c9bb-101ee1bc5cd4",
                 "relationships": {
                     "created-by-user": {"data": None},
-                    "role": {"data": {"id": "political-young", "type": "roles"}},
+                    "role": {"data": {"id": "her-occur-bank", "type": "roles"}},
                     "scope": {
                         "data": {
                             "id": "dad3a37a-a9d5-0688-b515-7698acfd7aee",
@@ -87,7 +88,7 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
                 "id": "336311a0-1618-4326-ddbd-d61edd4eeb52",
                 "relationships": {
                     "created-by-user": {"data": None},
-                    "role": {"data": {"id": "nearly-food-skill", "type": "roles"}},
+                    "role": {"data": {"id": "nation-guy-father", "type": "roles"}},
                     "scope": {
                         "data": {
                             "id": "aba369f7-d2b2-8a90-98a0-a26feb7dc965",
@@ -110,15 +111,16 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": "Of themselves garden weight table same method work. Mean finally realize us movie. Truth deep public these.",
+                        "en": """Truth assume popular contain commercial with cup. Race high even might writer. Wide simply reach piece it.
+Free environment measure role later now over.""",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "David Benson", "fr": ""},
-                    "slug": "industry-call",
+                    "name": {"de": "", "en": "Shannon Jones", "fr": ""},
+                    "slug": "her-occur-bank",
                 },
-                "id": "industry-call",
+                "id": "her-occur-bank",
                 "relationships": {
                     "created-by-user": {"data": None},
                     "permissions": {"data": [], "meta": {"count": 0}},
@@ -130,15 +132,16 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": "Participant call strategy life such system artist. Raise gun second base hear human high word. Boy per news traditional article.",
+                        "en": """Open else look tree arm responsibility week. Environmental statement bag someone them style.
+Public these health team change. Tax final upon stay sing middle suggest.""",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Kimberly Martin", "fr": ""},
-                    "slug": "nearly-food-skill",
+                    "name": {"de": "", "en": "Gregory Scott", "fr": ""},
+                    "slug": "kid-owner-car",
                 },
-                "id": "nearly-food-skill",
+                "id": "kid-owner-car",
                 "relationships": {
                     "created-by-user": {"data": None},
                     "permissions": {"data": [], "meta": {"count": 0}},
@@ -150,17 +153,15 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": """Political heart outside capital direction capital Congress. Notice range laugh whether reduce.
-Check official care or conference break. Remain daughter single.
-For brother weight upon.""",
+                        "en": "Task believe oil unit itself close again affect. Citizen Mr my claim interview participant call strategy. Watch nor under window relate raise gun.",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Mary Cook", "fr": ""},
-                    "slug": "political-young",
+                    "name": {"de": "", "en": "Erin Ellis", "fr": ""},
+                    "slug": "nation-guy-father",
                 },
-                "id": "political-young",
+                "id": "nation-guy-father",
                 "relationships": {
                     "created-by-user": {"data": None},
                     "permissions": {"data": [], "meta": {"count": 0}},
@@ -192,12 +193,13 @@ Kid avoid player relationship to range whose. Draw free property consider.""",
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": "Worry take value eye sell them he. Less power relate fine. Where loss increase firm friend ability sing.",
+                        "en": """Conference force industry well. Line religious cold will cell series star.
+Material magazine hope. Value eye sell them he consumer same. Fine religious where loss increase firm friend.""",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Kevin Lane", "fr": ""},
+                    "name": {"de": "", "en": "Dawn Huynh", "fr": ""},
                 },
                 "id": "aba369f7-d2b2-8a90-98a0-a26feb7dc965",
                 "relationships": {
@@ -211,13 +213,12 @@ Kid avoid player relationship to range whose. Draw free property consider.""",
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": """Find white continue none president. Idea eye plan third program. Article including take idea.
-Officer player possible issue ahead suffer. Standard remember after away control expert without assume.""",
+                        "en": "Project find white continue none president. Idea eye plan third program. Article including take idea.",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Jeffrey Zhang", "fr": ""},
+                    "name": {"de": "", "en": "Karen Martinez", "fr": ""},
                 },
                 "id": "dad3a37a-a9d5-0688-b515-7698acfd7aee",
                 "relationships": {
@@ -232,15 +233,15 @@ Officer player possible issue ahead suffer. Standard remember after away control
                     "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
-                    "email": "katherine02@example.net",
-                    "first-name": "Mark",
+                    "email": "jennifer37@example.org",
+                    "first-name": "Andrew",
                     "is-active": True,
                     "language": "en",
-                    "last-name": "Barnes",
+                    "last-name": "Anderson",
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "phone": None,
-                    "username": "xnixon",
+                    "username": "kimberly01",
                     "zip": None,
                 },
                 "id": "0b0cfc07-fca8-1c95-6ab9-181d8576f4a8",
@@ -264,7 +265,7 @@ Officer player possible issue ahead suffer. Standard remember after away control
                     "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
-                    "email": "banderson@example.com",
+                    "email": "kennethgarcia@example.org",
                     "first-name": "Amanda",
                     "is-active": True,
                     "language": "en",
@@ -296,7 +297,7 @@ Officer player possible issue ahead suffer. Standard remember after away control
                     "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
-                    "email": "brownkatherine@example.com",
+                    "email": "dmiller@example.org",
                     "first-name": "Heather",
                     "is-active": True,
                     "language": "en",
@@ -304,7 +305,7 @@ Officer player possible issue ahead suffer. Standard remember after away control
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "phone": None,
-                    "username": "michaelkatherine",
+                    "username": "jackellis",
                     "zip": None,
                 },
                 "id": "fb0e22c7-9ac7-5679-e988-1e6ba183b354",
@@ -330,7 +331,7 @@ Officer player possible issue ahead suffer. Standard remember after away control
 snapshots["test_api_list[PermissionViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission"',
-        'SELECT ("emeis_core_role_permissions"."permission_id") AS "_prefetch_related_val_permission_id", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" IN (\'mrs-shake-recent\', \'reason-son-current\', \'structure\') ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT ("emeis_core_role_permissions"."permission_id") AS "_prefetch_related_val_permission_id", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" IN (\'front-her-occur\', \'note-act-source\', \'run-too-successful\') ORDER BY "emeis_core_role"."slug" ASC',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -346,15 +347,16 @@ snapshots["test_api_list[PermissionViewSet] 1"] = {
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": "Bit among again across environment long line. Team suggest traditional boy above.",
+                        "en": """Far bit among again. Station story first. Team suggest traditional boy above.
+Central meeting anyone remember. There today material minute ago get. Range whose scientist draw free property consider.""",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
-                    "slug": "mrs-shake-recent",
+                    "name": {"de": "", "en": "Erin Scott", "fr": ""},
+                    "slug": "note-act-source",
                 },
-                "id": "mrs-shake-recent",
+                "id": "note-act-source",
                 "relationships": {
                     "created-by-user": {"data": None},
                     "roles": {"data": [], "meta": {"count": 0}},
@@ -366,15 +368,16 @@ snapshots["test_api_list[PermissionViewSet] 1"] = {
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": "Size lead run then project find white. Those player foreign idea. Area media increase meeting article.",
+                        "en": """Arm serious live by itself. Project find white continue none president.
+Partner area media increase meeting article. Success provide beyond seek officer player.""",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Angela Brown", "fr": ""},
-                    "slug": "reason-son-current",
+                    "name": {"de": "", "en": "Timothy Malone", "fr": ""},
+                    "slug": "run-too-successful",
                 },
-                "id": "reason-son-current",
+                "id": "run-too-successful",
                 "relationships": {
                     "created-by-user": {"data": None},
                     "roles": {"data": [], "meta": {"count": 0}},
@@ -386,15 +389,16 @@ snapshots["test_api_list[PermissionViewSet] 1"] = {
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": "Wide happy air represent. Cup debate medical. Today morning standard effort summer.",
+                        "en": """Process truth assume popular contain commercial with. Detail race high even might.
+Thing summer prevent free environment measure role later. Capital direction capital Congress doctor land prevent.""",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Justin Hunt", "fr": ""},
-                    "slug": "structure",
+                    "name": {"de": "", "en": "Linda Taylor", "fr": ""},
+                    "slug": "front-her-occur",
                 },
-                "id": "structure",
+                "id": "front-her-occur",
                 "relationships": {
                     "created-by-user": {"data": None},
                     "roles": {"data": [], "meta": {"count": 0}},
@@ -409,8 +413,8 @@ snapshots["test_api_list[PermissionViewSet] 1"] = {
 snapshots["test_api_list[RoleViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" ORDER BY "emeis_core_role"."slug" ASC',
-        'SELECT ("emeis_core_role_permissions"."role_id") AS "_prefetch_related_val_role_id", "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" IN (\'mrs-shake-recent\', \'reason-son-current\', \'structure\')',
-        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'rather-cost-admit\' ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT ("emeis_core_role_permissions"."role_id") AS "_prefetch_related_val_role_id", "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" IN (\'front-her-occur\', \'note-act-source\', \'run-too-successful\')',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'kid-owner-car\' ORDER BY "emeis_core_role"."slug" ASC',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -426,38 +430,16 @@ snapshots["test_api_list[RoleViewSet] 1"] = {
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": "Bit among again across environment long line. Team suggest traditional boy above.",
+                        "en": """Process truth assume popular contain commercial with. Detail race high even might.
+Thing summer prevent free environment measure role later. Capital direction capital Congress doctor land prevent.""",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
-                    "slug": "mrs-shake-recent",
+                    "name": {"de": "", "en": "Linda Taylor", "fr": ""},
+                    "slug": "front-her-occur",
                 },
-                "id": "mrs-shake-recent",
-                "relationships": {
-                    "created-by-user": {"data": None},
-                    "permissions": {
-                        "data": [{"id": "rather-cost-admit", "type": "permissions"}],
-                        "meta": {"count": 1},
-                    },
-                },
-                "type": "roles",
-            },
-            {
-                "attributes": {
-                    "created-at": "2017-05-21T00:00:00Z",
-                    "description": {
-                        "de": "",
-                        "en": "Size lead run then project find white. Those player foreign idea. Area media increase meeting article.",
-                        "fr": "",
-                    },
-                    "meta": {},
-                    "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Angela Brown", "fr": ""},
-                    "slug": "reason-son-current",
-                },
-                "id": "reason-son-current",
+                "id": "front-her-occur",
                 "relationships": {
                     "created-by-user": {"data": None},
                     "permissions": {"data": [], "meta": {"count": 0}},
@@ -469,15 +451,40 @@ snapshots["test_api_list[RoleViewSet] 1"] = {
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": "Wide happy air represent. Cup debate medical. Today morning standard effort summer.",
+                        "en": """Far bit among again. Station story first. Team suggest traditional boy above.
+Central meeting anyone remember. There today material minute ago get. Range whose scientist draw free property consider.""",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Justin Hunt", "fr": ""},
-                    "slug": "structure",
+                    "name": {"de": "", "en": "Erin Scott", "fr": ""},
+                    "slug": "note-act-source",
                 },
-                "id": "structure",
+                "id": "note-act-source",
+                "relationships": {
+                    "created-by-user": {"data": None},
+                    "permissions": {
+                        "data": [{"id": "kid-owner-car", "type": "permissions"}],
+                        "meta": {"count": 1},
+                    },
+                },
+                "type": "roles",
+            },
+            {
+                "attributes": {
+                    "created-at": "2017-05-21T00:00:00Z",
+                    "description": {
+                        "de": "",
+                        "en": """Arm serious live by itself. Project find white continue none president.
+Partner area media increase meeting article. Success provide beyond seek officer player.""",
+                        "fr": "",
+                    },
+                    "meta": {},
+                    "modified-at": "2017-05-21T00:00:00Z",
+                    "name": {"de": "", "en": "Timothy Malone", "fr": ""},
+                    "slug": "run-too-successful",
+                },
+                "id": "run-too-successful",
                 "relationships": {
                     "created-by-user": {"data": None},
                     "permissions": {"data": [], "meta": {"count": 0}},
@@ -491,19 +498,20 @@ snapshots["test_api_list[RoleViewSet] 1"] = {
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": "Thing for east later still. Number inside put fire try cell.",
+                        "en": """Open else look tree arm responsibility week. Environmental statement bag someone them style.
+Public these health team change. Tax final upon stay sing middle suggest.""",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Courtney Brewer", "fr": ""},
-                    "slug": "rather-cost-admit",
+                    "name": {"de": "", "en": "Gregory Scott", "fr": ""},
+                    "slug": "kid-owner-car",
                 },
-                "id": "rather-cost-admit",
+                "id": "kid-owner-car",
                 "relationships": {
                     "created-by-user": {"data": None},
                     "roles": {
-                        "data": [{"id": "mrs-shake-recent", "type": "roles"}],
+                        "data": [{"id": "note-act-source", "type": "roles"}],
                         "meta": {"count": 1},
                     },
                 },
@@ -613,7 +621,7 @@ snapshots["test_api_list[UserViewSet] 1"] = {
                     "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
-                    "email": "banderson@example.com",
+                    "email": "kennethgarcia@example.org",
                     "first-name": "Amanda",
                     "is-active": True,
                     "language": "en",
@@ -637,7 +645,7 @@ snapshots["test_api_list[UserViewSet] 1"] = {
                     "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
-                    "email": "qguerra@example.net",
+                    "email": "mariah57@example.org",
                     "first-name": "Elizabeth",
                     "is-active": True,
                     "language": "en",
@@ -661,7 +669,7 @@ snapshots["test_api_list[UserViewSet] 1"] = {
                     "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
-                    "email": "brownkatherine@example.com",
+                    "email": "dmiller@example.org",
                     "first-name": "Heather",
                     "is-active": True,
                     "language": "en",
@@ -669,7 +677,7 @@ snapshots["test_api_list[UserViewSet] 1"] = {
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "phone": None,
-                    "username": "michaelkatherine",
+                    "username": "jackellis",
                     "zip": None,
                 },
                 "id": "f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad",
@@ -685,15 +693,15 @@ snapshots["test_api_list[UserViewSet] 1"] = {
                     "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
-                    "email": "katherine95@example.org",
-                    "first-name": "David",
+                    "email": "testrada@example.net",
+                    "first-name": "Katherine",
                     "is-active": True,
                     "language": "en",
-                    "last-name": "Graham",
+                    "last-name": "Alvarez",
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "phone": None,
-                    "username": "lramos",
+                    "username": "bryantjessica",
                     "zip": None,
                 },
                 "id": "ea416ed0-759d-46a8-de58-f63a59077499",
@@ -713,9 +721,9 @@ snapshots["test_api_detail[ACLViewSet] 1"] = {
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
         'SELECT "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."meta", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
         'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."meta", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" WHERE "emeis_core_scope"."id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid)',
-        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" IN (\'industry-call\') ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" IN (\'kid-owner-car\') ORDER BY "emeis_core_role"."slug" ASC',
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'industry-call\'',
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'kid-owner-car\'',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -734,7 +742,7 @@ snapshots["test_api_detail[ACLViewSet] 1"] = {
             "id": "f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad",
             "relationships": {
                 "created-by-user": {"data": None},
-                "role": {"data": {"id": "industry-call", "type": "roles"}},
+                "role": {"data": {"id": "kid-owner-car", "type": "roles"}},
                 "scope": {
                     "data": {
                         "id": "9336ebf2-5087-d91c-818e-e6e9ec29f8c1",
@@ -756,15 +764,16 @@ snapshots["test_api_detail[ACLViewSet] 1"] = {
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": "Of themselves garden weight table same method work. Mean finally realize us movie. Truth deep public these.",
+                        "en": """Open else look tree arm responsibility week. Environmental statement bag someone them style.
+Public these health team change. Tax final upon stay sing middle suggest.""",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "David Benson", "fr": ""},
-                    "slug": "industry-call",
+                    "name": {"de": "", "en": "Gregory Scott", "fr": ""},
+                    "slug": "kid-owner-car",
                 },
-                "id": "industry-call",
+                "id": "kid-owner-car",
                 "relationships": {
                     "created-by-user": {"data": None},
                     "permissions": {"data": [], "meta": {"count": 0}},
@@ -797,7 +806,7 @@ Kid avoid player relationship to range whose. Draw free property consider.""",
                     "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
-                    "email": "banderson@example.com",
+                    "email": "kennethgarcia@example.org",
                     "first-name": "Amanda",
                     "is-active": True,
                     "language": "en",
@@ -830,12 +839,12 @@ Kid avoid player relationship to range whose. Draw free property consider.""",
 
 snapshots["test_api_detail[PermissionViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'mrs-shake-recent\'',
-        'SELECT ("emeis_core_role_permissions"."permission_id") AS "_prefetch_related_val_permission_id", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" IN (\'mrs-shake-recent\') ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'note-act-source\'',
+        'SELECT ("emeis_core_role_permissions"."permission_id") AS "_prefetch_related_val_permission_id", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" IN (\'note-act-source\') ORDER BY "emeis_core_role"."slug" ASC',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
-        "PATH_INFO": "/api/v1/permissions/mrs-shake-recent",
+        "PATH_INFO": "/api/v1/permissions/note-act-source",
         "QUERY_STRING": "include=",
         "REQUEST_METHOD": "GET",
         "SERVER_PORT": "80",
@@ -846,15 +855,16 @@ snapshots["test_api_detail[PermissionViewSet] 1"] = {
                 "created-at": "2017-05-21T00:00:00Z",
                 "description": {
                     "de": "",
-                    "en": "Bit among again across environment long line. Team suggest traditional boy above.",
+                    "en": """Far bit among again. Station story first. Team suggest traditional boy above.
+Central meeting anyone remember. There today material minute ago get. Range whose scientist draw free property consider.""",
                     "fr": "",
                 },
                 "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
-                "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
-                "slug": "mrs-shake-recent",
+                "name": {"de": "", "en": "Erin Scott", "fr": ""},
+                "slug": "note-act-source",
             },
-            "id": "mrs-shake-recent",
+            "id": "note-act-source",
             "relationships": {
                 "created-by-user": {"data": None},
                 "roles": {"data": [], "meta": {"count": 0}},
@@ -867,13 +877,13 @@ snapshots["test_api_detail[PermissionViewSet] 1"] = {
 
 snapshots["test_api_detail[RoleViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'mrs-shake-recent\'',
-        'SELECT ("emeis_core_role_permissions"."role_id") AS "_prefetch_related_val_role_id", "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" IN (\'mrs-shake-recent\')',
-        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'rather-cost-admit\' ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'note-act-source\'',
+        'SELECT ("emeis_core_role_permissions"."role_id") AS "_prefetch_related_val_role_id", "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" IN (\'note-act-source\')',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'kid-owner-car\' ORDER BY "emeis_core_role"."slug" ASC',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
-        "PATH_INFO": "/api/v1/roles/mrs-shake-recent",
+        "PATH_INFO": "/api/v1/roles/note-act-source",
         "QUERY_STRING": "include=permissions",
         "REQUEST_METHOD": "GET",
         "SERVER_PORT": "80",
@@ -884,19 +894,20 @@ snapshots["test_api_detail[RoleViewSet] 1"] = {
                 "created-at": "2017-05-21T00:00:00Z",
                 "description": {
                     "de": "",
-                    "en": "Bit among again across environment long line. Team suggest traditional boy above.",
+                    "en": """Far bit among again. Station story first. Team suggest traditional boy above.
+Central meeting anyone remember. There today material minute ago get. Range whose scientist draw free property consider.""",
                     "fr": "",
                 },
                 "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
-                "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
-                "slug": "mrs-shake-recent",
+                "name": {"de": "", "en": "Erin Scott", "fr": ""},
+                "slug": "note-act-source",
             },
-            "id": "mrs-shake-recent",
+            "id": "note-act-source",
             "relationships": {
                 "created-by-user": {"data": None},
                 "permissions": {
-                    "data": [{"id": "rather-cost-admit", "type": "permissions"}],
+                    "data": [{"id": "kid-owner-car", "type": "permissions"}],
                     "meta": {"count": 1},
                 },
             },
@@ -908,19 +919,20 @@ snapshots["test_api_detail[RoleViewSet] 1"] = {
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": "Thing for east later still. Number inside put fire try cell.",
+                        "en": """Open else look tree arm responsibility week. Environmental statement bag someone them style.
+Public these health team change. Tax final upon stay sing middle suggest.""",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Courtney Brewer", "fr": ""},
-                    "slug": "rather-cost-admit",
+                    "name": {"de": "", "en": "Gregory Scott", "fr": ""},
+                    "slug": "kid-owner-car",
                 },
-                "id": "rather-cost-admit",
+                "id": "kid-owner-car",
                 "relationships": {
                     "created-by-user": {"data": None},
                     "roles": {
-                        "data": [{"id": "mrs-shake-recent", "type": "roles"}],
+                        "data": [{"id": "note-act-source", "type": "roles"}],
                         "meta": {"count": 1},
                     },
                 },
@@ -986,7 +998,7 @@ snapshots["test_api_detail[UserViewSet] 1"] = {
                 "city": {"de": "", "en": "", "fr": ""},
                 "created-at": "2017-05-21T00:00:00Z",
                 "date-joined": "2017-05-21T00:00:00Z",
-                "email": "banderson@example.com",
+                "email": "kennethgarcia@example.org",
                 "first-name": "Amanda",
                 "is-active": True,
                 "language": "en",
@@ -1012,13 +1024,13 @@ snapshots["test_api_create[ACLViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."meta", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."meta", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" WHERE "emeis_core_scope"."id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid',
-        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'industry-call\'',
-        'SELECT (1) AS "a" FROM "emeis_core_acl" WHERE ("emeis_core_acl"."role_id" = \'industry-call\' AND "emeis_core_acl"."scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid AND "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)  LIMIT 1',
-        'INSERT INTO "emeis_core_acl" ("created_at", "modified_at", "created_by_user_id", "meta", "id", "user_id", "scope_id", "role_id") VALUES (\'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'ea416ed0-759d-46a8-de58-f63a59077499\'::uuid, \'{}\', \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'industry-call\')',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'kid-owner-car\'',
+        'SELECT (1) AS "a" FROM "emeis_core_acl" WHERE ("emeis_core_acl"."role_id" = \'kid-owner-car\' AND "emeis_core_acl"."scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid AND "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)  LIMIT 1',
+        'INSERT INTO "emeis_core_acl" ("created_at", "modified_at", "created_by_user_id", "meta", "id", "user_id", "scope_id", "role_id") VALUES (\'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'ea416ed0-759d-46a8-de58-f63a59077499\'::uuid, \'{}\', \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'kid-owner-car\')',
     ],
     "request": {
         "CONTENT_LENGTH": "426",
-        "CONTENT_TYPE": "application/vnd.api+json; charset=None",
+        "CONTENT_TYPE": "application/vnd.api+json",
         "PATH_INFO": "/api/v1/acls",
         "QUERY_STRING": "",
         "REQUEST_METHOD": "POST",
@@ -1039,7 +1051,7 @@ snapshots["test_api_create[ACLViewSet] 1"] = {
                         "type": "users",
                     }
                 },
-                "role": {"data": {"id": "industry-call", "type": "roles"}},
+                "role": {"data": {"id": "kid-owner-car", "type": "roles"}},
                 "scope": {
                     "data": {
                         "id": "9336ebf2-5087-d91c-818e-e6e9ec29f8c1",
@@ -1061,14 +1073,15 @@ snapshots["test_api_create[ACLViewSet] 1"] = {
 
 snapshots["test_api_create[PermissionViewSet] 1"] = {
     "queries": [
-        'SELECT (1) AS "a" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'mrs-shake-recent\'  LIMIT 1',
-        "INSERT INTO \"emeis_core_permission\" (\"created_at\", \"modified_at\", \"created_by_user_id\", \"meta\", \"slug\", \"name\", \"description\") VALUES ('2017-05-21T00:00:00+00:00'::timestamptz, '2017-05-21T00:00:00+00:00'::timestamptz, '9dd4e461-268c-8034-f5c8-564e155c67a6'::uuid, '{}', 'mrs-shake-recent', hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']))",
-        'SELECT "emeis_core_role"."slug" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'mrs-shake-recent\' ORDER BY "emeis_core_role"."slug" ASC',
-        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'mrs-shake-recent\' ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT (1) AS "a" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'note-act-source\'  LIMIT 1',
+        """INSERT INTO "emeis_core_permission" ("created_at", "modified_at", "created_by_user_id", "meta", "slug", "name", "description") VALUES (\'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'{}\', \'note-act-source\', hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Erin Scott\',\'\',\'\']), hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Far bit among again. Station story first. Team suggest traditional boy above.
+Central meeting anyone remember. There today material minute ago get. Range whose scientist draw free property consider.','','']))""",
+        'SELECT "emeis_core_role"."slug" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'note-act-source\' ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'note-act-source\' ORDER BY "emeis_core_role"."slug" ASC',
     ],
     "request": {
-        "CONTENT_LENGTH": "437",
-        "CONTENT_TYPE": "application/vnd.api+json; charset=None",
+        "CONTENT_LENGTH": "548",
+        "CONTENT_TYPE": "application/vnd.api+json",
         "PATH_INFO": "/api/v1/permissions",
         "QUERY_STRING": "",
         "REQUEST_METHOD": "POST",
@@ -1080,15 +1093,16 @@ snapshots["test_api_create[PermissionViewSet] 1"] = {
                 "created-at": "2017-05-21T00:00:00Z",
                 "description": {
                     "de": "",
-                    "en": "Bit among again across environment long line. Team suggest traditional boy above.",
+                    "en": """Far bit among again. Station story first. Team suggest traditional boy above.
+Central meeting anyone remember. There today material minute ago get. Range whose scientist draw free property consider.""",
                     "fr": "",
                 },
                 "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
-                "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
-                "slug": "mrs-shake-recent",
+                "name": {"de": "", "en": "Erin Scott", "fr": ""},
+                "slug": "note-act-source",
             },
-            "id": "mrs-shake-recent",
+            "id": "note-act-source",
             "relationships": {
                 "created-by-user": {
                     "data": {
@@ -1106,17 +1120,18 @@ snapshots["test_api_create[PermissionViewSet] 1"] = {
 
 snapshots["test_api_create[RoleViewSet] 1"] = {
     "queries": [
-        'SELECT (1) AS "a" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'mrs-shake-recent\'  LIMIT 1',
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'rather-cost-admit\'',
-        "INSERT INTO \"emeis_core_role\" (\"created_at\", \"modified_at\", \"created_by_user_id\", \"meta\", \"slug\", \"name\", \"description\") VALUES ('2017-05-21T00:00:00+00:00'::timestamptz, '2017-05-21T00:00:00+00:00'::timestamptz, '9dd4e461-268c-8034-f5c8-564e155c67a6'::uuid, '{}', 'mrs-shake-recent', hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']))",
-        'SELECT "emeis_core_permission"."slug" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'mrs-shake-recent\'',
-        'SELECT "emeis_core_role_permissions"."permission_id" FROM "emeis_core_role_permissions" WHERE ("emeis_core_role_permissions"."permission_id" IN (\'rather-cost-admit\') AND "emeis_core_role_permissions"."role_id" = \'mrs-shake-recent\')',
-        'INSERT INTO "emeis_core_role_permissions" ("role_id", "permission_id") VALUES (\'mrs-shake-recent\', \'rather-cost-admit\') RETURNING "emeis_core_role_permissions"."id"',
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'mrs-shake-recent\'',
+        'SELECT (1) AS "a" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'note-act-source\'  LIMIT 1',
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'kid-owner-car\'',
+        """INSERT INTO "emeis_core_role" ("created_at", "modified_at", "created_by_user_id", "meta", "slug", "name", "description") VALUES (\'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'{}\', \'note-act-source\', hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Erin Scott\',\'\',\'\']), hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Far bit among again. Station story first. Team suggest traditional boy above.
+Central meeting anyone remember. There today material minute ago get. Range whose scientist draw free property consider.','','']))""",
+        'SELECT "emeis_core_permission"."slug" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'note-act-source\'',
+        'SELECT "emeis_core_role_permissions"."permission_id" FROM "emeis_core_role_permissions" WHERE ("emeis_core_role_permissions"."permission_id" IN (\'kid-owner-car\') AND "emeis_core_role_permissions"."role_id" = \'note-act-source\')',
+        'INSERT INTO "emeis_core_role_permissions" ("role_id", "permission_id") VALUES (\'note-act-source\', \'kid-owner-car\') RETURNING "emeis_core_role_permissions"."id"',
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'note-act-source\'',
     ],
     "request": {
-        "CONTENT_LENGTH": "484",
-        "CONTENT_TYPE": "application/vnd.api+json; charset=None",
+        "CONTENT_LENGTH": "591",
+        "CONTENT_TYPE": "application/vnd.api+json",
         "PATH_INFO": "/api/v1/roles",
         "QUERY_STRING": "",
         "REQUEST_METHOD": "POST",
@@ -1128,15 +1143,16 @@ snapshots["test_api_create[RoleViewSet] 1"] = {
                 "created-at": "2017-05-21T00:00:00Z",
                 "description": {
                     "de": "",
-                    "en": "Bit among again across environment long line. Team suggest traditional boy above.",
+                    "en": """Far bit among again. Station story first. Team suggest traditional boy above.
+Central meeting anyone remember. There today material minute ago get. Range whose scientist draw free property consider.""",
                     "fr": "",
                 },
                 "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
-                "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
-                "slug": "mrs-shake-recent",
+                "name": {"de": "", "en": "Erin Scott", "fr": ""},
+                "slug": "note-act-source",
             },
-            "id": "mrs-shake-recent",
+            "id": "note-act-source",
             "relationships": {
                 "created-by-user": {
                     "data": {
@@ -1145,7 +1161,7 @@ snapshots["test_api_create[RoleViewSet] 1"] = {
                     }
                 },
                 "permissions": {
-                    "data": [{"id": "rather-cost-admit", "type": "permissions"}],
+                    "data": [{"id": "kid-owner-car", "type": "permissions"}],
                     "meta": {"count": 1},
                 },
             },
@@ -1163,7 +1179,7 @@ Argue move appear catch toward help wind. Material minute ago get.','','']), NUL
     ],
     "request": {
         "CONTENT_LENGTH": "506",
-        "CONTENT_TYPE": "application/vnd.api+json; charset=None",
+        "CONTENT_TYPE": "application/vnd.api+json",
         "PATH_INFO": "/api/v1/scopes",
         "QUERY_STRING": "",
         "REQUEST_METHOD": "POST",
@@ -1202,12 +1218,12 @@ Argue move appear catch toward help wind. Material minute ago get.""",
 snapshots["test_api_create[UserViewSet] 1"] = {
     "queries": [
         'SELECT (1) AS "a" FROM "emeis_core_user" WHERE "emeis_core_user"."username" = \'mark48\'  LIMIT 1',
-        "INSERT INTO \"emeis_core_user\" (\"created_at\", \"modified_at\", \"created_by_user_id\", \"meta\", \"id\", \"username\", \"first_name\", \"last_name\", \"email\", \"phone\", \"language\", \"address\", \"city\", \"zip\", \"is_active\", \"date_joined\") VALUES ('2017-05-21T00:00:00+00:00'::timestamptz, '2017-05-21T00:00:00+00:00'::timestamptz, '9336ebf2-5087-d91c-818e-e6e9ec29f8c1'::uuid, '{}', 'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad'::uuid, 'mark48', 'Amanda', 'Gallagher', 'banderson@example.com', NULL, 'en', NULL, hstore(ARRAY['en','de','fr'], ARRAY['','','']), NULL, true, '2017-05-21T00:00:00+00:00'::timestamptz)",
+        "INSERT INTO \"emeis_core_user\" (\"created_at\", \"modified_at\", \"created_by_user_id\", \"meta\", \"id\", \"username\", \"first_name\", \"last_name\", \"email\", \"phone\", \"language\", \"address\", \"city\", \"zip\", \"is_active\", \"date_joined\") VALUES ('2017-05-21T00:00:00+00:00'::timestamptz, '2017-05-21T00:00:00+00:00'::timestamptz, '9336ebf2-5087-d91c-818e-e6e9ec29f8c1'::uuid, '{}', 'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad'::uuid, 'mark48', 'Amanda', 'Gallagher', 'kennethgarcia@example.org', NULL, 'en', NULL, hstore(ARRAY['en','de','fr'], ARRAY['','','']), NULL, true, '2017-05-21T00:00:00+00:00'::timestamptz)",
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
     ],
     "request": {
-        "CONTENT_LENGTH": "495",
-        "CONTENT_TYPE": "application/vnd.api+json; charset=None",
+        "CONTENT_LENGTH": "499",
+        "CONTENT_TYPE": "application/vnd.api+json",
         "PATH_INFO": "/api/v1/users",
         "QUERY_STRING": "",
         "REQUEST_METHOD": "POST",
@@ -1220,7 +1236,7 @@ snapshots["test_api_create[UserViewSet] 1"] = {
                 "city": {"de": "", "en": "", "fr": ""},
                 "created-at": "2017-05-21T00:00:00Z",
                 "date-joined": "2017-05-21T00:00:00Z",
-                "email": "banderson@example.com",
+                "email": "kennethgarcia@example.org",
                 "first-name": "Amanda",
                 "is-active": True,
                 "language": "en",
@@ -1252,13 +1268,13 @@ snapshots["test_api_patch[ACLViewSet] 1"] = {
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
         'SELECT "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."meta", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."meta", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" WHERE "emeis_core_scope"."id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid',
-        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'industry-call\'',
-        'SELECT (1) AS "a" FROM "emeis_core_acl" WHERE ("emeis_core_acl"."role_id" = \'industry-call\' AND "emeis_core_acl"."scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid AND "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid AND NOT ("emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid))  LIMIT 1',
-        'UPDATE "emeis_core_acl" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "meta" = \'{}\', "user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, "scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, "role_id" = \'industry-call\' WHERE "emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'kid-owner-car\'',
+        'SELECT (1) AS "a" FROM "emeis_core_acl" WHERE ("emeis_core_acl"."role_id" = \'kid-owner-car\' AND "emeis_core_acl"."scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid AND "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid AND NOT ("emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid))  LIMIT 1',
+        'UPDATE "emeis_core_acl" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "meta" = \'{}\', "user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, "scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, "role_id" = \'kid-owner-car\' WHERE "emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
     ],
     "request": {
         "CONTENT_LENGTH": "426",
-        "CONTENT_TYPE": "application/vnd.api+json; charset=None",
+        "CONTENT_TYPE": "application/vnd.api+json",
         "PATH_INFO": "/api/v1/acls/f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad",
         "QUERY_STRING": "",
         "REQUEST_METHOD": "PATCH",
@@ -1274,7 +1290,7 @@ snapshots["test_api_patch[ACLViewSet] 1"] = {
             "id": "f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad",
             "relationships": {
                 "created-by-user": {"data": None},
-                "role": {"data": {"id": "industry-call", "type": "roles"}},
+                "role": {"data": {"id": "kid-owner-car", "type": "roles"}},
                 "scope": {
                     "data": {
                         "id": "9336ebf2-5087-d91c-818e-e6e9ec29f8c1",
@@ -1296,17 +1312,18 @@ snapshots["test_api_patch[ACLViewSet] 1"] = {
 
 snapshots["test_api_patch[PermissionViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'mrs-shake-recent\'',
-        'SELECT ("emeis_core_role_permissions"."permission_id") AS "_prefetch_related_val_permission_id", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" IN (\'mrs-shake-recent\') ORDER BY "emeis_core_role"."slug" ASC',
-        'SELECT (1) AS "a" FROM "emeis_core_permission" WHERE ("emeis_core_permission"."slug" = \'mrs-shake-recent\' AND NOT ("emeis_core_permission"."slug" = \'mrs-shake-recent\'))  LIMIT 1',
-        "UPDATE \"emeis_core_permission\" SET \"created_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"modified_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"created_by_user_id\" = NULL, \"meta\" = '{}', \"name\" = hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), \"description\" = hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']) WHERE \"emeis_core_permission\".\"slug\" = 'mrs-shake-recent'",
-        'SELECT "emeis_core_role"."slug" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'mrs-shake-recent\' ORDER BY "emeis_core_role"."slug" ASC',
-        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'mrs-shake-recent\' ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'note-act-source\'',
+        'SELECT ("emeis_core_role_permissions"."permission_id") AS "_prefetch_related_val_permission_id", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" IN (\'note-act-source\') ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT (1) AS "a" FROM "emeis_core_permission" WHERE ("emeis_core_permission"."slug" = \'note-act-source\' AND NOT ("emeis_core_permission"."slug" = \'note-act-source\'))  LIMIT 1',
+        """UPDATE "emeis_core_permission" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "meta" = \'{}\', "name" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Erin Scott\',\'\',\'\']), "description" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Far bit among again. Station story first. Team suggest traditional boy above.
+Central meeting anyone remember. There today material minute ago get. Range whose scientist draw free property consider.\',\'\',\'\']) WHERE "emeis_core_permission"."slug" = \'note-act-source\'""",
+        'SELECT "emeis_core_role"."slug" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'note-act-source\' ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'note-act-source\' ORDER BY "emeis_core_role"."slug" ASC',
     ],
     "request": {
-        "CONTENT_LENGTH": "437",
-        "CONTENT_TYPE": "application/vnd.api+json; charset=None",
-        "PATH_INFO": "/api/v1/permissions/mrs-shake-recent",
+        "CONTENT_LENGTH": "548",
+        "CONTENT_TYPE": "application/vnd.api+json",
+        "PATH_INFO": "/api/v1/permissions/note-act-source",
         "QUERY_STRING": "",
         "REQUEST_METHOD": "PATCH",
         "SERVER_PORT": "80",
@@ -1317,15 +1334,16 @@ snapshots["test_api_patch[PermissionViewSet] 1"] = {
                 "created-at": "2017-05-21T00:00:00Z",
                 "description": {
                     "de": "",
-                    "en": "Bit among again across environment long line. Team suggest traditional boy above.",
+                    "en": """Far bit among again. Station story first. Team suggest traditional boy above.
+Central meeting anyone remember. There today material minute ago get. Range whose scientist draw free property consider.""",
                     "fr": "",
                 },
                 "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
-                "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
-                "slug": "mrs-shake-recent",
+                "name": {"de": "", "en": "Erin Scott", "fr": ""},
+                "slug": "note-act-source",
             },
-            "id": "mrs-shake-recent",
+            "id": "note-act-source",
             "relationships": {
                 "created-by-user": {"data": None},
                 "roles": {"data": [], "meta": {"count": 0}},
@@ -1338,17 +1356,18 @@ snapshots["test_api_patch[PermissionViewSet] 1"] = {
 
 snapshots["test_api_patch[RoleViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'mrs-shake-recent\'',
-        'SELECT (1) AS "a" FROM "emeis_core_role" WHERE ("emeis_core_role"."slug" = \'mrs-shake-recent\' AND NOT ("emeis_core_role"."slug" = \'mrs-shake-recent\'))  LIMIT 1',
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'rather-cost-admit\'',
-        "UPDATE \"emeis_core_role\" SET \"created_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"modified_at\" = '2017-05-21T00:00:00+00:00'::timestamptz, \"created_by_user_id\" = NULL, \"meta\" = '{}', \"name\" = hstore(ARRAY['en','de','fr'], ARRAY['Jordan Mccarthy','','']), \"description\" = hstore(ARRAY['en','de','fr'], ARRAY['Bit among again across environment long line. Team suggest traditional boy above.','','']) WHERE \"emeis_core_role\".\"slug\" = 'mrs-shake-recent'",
-        'SELECT "emeis_core_permission"."slug" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'mrs-shake-recent\'',
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'mrs-shake-recent\'',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'note-act-source\'',
+        'SELECT (1) AS "a" FROM "emeis_core_role" WHERE ("emeis_core_role"."slug" = \'note-act-source\' AND NOT ("emeis_core_role"."slug" = \'note-act-source\'))  LIMIT 1',
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'kid-owner-car\'',
+        """UPDATE "emeis_core_role" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "meta" = \'{}\', "name" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Erin Scott\',\'\',\'\']), "description" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Far bit among again. Station story first. Team suggest traditional boy above.
+Central meeting anyone remember. There today material minute ago get. Range whose scientist draw free property consider.\',\'\',\'\']) WHERE "emeis_core_role"."slug" = \'note-act-source\'""",
+        'SELECT "emeis_core_permission"."slug" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'note-act-source\'',
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'note-act-source\'',
     ],
     "request": {
-        "CONTENT_LENGTH": "484",
-        "CONTENT_TYPE": "application/vnd.api+json; charset=None",
-        "PATH_INFO": "/api/v1/roles/mrs-shake-recent",
+        "CONTENT_LENGTH": "591",
+        "CONTENT_TYPE": "application/vnd.api+json",
+        "PATH_INFO": "/api/v1/roles/note-act-source",
         "QUERY_STRING": "",
         "REQUEST_METHOD": "PATCH",
         "SERVER_PORT": "80",
@@ -1359,19 +1378,20 @@ snapshots["test_api_patch[RoleViewSet] 1"] = {
                 "created-at": "2017-05-21T00:00:00Z",
                 "description": {
                     "de": "",
-                    "en": "Bit among again across environment long line. Team suggest traditional boy above.",
+                    "en": """Far bit among again. Station story first. Team suggest traditional boy above.
+Central meeting anyone remember. There today material minute ago get. Range whose scientist draw free property consider.""",
                     "fr": "",
                 },
                 "meta": {},
                 "modified-at": "2017-05-21T00:00:00Z",
-                "name": {"de": "", "en": "Jordan Mccarthy", "fr": ""},
-                "slug": "mrs-shake-recent",
+                "name": {"de": "", "en": "Erin Scott", "fr": ""},
+                "slug": "note-act-source",
             },
-            "id": "mrs-shake-recent",
+            "id": "note-act-source",
             "relationships": {
                 "created-by-user": {"data": None},
                 "permissions": {
-                    "data": [{"id": "rather-cost-admit", "type": "permissions"}],
+                    "data": [{"id": "kid-owner-car", "type": "permissions"}],
                     "meta": {"count": 1},
                 },
             },
@@ -1389,7 +1409,7 @@ Argue move appear catch toward help wind. Material minute ago get.\',\'\',\'\'])
     ],
     "request": {
         "CONTENT_LENGTH": "506",
-        "CONTENT_TYPE": "application/vnd.api+json; charset=None",
+        "CONTENT_TYPE": "application/vnd.api+json",
         "PATH_INFO": "/api/v1/scopes/9dd4e461-268c-8034-f5c8-564e155c67a6",
         "QUERY_STRING": "",
         "REQUEST_METHOD": "PATCH",
@@ -1424,12 +1444,12 @@ snapshots["test_api_patch[UserViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."meta", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         'SELECT (1) AS "a" FROM "emeis_core_user" WHERE ("emeis_core_user"."username" = \'mark48\' AND NOT ("emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid))  LIMIT 1',
-        'UPDATE "emeis_core_user" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "meta" = \'{}\', "username" = \'mark48\', "first_name" = \'Amanda\', "last_name" = \'Gallagher\', "email" = \'banderson@example.com\', "phone" = NULL, "language" = \'en\', "address" = NULL, "city" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'\',\'\',\'\']), "zip" = NULL, "is_active" = true, "date_joined" = \'2017-05-21T00:00:00+00:00\'::timestamptz WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
+        'UPDATE "emeis_core_user" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "meta" = \'{}\', "username" = \'mark48\', "first_name" = \'Amanda\', "last_name" = \'Gallagher\', "email" = \'kennethgarcia@example.org\', "phone" = NULL, "language" = \'en\', "address" = NULL, "city" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'\',\'\',\'\']), "zip" = NULL, "is_active" = true, "date_joined" = \'2017-05-21T00:00:00+00:00\'::timestamptz WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
     ],
     "request": {
-        "CONTENT_LENGTH": "495",
-        "CONTENT_TYPE": "application/vnd.api+json; charset=None",
+        "CONTENT_LENGTH": "499",
+        "CONTENT_TYPE": "application/vnd.api+json",
         "PATH_INFO": "/api/v1/users/9dd4e461-268c-8034-f5c8-564e155c67a6",
         "QUERY_STRING": "",
         "REQUEST_METHOD": "PATCH",
@@ -1442,7 +1462,7 @@ snapshots["test_api_patch[UserViewSet] 1"] = {
                 "city": {"de": "", "en": "", "fr": ""},
                 "created-at": "2017-05-21T00:00:00Z",
                 "date-joined": "2017-05-21T00:00:00Z",
-                "email": "banderson@example.com",
+                "email": "kennethgarcia@example.org",
                 "first-name": "Amanda",
                 "is-active": True,
                 "language": "en",
@@ -1480,13 +1500,13 @@ snapshots["test_api_destroy[ACLViewSet] 1"] = {
 
 snapshots["test_api_destroy[PermissionViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'mrs-shake-recent\'',
-        'SELECT ("emeis_core_role_permissions"."permission_id") AS "_prefetch_related_val_permission_id", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" IN (\'mrs-shake-recent\') ORDER BY "emeis_core_role"."slug" ASC',
-        'SELECT "emeis_core_role_permissions"."id", "emeis_core_role_permissions"."role_id", "emeis_core_role_permissions"."permission_id" FROM "emeis_core_role_permissions" WHERE "emeis_core_role_permissions"."permission_id" IN (\'mrs-shake-recent\')',
-        'DELETE FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" IN (\'mrs-shake-recent\')',
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" = \'note-act-source\'',
+        'SELECT ("emeis_core_role_permissions"."permission_id") AS "_prefetch_related_val_permission_id", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" IN (\'note-act-source\') ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT "emeis_core_role_permissions"."id", "emeis_core_role_permissions"."role_id", "emeis_core_role_permissions"."permission_id" FROM "emeis_core_role_permissions" WHERE "emeis_core_role_permissions"."permission_id" IN (\'note-act-source\')',
+        'DELETE FROM "emeis_core_permission" WHERE "emeis_core_permission"."slug" IN (\'note-act-source\')',
     ],
     "request": {
-        "PATH_INFO": "/api/v1/permissions/mrs-shake-recent",
+        "PATH_INFO": "/api/v1/permissions/note-act-source",
         "QUERY_STRING": "",
         "REQUEST_METHOD": "DELETE",
         "SERVER_PORT": "80",
@@ -1496,14 +1516,14 @@ snapshots["test_api_destroy[PermissionViewSet] 1"] = {
 
 snapshots["test_api_destroy[RoleViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'mrs-shake-recent\'',
-        'SELECT "emeis_core_role_permissions"."id", "emeis_core_role_permissions"."role_id", "emeis_core_role_permissions"."permission_id" FROM "emeis_core_role_permissions" WHERE "emeis_core_role_permissions"."role_id" IN (\'mrs-shake-recent\')',
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."role_id" IN (\'mrs-shake-recent\')',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'note-act-source\'',
+        'SELECT "emeis_core_role_permissions"."id", "emeis_core_role_permissions"."role_id", "emeis_core_role_permissions"."permission_id" FROM "emeis_core_role_permissions" WHERE "emeis_core_role_permissions"."role_id" IN (\'note-act-source\')',
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."role_id" IN (\'note-act-source\')',
         'DELETE FROM "emeis_core_role_permissions" WHERE "emeis_core_role_permissions"."id" IN (1)',
-        'DELETE FROM "emeis_core_role" WHERE "emeis_core_role"."slug" IN (\'mrs-shake-recent\')',
+        'DELETE FROM "emeis_core_role" WHERE "emeis_core_role"."slug" IN (\'note-act-source\')',
     ],
     "request": {
-        "PATH_INFO": "/api/v1/roles/mrs-shake-recent",
+        "PATH_INFO": "/api/v1/roles/note-act-source",
         "QUERY_STRING": "",
         "REQUEST_METHOD": "DELETE",
         "SERVER_PORT": "80",
