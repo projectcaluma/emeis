@@ -27,4 +27,4 @@ pytest-mock==3.3.1
 pytest-randomly==3.4.1
 requests-mock==1.8.0
 snapshottest==0.5.1
-werkzeug==1.0.1
+werkzeug==2.0.1
