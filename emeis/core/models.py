@@ -2,8 +2,7 @@ import unicodedata
 import uuid
 
 from django.conf import settings
-from django.contrib.auth.base_user import BaseUserManager
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, UserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ImproperlyConfigured
@@ -140,6 +139,8 @@ class User(UUIDModel, AbstractBaseUser):
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["email"]
 
+    objects = UserManager()
+
     def __str__(self):
         return "%s object (%s - %s)" % (self.__class__.__name__, self.pk, self.username)
 
@@ -151,7 +152,7 @@ class User(UUIDModel, AbstractBaseUser):
         super().clean()
         setattr(self, self.USERNAME_FIELD, self.normalize_username(self.get_username()))
 
-        self.email = BaseUserManager.normalize_email(self.email)
+        self.email = UserManager.normalize_email(self.email)
 
     def get_full_name(self):
         """Return the first_name plus the last_name, with a space in between."""
