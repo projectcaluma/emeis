@@ -8,7 +8,7 @@ class DefaultConfig(AppConfig):
     label = "emeis_core"
 
     def ready(self):
-        from .models import VisibilityMixin, PermissionMixin
+        from .models import PermissionMixin, VisibilityMixin
 
         # to avoid recursive import error, load extension classes
         # only once the app is ready

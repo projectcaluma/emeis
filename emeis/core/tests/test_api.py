@@ -86,7 +86,10 @@ def viewset(request):
 
 @pytest.fixture
 def fixture(
-    deterministic_uuids, django_db_reset_sequences, request, viewset,
+    deterministic_uuids,
+    django_db_reset_sequences,
+    request,
+    viewset,
 ):
     """Get fixture and many to many relations of given viewset."""
     fixture = request.getfixturevalue(viewset.factory_name)
