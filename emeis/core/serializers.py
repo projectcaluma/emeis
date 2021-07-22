@@ -59,7 +59,24 @@ class UserSerializer(BaseSerializer):
 
     class Meta:
         model = User
-        fields = "__all__"
+        fields = [
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "phone",
+            "language",
+            "address",
+            "city",
+            "zip",
+            "acls",
+            "is_active",
+            "date_joined",
+            "modified_at",
+            "created_at",
+            "created_by_user",
+            "meta",
+        ]
 
 
 class ScopeSerializer(BaseSerializer):

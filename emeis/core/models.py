@@ -3,6 +3,7 @@ import uuid
 
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ImproperlyConfigured
@@ -105,7 +106,7 @@ class SlugModel(BaseModel):
         abstract = True
 
 
-class User(UUIDModel):
+class User(UUIDModel, AbstractBaseUser):
     username_validator = UnicodeUsernameValidator()
 
     username = models.CharField(

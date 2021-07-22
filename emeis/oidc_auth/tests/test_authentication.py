@@ -66,13 +66,7 @@ def test_authentication(
     [(False, "", 0), (True, "", 1), (True, "foo@example.com", 1)],
 )
 def test_authentication_new_user(
-    db,
-    rf,
-    requests_mock,
-    settings,
-    create_user,
-    email,
-    expected_count,
+    db, rf, requests_mock, settings, create_user, email, expected_count,
 ):
     settings.OIDC_CREATE_USER = create_user
     settings.OIDC_UPDATE_USER = create_user
@@ -99,12 +93,7 @@ def test_authentication_new_user(
     [("1", "foo@example.com", "bar@example.com")],
 )
 def test_authentication_email_update(
-    db,
-    rf,
-    requests_mock,
-    settings,
-    user,
-    expected_email,
+    db, rf, requests_mock, settings, user, expected_email,
 ):
     settings.OIDC_UPDATE_USER = True
     userinfo = {"sub": "1", "email": expected_email}
@@ -117,10 +106,7 @@ def test_authentication_email_update(
 
 
 def test_authentication_idp_502(
-    db,
-    rf,
-    requests_mock,
-    settings,
+    db, rf, requests_mock, settings,
 ):
     requests_mock.get(
         settings.OIDC_OP_USER_ENDPOINT, status_code=status.HTTP_502_BAD_GATEWAY
@@ -132,10 +118,7 @@ def test_authentication_idp_502(
 
 
 def test_authentication_idp_missing_claim(
-    db,
-    rf,
-    requests_mock,
-    settings,
+    db, rf, requests_mock, settings,
 ):
     settings.OIDC_USERNAME_CLAIM = "missing"
     userinfo = {"sub": "1"}
@@ -147,10 +130,7 @@ def test_authentication_idp_missing_claim(
 
 
 def test_authentication_no_client(
-    db,
-    rf,
-    requests_mock,
-    settings,
+    db, rf, requests_mock, settings,
 ):
     requests_mock.get(
         settings.OIDC_OP_USER_ENDPOINT, status_code=status.HTTP_401_UNAUTHORIZED

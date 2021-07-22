@@ -58,15 +58,12 @@ def test_visibility(
     if not detail:
         if use_admin_client:
             assert len(result["data"]) == 2
-            assert (
-                sorted(
-                    [
-                        result["data"][0]["attributes"]["username"],
-                        result["data"][1]["attributes"]["username"],
-                    ]
-                )
-                == ["admin", "foo"]
-            )
+            assert sorted(
+                [
+                    result["data"][0]["attributes"]["username"],
+                    result["data"][1]["attributes"]["username"],
+                ]
+            ) == ["admin", "foo"]
         else:
             assert len(result["data"]) == 0
     else:
