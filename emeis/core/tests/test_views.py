@@ -123,7 +123,8 @@ def test_scope_search_filter(db, scope_factory, client):
 
     url = reverse("scope-list")
 
-    response = client.get(url, {"filter[search]": "skop"})
+    response = client.get(url, {"filter[search]": "skop"}, HTTP_ACCEPT_LANGUAGE="de")
+
     assert response.status_code == HTTP_200_OK
     result = response.json()
     assert len(result["data"]) == 1
