@@ -1,3 +1,6 @@
+from datetime import datetime
+
+from django.utils import timezone
 from factory import Faker, SubFactory
 from factory.django import DjangoModelFactory
 
@@ -9,6 +12,10 @@ class UserFactory(DjangoModelFactory):
     last_name = Faker("last_name")
     username = Faker("user_name")
     email = Faker("safe_email")
+    last_login = datetime(
+        2021, 7, 20, 12, 00, 00, tzinfo=timezone.get_default_timezone()
+    )
+    password = Faker("password")
     language = "en"
 
     class Meta:

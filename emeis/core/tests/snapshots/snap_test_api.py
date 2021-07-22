@@ -12,13 +12,13 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl"',
         'SELECT "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."meta", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" IN (\'0b0cfc07-fca8-1c95-6ab9-181d8576f4a8\'::uuid, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid)',
         'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."meta", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" WHERE "emeis_core_scope"."id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'aba369f7-d2b2-8a90-98a0-a26feb7dc965\'::uuid, \'dad3a37a-a9d5-0688-b515-7698acfd7aee\'::uuid)',
-        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" IN (\'her-occur-bank\', \'kid-owner-car\', \'nation-guy-father\') ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" IN (\'form-level-clear\', \'fund-executive-most\', \'over-catch-plant\') ORDER BY "emeis_core_role"."slug" ASC',
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'kid-owner-car\'',
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'fund-executive-most\'',
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid',
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'her-occur-bank\'',
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'over-catch-plant\'',
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'0b0cfc07-fca8-1c95-6ab9-181d8576f4a8\'::uuid',
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'nation-guy-father\'',
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'form-level-clear\'',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -38,7 +38,7 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
                 "id": "f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad",
                 "relationships": {
                     "created-by-user": {"data": None},
-                    "role": {"data": {"id": "kid-owner-car", "type": "roles"}},
+                    "role": {"data": {"id": "fund-executive-most", "type": "roles"}},
                     "scope": {
                         "data": {
                             "id": "9336ebf2-5087-d91c-818e-e6e9ec29f8c1",
@@ -63,7 +63,7 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
                 "id": "04adb4e2-f055-c978-c9bb-101ee1bc5cd4",
                 "relationships": {
                     "created-by-user": {"data": None},
-                    "role": {"data": {"id": "her-occur-bank", "type": "roles"}},
+                    "role": {"data": {"id": "over-catch-plant", "type": "roles"}},
                     "scope": {
                         "data": {
                             "id": "dad3a37a-a9d5-0688-b515-7698acfd7aee",
@@ -88,7 +88,7 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
                 "id": "336311a0-1618-4326-ddbd-d61edd4eeb52",
                 "relationships": {
                     "created-by-user": {"data": None},
-                    "role": {"data": {"id": "nation-guy-father", "type": "roles"}},
+                    "role": {"data": {"id": "form-level-clear", "type": "roles"}},
                     "scope": {
                         "data": {
                             "id": "aba369f7-d2b2-8a90-98a0-a26feb7dc965",
@@ -111,16 +111,16 @@ snapshots["test_api_list[ACLViewSet] 1"] = {
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": """Truth assume popular contain commercial with cup. Race high even might writer. Wide simply reach piece it.
-Free environment measure role later now over.""",
+                        "en": """Tell save term few military feeling. Avoid generation nearly laugh. Human great region administration bar rate threat.
+Open should upon few play. Seven knowledge property already better.""",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Shannon Jones", "fr": ""},
-                    "slug": "her-occur-bank",
+                    "name": {"de": "", "en": "Wayne Key", "fr": ""},
+                    "slug": "form-level-clear",
                 },
-                "id": "her-occur-bank",
+                "id": "form-level-clear",
                 "relationships": {
                     "created-by-user": {"data": None},
                     "permissions": {"data": [], "meta": {"count": 0}},
@@ -132,16 +132,16 @@ Free environment measure role later now over.""",
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": """Open else look tree arm responsibility week. Environmental statement bag someone them style.
-Public these health team change. Tax final upon stay sing middle suggest.""",
+                        "en": """Truth deep public these. View mind stop serve tax final. Stay sing middle suggest.
+Even yourself responsibility sound air mission value. Character last guy. Plan contain task various few.""",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Gregory Scott", "fr": ""},
-                    "slug": "kid-owner-car",
+                    "name": {"de": "", "en": "Michael Arias", "fr": ""},
+                    "slug": "fund-executive-most",
                 },
-                "id": "kid-owner-car",
+                "id": "fund-executive-most",
                 "relationships": {
                     "created-by-user": {"data": None},
                     "permissions": {"data": [], "meta": {"count": 0}},
@@ -153,15 +153,16 @@ Public these health team change. Tax final upon stay sing middle suggest.""",
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": "Task believe oil unit itself close again affect. Citizen Mr my claim interview participant call strategy. Watch nor under window relate raise gun.",
+                        "en": """Range laugh whether reduce remain summer international. Official care or conference. Risk against capital factor.
+Trade for brother. Upon apply edge summer movie.""",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Erin Ellis", "fr": ""},
-                    "slug": "nation-guy-father",
+                    "name": {"de": "", "en": "Beverly Davis", "fr": ""},
+                    "slug": "over-catch-plant",
                 },
-                "id": "nation-guy-father",
+                "id": "over-catch-plant",
                 "relationships": {
                     "created-by-user": {"data": None},
                     "permissions": {"data": [], "meta": {"count": 0}},
@@ -173,13 +174,12 @@ Public these health team change. Tax final upon stay sing middle suggest.""",
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": """Line whatever team suggest traditional boy. Drop argue move. Anyone remember prove.
-Kid avoid player relationship to range whose. Draw free property consider.""",
+                        "en": "Ago get want middle. Whose scientist draw free property consider rather. Have director true force.",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Jessica Holloway", "fr": ""},
+                    "name": {"de": "", "en": "Stephanie Porter", "fr": ""},
                 },
                 "id": "9336ebf2-5087-d91c-818e-e6e9ec29f8c1",
                 "relationships": {
@@ -193,13 +193,12 @@ Kid avoid player relationship to range whose. Draw free property consider.""",
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": """Conference force industry well. Line religious cold will cell series star.
-Material magazine hope. Value eye sell them he consumer same. Fine religious where loss increase firm friend.""",
+                        "en": "Form leader fund task believe oil. Itself close again affect ok window church. Claim interview participant call strategy.",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Dawn Huynh", "fr": ""},
+                    "name": {"de": "", "en": "Dr. Jose Campbell", "fr": ""},
                 },
                 "id": "aba369f7-d2b2-8a90-98a0-a26feb7dc965",
                 "relationships": {
@@ -213,12 +212,12 @@ Material magazine hope. Value eye sell them he consumer same. Fine religious whe
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": "Project find white continue none president. Idea eye plan third program. Article including take idea.",
+                        "en": "Beyond seek officer player possible issue. Trial population standard. After away control expert without assume grow back.",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Karen Martinez", "fr": ""},
+                    "name": {"de": "", "en": "Mary White", "fr": ""},
                 },
                 "id": "dad3a37a-a9d5-0688-b515-7698acfd7aee",
                 "relationships": {
@@ -233,15 +232,15 @@ Material magazine hope. Value eye sell them he consumer same. Fine religious whe
                     "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
-                    "email": "jennifer37@example.org",
-                    "first-name": "Andrew",
+                    "email": "karen47@example.com",
+                    "first-name": "Jennifer",
                     "is-active": True,
                     "language": "en",
-                    "last-name": "Anderson",
+                    "last-name": "Johnson",
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "phone": None,
-                    "username": "kimberly01",
+                    "username": "kdowns",
                     "zip": None,
                 },
                 "id": "0b0cfc07-fca8-1c95-6ab9-181d8576f4a8",
@@ -645,11 +644,11 @@ snapshots["test_api_list[UserViewSet] 1"] = {
                     "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
-                    "email": "mariah57@example.org",
-                    "first-name": "Elizabeth",
+                    "email": "ealexander@example.org",
+                    "first-name": "Natalie",
                     "is-active": True,
                     "language": "en",
-                    "last-name": "Coleman",
+                    "last-name": "Hurst",
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "phone": None,
@@ -693,15 +692,15 @@ snapshots["test_api_list[UserViewSet] 1"] = {
                     "city": {"de": "", "en": "", "fr": ""},
                     "created-at": "2017-05-21T00:00:00Z",
                     "date-joined": "2017-05-21T00:00:00Z",
-                    "email": "testrada@example.net",
-                    "first-name": "Katherine",
+                    "email": "vgarcia@example.com",
+                    "first-name": "Nicole",
                     "is-active": True,
                     "language": "en",
-                    "last-name": "Alvarez",
+                    "last-name": "Ortega",
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
                     "phone": None,
-                    "username": "bryantjessica",
+                    "username": "brucegutierrez",
                     "zip": None,
                 },
                 "id": "ea416ed0-759d-46a8-de58-f63a59077499",
@@ -721,9 +720,9 @@ snapshots["test_api_detail[ACLViewSet] 1"] = {
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
         'SELECT "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."meta", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
         'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."meta", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" WHERE "emeis_core_scope"."id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid)',
-        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" IN (\'kid-owner-car\') ORDER BY "emeis_core_role"."slug" ASC',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" IN (\'fund-executive-most\') ORDER BY "emeis_core_role"."slug" ASC',
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
-        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'kid-owner-car\'',
+        'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."meta", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'fund-executive-most\'',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -742,7 +741,7 @@ snapshots["test_api_detail[ACLViewSet] 1"] = {
             "id": "f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad",
             "relationships": {
                 "created-by-user": {"data": None},
-                "role": {"data": {"id": "kid-owner-car", "type": "roles"}},
+                "role": {"data": {"id": "fund-executive-most", "type": "roles"}},
                 "scope": {
                     "data": {
                         "id": "9336ebf2-5087-d91c-818e-e6e9ec29f8c1",
@@ -764,16 +763,16 @@ snapshots["test_api_detail[ACLViewSet] 1"] = {
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": """Open else look tree arm responsibility week. Environmental statement bag someone them style.
-Public these health team change. Tax final upon stay sing middle suggest.""",
+                        "en": """Truth deep public these. View mind stop serve tax final. Stay sing middle suggest.
+Even yourself responsibility sound air mission value. Character last guy. Plan contain task various few.""",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Gregory Scott", "fr": ""},
-                    "slug": "kid-owner-car",
+                    "name": {"de": "", "en": "Michael Arias", "fr": ""},
+                    "slug": "fund-executive-most",
                 },
-                "id": "kid-owner-car",
+                "id": "fund-executive-most",
                 "relationships": {
                     "created-by-user": {"data": None},
                     "permissions": {"data": [], "meta": {"count": 0}},
@@ -785,13 +784,12 @@ Public these health team change. Tax final upon stay sing middle suggest.""",
                     "created-at": "2017-05-21T00:00:00Z",
                     "description": {
                         "de": "",
-                        "en": """Line whatever team suggest traditional boy. Drop argue move. Anyone remember prove.
-Kid avoid player relationship to range whose. Draw free property consider.""",
+                        "en": "Ago get want middle. Whose scientist draw free property consider rather. Have director true force.",
                         "fr": "",
                     },
                     "meta": {},
                     "modified-at": "2017-05-21T00:00:00Z",
-                    "name": {"de": "", "en": "Jessica Holloway", "fr": ""},
+                    "name": {"de": "", "en": "Stephanie Porter", "fr": ""},
                 },
                 "id": "9336ebf2-5087-d91c-818e-e6e9ec29f8c1",
                 "relationships": {
@@ -1024,12 +1022,12 @@ snapshots["test_api_create[ACLViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."meta", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."meta", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" WHERE "emeis_core_scope"."id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid',
-        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'kid-owner-car\'',
-        'SELECT (1) AS "a" FROM "emeis_core_acl" WHERE ("emeis_core_acl"."role_id" = \'kid-owner-car\' AND "emeis_core_acl"."scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid AND "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)  LIMIT 1',
-        'INSERT INTO "emeis_core_acl" ("created_at", "modified_at", "created_by_user_id", "meta", "id", "user_id", "scope_id", "role_id") VALUES (\'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'ea416ed0-759d-46a8-de58-f63a59077499\'::uuid, \'{}\', \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'kid-owner-car\')',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'fund-executive-most\'',
+        'SELECT (1) AS "a" FROM "emeis_core_acl" WHERE ("emeis_core_acl"."role_id" = \'fund-executive-most\' AND "emeis_core_acl"."scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid AND "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)  LIMIT 1',
+        'INSERT INTO "emeis_core_acl" ("created_at", "modified_at", "created_by_user_id", "meta", "id", "user_id", "scope_id", "role_id") VALUES (\'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'ea416ed0-759d-46a8-de58-f63a59077499\'::uuid, \'{}\', \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'fund-executive-most\')',
     ],
     "request": {
-        "CONTENT_LENGTH": "426",
+        "CONTENT_LENGTH": "432",
         "CONTENT_TYPE": "application/vnd.api+json",
         "PATH_INFO": "/api/v1/acls",
         "QUERY_STRING": "",
@@ -1051,7 +1049,7 @@ snapshots["test_api_create[ACLViewSet] 1"] = {
                         "type": "users",
                     }
                 },
-                "role": {"data": {"id": "kid-owner-car", "type": "roles"}},
+                "role": {"data": {"id": "fund-executive-most", "type": "roles"}},
                 "scope": {
                     "data": {
                         "id": "9336ebf2-5087-d91c-818e-e6e9ec29f8c1",
@@ -1268,12 +1266,12 @@ snapshots["test_api_patch[ACLViewSet] 1"] = {
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
         'SELECT "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."meta", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."meta", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" WHERE "emeis_core_scope"."id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid',
-        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'kid-owner-car\'',
-        'SELECT (1) AS "a" FROM "emeis_core_acl" WHERE ("emeis_core_acl"."role_id" = \'kid-owner-car\' AND "emeis_core_acl"."scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid AND "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid AND NOT ("emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid))  LIMIT 1',
-        'UPDATE "emeis_core_acl" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "meta" = \'{}\', "user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, "scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, "role_id" = \'kid-owner-car\' WHERE "emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
+        'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."meta", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'fund-executive-most\'',
+        'SELECT (1) AS "a" FROM "emeis_core_acl" WHERE ("emeis_core_acl"."role_id" = \'fund-executive-most\' AND "emeis_core_acl"."scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid AND "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid AND NOT ("emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid))  LIMIT 1',
+        'UPDATE "emeis_core_acl" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "meta" = \'{}\', "user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, "scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, "role_id" = \'fund-executive-most\' WHERE "emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
     ],
     "request": {
-        "CONTENT_LENGTH": "426",
+        "CONTENT_LENGTH": "432",
         "CONTENT_TYPE": "application/vnd.api+json",
         "PATH_INFO": "/api/v1/acls/f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad",
         "QUERY_STRING": "",
@@ -1290,7 +1288,7 @@ snapshots["test_api_patch[ACLViewSet] 1"] = {
             "id": "f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad",
             "relationships": {
                 "created-by-user": {"data": None},
-                "role": {"data": {"id": "kid-owner-car", "type": "roles"}},
+                "role": {"data": {"id": "fund-executive-most", "type": "roles"}},
                 "scope": {
                     "data": {
                         "id": "9336ebf2-5087-d91c-818e-e6e9ec29f8c1",
@@ -1444,7 +1442,7 @@ snapshots["test_api_patch[UserViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."meta", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         'SELECT (1) AS "a" FROM "emeis_core_user" WHERE ("emeis_core_user"."username" = \'mark48\' AND NOT ("emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid))  LIMIT 1',
-        'UPDATE "emeis_core_user" SET "password" = \'\', "last_login" = NULL, "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "meta" = \'{}\', "username" = \'mark48\', "first_name" = \'Amanda\', "last_name" = \'Gallagher\', "email" = \'kennethgarcia@example.org\', "phone" = NULL, "language" = \'en\', "address" = NULL, "city" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'\',\'\',\'\']), "zip" = NULL, "is_active" = true, "date_joined" = \'2017-05-21T00:00:00+00:00\'::timestamptz WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
+        'UPDATE "emeis_core_user" SET "password" = \'_nNx5pap05\', "last_login" = \'2021-07-20T12:00:00+00:00\'::timestamptz, "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "meta" = \'{}\', "username" = \'mark48\', "first_name" = \'Amanda\', "last_name" = \'Gallagher\', "email" = \'kennethgarcia@example.org\', "phone" = NULL, "language" = \'en\', "address" = NULL, "city" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'\',\'\',\'\']), "zip" = NULL, "is_active" = true, "date_joined" = \'2017-05-21T00:00:00+00:00\'::timestamptz WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."meta", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
     ],
     "request": {

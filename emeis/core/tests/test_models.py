@@ -1,6 +1,7 @@
 from unicodedata import normalize
 
 import pytest
+from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.base_user import BaseUserManager
 from hypothesis import given
 from hypothesis.strategies import emails, text
@@ -39,3 +40,17 @@ def test_scope_model(db):
     parent_scope.parent = scope
     with pytest.raises(InvalidMove):
         parent_scope.save()
+
+
+def test_can_authenticate(db, user):
+    # Test whether the authentication mechanism works correctly
+    user.set_password("test_password")
+    user.save()
+
+    backend = ModelBackend()
+
+    request = None
+    auth = backend.authenticate(
+        request, username=user.username, password="test_password"
+    )
+    assert auth == user
