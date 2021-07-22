@@ -1,10 +1,10 @@
 django==2.2.24
 django-cors-headers==3.7.0
 django-environ==0.4.5
-django-filter==2.3.0
-django-localized-fields==5.4.2
+django-filter==2.4.0
+django-localized-fields==6.4
 django_mptt==0.11.0
-django-postgres-extra==1.22
+django-postgres-extra==2.0.2
 djangorestframework==3.12.4
 djangorestframework-jsonapi==4.1.0
 mozilla-django-oidc==1.2.4
