@@ -3,8 +3,6 @@ services:
   db:
     environment:
       - POSTGRES_PASSWORD=emeis
-    ports:
-      - "5432:5432"
   emeis:
     build:
       context: .
