@@ -1,3 +1,9 @@
+## v0.2.2 (26 July 2021)
+
+### Fixes
+
+* add missing migration for new manager on user model
+
 ## v0.2.1 (22 July 2021)
 
 ### Fixes
