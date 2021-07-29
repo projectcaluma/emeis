@@ -102,6 +102,9 @@ This should always be `false` in production environments.
 After installing and configuring those, download [docker-compose.yml](https://raw.githubusercontent.com/projectcaluma/emeis/master/docker-compose.yml) and run the following command:
 
 ```bash
+# only needs to be run once
+echo UID=$UID > .env
+
 docker-compose up -d
 ```
 
