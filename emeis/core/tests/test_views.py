@@ -133,11 +133,27 @@ def test_scope_search_filter(db, scope_factory, client):
         "en": "scope2",
         "fr": "",
     }
+    assert result["data"][0]["attributes"]["level"] == 0
 
     response = client.get(url, {"filter[search]": "scope"})
     assert response.status_code == HTTP_200_OK
     result = response.json()
     assert len(result["data"]) == 3
+
+
+def test_cannot_write_level(db, client, settings, user):
+    data = {
+        "data": {
+            "type": "scopes",
+            "attributes": {"name": {"en": "test"}, "level": 400},
+        }
+    }
+
+    resp = client.post(reverse("scope-list"), data=data)
+
+    assert resp.status_code == HTTP_201_CREATED
+    result = resp.json()
+    assert result["data"]["attributes"]["level"] == 0
 
 
 def test_acl_user_filter(db, user, acl_factory, client):

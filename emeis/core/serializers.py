@@ -82,7 +82,7 @@ class UserSerializer(BaseSerializer):
 class ScopeSerializer(BaseSerializer):
     class Meta:
         model = Scope
-        fields = BaseSerializer.Meta.fields + ("name", "description", "parent")
+        fields = BaseSerializer.Meta.fields + ("name", "description", "parent", "level")
 
 
 class PermissionSerializer(BaseSerializer):
