@@ -74,10 +74,11 @@ def viewset(request):
     """
     viewset_instance = request.param()
     model = viewset_instance.queryset.model
-    factory_name = inflection.underscore(model._meta.object_name)
+    instance_name = inflection.underscore(model._meta.object_name)
     base_name = model._meta.object_name.lower()
 
-    viewset_instance.factory_name = factory_name
+    viewset_instance.factory_name = f"{instance_name}_factory"
+    viewset_instance.instance_name = instance_name
     viewset_instance.base_name = base_name
     viewset_instance.kwargs = {}
 
@@ -92,7 +93,7 @@ def fixture(
     viewset,
 ):
     """Get fixture and many to many relations of given viewset."""
-    fixture = request.getfixturevalue(viewset.factory_name)
+    fixture = request.getfixturevalue(viewset.factory_name)()
 
     included = get_included_serializers(viewset.serializer_class)
     for name in sorted(included.keys()):
@@ -100,8 +101,7 @@ def fixture(
         # pytest factory boy doesn't have native ManyToMany support
         # so needs to be handled manually
         if isinstance(relation_type, ManyToManyDescriptor):
-            print("{0}_{1}".format(viewset.factory_name, name))
-            request.getfixturevalue("{0}_{1}".format(viewset.factory_name, name))
+            request.getfixturevalue("{0}_{1}".format(viewset.instance_name, name))
 
     return fixture
 
@@ -151,8 +151,8 @@ def assert_response(response, query_context, snapshot, include_json=True):
 def test_api_list(fixture, request, admin_client, snapshot, viewset):
     url = reverse("{0}-list".format(viewset.base_name))
 
-    # create more data for proper num queries check
-    request.getfixturevalue(viewset.factory_name + "_factory").create_batch(2)
+    # create data for proper num queries check
+    request.getfixturevalue(viewset.factory_name).create_batch(2)
 
     included = getattr(viewset.serializer_class, "included_serializers", {})
     with CaptureQueriesContext(connection) as context:
@@ -173,7 +173,7 @@ def test_api_detail(fixture, admin_client, viewset, snapshot):
 
 
 @pytest.mark.freeze_time("2017-05-21")
-def test_api_create(fixture, admin_client, viewset, snapshot):
+def test_api_create(transactional_db, fixture, admin_client, viewset, snapshot):
     url = reverse("{0}-list".format(viewset.base_name))
 
     serializer = viewset.serializer_class(fixture)

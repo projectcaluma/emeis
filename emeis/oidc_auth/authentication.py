@@ -3,10 +3,57 @@ import functools
 import hashlib
 
 import requests
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.exceptions import SuspiciousOperation
 from django.utils.encoding import force_bytes
+from django.utils.module_loading import import_string
 from mozilla_django_oidc.auth import LOGGER, OIDCAuthenticationBackend
+
+
+class OIDCUser:
+    def __init__(self, username, claims):
+        self.username = username
+        self.claims = claims
+        self.OIDC_EMAIL_CLAIM = self.get_settings("OIDC_EMAIL_CLAIM")
+
+        users = self.filter_users_by_claims(claims)
+        if len(users) == 1:
+            self.user = users[0]
+            if self.get_settings("OIDC_UPDATE_USER", False):
+                self.update_user(users[0], claims)
+
+        elif self.get_settings("OIDC_CREATE_USER", False):
+            self.user = self.create_user(claims)
+        else:
+            raise RuntimeError(
+                f"No user with username {username} found, and "
+                "OIDC_CREATE_USER is False"
+            )
+
+    @property
+    def is_authenticated(self):
+        return True
+
+    def filter_users_by_claims(self, claims):
+        return get_user_model().objects.filter(username=self.username)
+
+    def create_user(self, claims):
+        """Return object for a newly created user account."""
+        email = claims.get(self.OIDC_EMAIL_CLAIM)
+        return get_user_model().objects.create(username=self.username, email=email)
+
+    def update_user(self, user, claims):
+        """Update existing user with new claims, if necessary save, and return user."""
+        email = claims.get(self.OIDC_EMAIL_CLAIM)
+        if email and user.email != email:
+            user.email = email
+            user.save()
+        return user
+
+    def get_settings(self, name, default=None):
+        return getattr(settings, name, default)
 
 
 class EmeisAuthenticationBackend(OIDCAuthenticationBackend):
@@ -14,7 +61,6 @@ class EmeisAuthenticationBackend(OIDCAuthenticationBackend):
         super().__init__(*args, **kwargs)
 
         self.OIDC_USERNAME_CLAIM = self.get_settings("OIDC_USERNAME_CLAIM")
-        self.OIDC_EMAIL_CLAIM = self.get_settings("OIDC_EMAIL_CLAIM")
         self.OIDC_OP_INTROSPECT_ENDPOINT = self.get_settings(
             "OIDC_OP_INTROSPECT_ENDPOINT"
         )
@@ -66,26 +112,16 @@ class EmeisAuthenticationBackend(OIDCAuthenticationBackend):
     def get_or_create_user(self, access_token, id_token, payload):
         """Verify claims and return user, otherwise raise an Exception."""
 
+        user_factory = import_string(settings.EMEIS_OIDC_USER_FACTORY)
+
         claims = self.get_userinfo_or_introspection(access_token)
         username = self.get_username(claims)
-        users = self.filter_users_by_claims(claims)
 
-        if len(users) == 1:
-            if self.get_settings("OIDC_UPDATE_USER", False):
-                return self.update_user(users[0], claims)
-            return users[0]
-        elif self.get_settings("OIDC_CREATE_USER", False):
-            return self.create_user(claims)
-        else:
-            LOGGER.debug(
-                "Login failed: No user with username %s found, and "
-                "OIDC_CREATE_USER is False",
-                username,
-            )
+        try:
+            return user_factory(username, claims)
+        except Exception as exc:  # noqa: B902
+            LOGGER.error(f'Login failed for "{username}: {str(exc)}"')
             return None
-
-    def filter_users_by_claims(self, claims):
-        return self.UserModel.objects.filter(username=self.get_username(claims))
 
     def cached_request(self, method, token, cache_prefix):
         token_hash = hashlib.sha256(force_bytes(token)).hexdigest()
@@ -103,17 +139,3 @@ class EmeisAuthenticationBackend(OIDCAuthenticationBackend):
             return claims[self.OIDC_USERNAME_CLAIM]
         except KeyError:
             raise SuspiciousOperation("Couldn't find username claim")
-
-    def create_user(self, claims):
-        """Return object for a newly created user account."""
-        email = claims.get(self.OIDC_EMAIL_CLAIM)
-        username = self.get_username(claims)
-        return self.UserModel.objects.create(username=username, email=email)
-
-    def update_user(self, user, claims):
-        """Update existing user with new claims, if necessary save, and return user."""
-        email = claims.get(self.OIDC_EMAIL_CLAIM)
-        if email and user.email != email:
-            user.email = email
-            user.save()
-        return user

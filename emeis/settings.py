@@ -134,6 +134,10 @@ OIDC_RP_CLIENT_ID = env.str("OIDC_RP_CLIENT_ID", default=None)
 OIDC_RP_CLIENT_SECRET = env.str("OIDC_RP_CLIENT_SECRET", default=None)
 OIDC_DRF_AUTH_BACKEND = "emeis.oidc_auth.authentication.EmeisAuthenticationBackend"
 
+EMEIS_OIDC_USER_FACTORY = env.str(
+    "EMEIS_OIDC_USER_FACTORY", default="emeis.oidc_auth.authentication.OIDCUser"
+)
+
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "rest_framework_json_api.exceptions.exception_handler",
     "DEFAULT_PAGINATION_CLASS": "rest_framework_json_api.pagination.JsonApiPageNumberPagination",

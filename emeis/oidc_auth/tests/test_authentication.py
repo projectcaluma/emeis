@@ -89,7 +89,7 @@ def test_authentication_new_user(
     except AuthenticationFailed:
         assert not create_user
     else:
-        assert user.email == email
+        assert user.user.email == email
 
     assert user_model.objects.count() == expected_count
 
@@ -113,7 +113,7 @@ def test_authentication_email_update(
     request = rf.get("/openid", HTTP_AUTHORIZATION="Bearer Token")
 
     user, _ = OIDCAuthentication().authenticate(request)
-    assert user.email == expected_email
+    assert user.user.email == expected_email
 
 
 def test_authentication_idp_502(
