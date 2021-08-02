@@ -55,6 +55,7 @@ class MyACLViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet):
 class UserViewSet(BaseViewset):
     serializer_class = serializers.UserSerializer
     queryset = models.User.objects.all()
+    filterset_fields = ("username", "first_name", "last_name", "email")
     search_fields = (
         "username",
         "first_name",
