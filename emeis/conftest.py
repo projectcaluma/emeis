@@ -3,6 +3,7 @@ import inspect
 
 import pytest
 from django.core.cache import cache
+from django.utils.module_loading import import_string
 from factory.base import FactoryMetaClass
 from pytest_factoryboy import register
 from rest_framework.test import APIClient
@@ -23,8 +24,12 @@ register_module(importlib.import_module(".core.factories", "emeis"))
 
 
 @pytest.fixture
-def admin_user(db, user_factory):
-    return user_factory(username="admin")
+def admin_user(db, user, settings):
+    user.username = "admin"
+    user.save()
+
+    user_factory = import_string(settings.EMEIS_OIDC_USER_FACTORY)
+    return user_factory("admin", {settings.OIDC_USERNAME_CLAIM: "admin"})
 
 
 @pytest.fixture

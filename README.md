@@ -66,6 +66,8 @@ Most of the settings below are documented in it's [respective documentation](htt
 * `OIDC_OP_INTROSPECT_ENDPOINT`: Url of introspection endpoint (optionally needed for Client Credentials Grant)
 * `OIDC_RP_CLIENT_ID`: ID of the client (optionally needed for Client Credentials Grant)
 * `OIDC_RP_CLIENT_SECRET`: Secret of the client (optionally needed for Client Credentials Grant)
+* `EMEIS_OIDC_USER_FACTORY`: Optional, factory function (or class) that defines
+   an OIDC user object. See also [docs/extending_emeis.md]
 
 ##### Cache
 
@@ -115,88 +117,8 @@ creates a user, scope, role and and ACL for administration based on the settings
 
 You can now access the api at [http://localhost:8000/api/v1/](http://localhost:8000/api/v1/).
 
-
-## Extension points
-
-For customization some clear extension points are defined. In case a customization is needed
-where no extension point is defined, best [open an issue](https://github.com/projectcaluma/caluma/issues/new) for discussion.
-
-### Visibility classes
-
-The visibility part defines what you can see at all. Anything you cannot see, you're implicitly also not allowed to modify. The visibility classes define what you see depending on your roles, permissions, etc. Building on top of this follow the permission classes (see below) that define what you can do with the data you see.
-
-Visibility classes are configured as `VISIBILITY_CLASSES`.
-
-Following pre-defined classes are available:
-* `emeis.core.visibilities.Any`: Allow any user without any filtering
-* `emeis.core.visibilities.Union`: Union result of a list of configured visibility classes. May only be used as base class.
-* `emeis.user.visibilities.OwnAndAdmin`: Only show data that belongs to the current user. For admin show all data
-
-In case this default classes do not cover your use case, it is also possible to create your custom
-visibility class defining per node how to filter.
-
-Example:
-```python
-from emeis.core.visibilities import BaseVisibility, filter_queryset_for
-from emeis.core.models import BaseModel, Scope
-
-
-class CustomVisibility(BaseVisibility):
-    @filter_queryset_for(BaseModel)
-    def filter_queryset_for_all(self, queryset, request):
-        return queryset.filter(created_by_user=request.user.username)
-    @filter_queryset_for(Scope)
-    def filter_queryset_for_scope(self, queryset, request):
-        return queryset.exclude(slug='protected-scope')
-```
-
-Arguments:
-* `queryset`: [Queryset](https://docs.djangoproject.com/en/2.1/ref/models/querysets/) of specific node type
-* `request`: holds the [http request](https://docs.djangoproject.com/en/1.11/ref/request-response/#httprequest-objects)
-
-Save your visibility module as `visibilities.py` and inject it as Docker volume to path `/app/caluma/extensions/visibilities.py`,
-
-Afterwards you can configure it in `VISIBILITY_CLASSES` as `emeis.extensions.visibilities.CustomVisibility`.
-
-### Permission classes
-
-Permission classes define who may perform which data mutation. Such can be configured as `PERMISSION_CLASSES`.
-
-Following pre-defined classes are available:
-* `emeis.core.permissions.AllowAny`: allow any users to perform any mutation.
-
-In case this default classes do not cover your use case, it is also possible to create your custom
-permission class defining per mutation and mutation object what is allowed.
-
-Example:
-```python
-from emeis.core.permissions import BasePermission, object_permission_for, permission_for
-from emeis.core.models import BaseModel, User
-
-class CustomPermission(BasePermission):
-    @permission_for(BaseModel)
-    def has_permission_default(self, request):
-        # change default permission to False when no more specific
-        # permission is defined.
-        return False
-
-    @permission_for(User)
-    def has_permission_for_user(self, request):
-        return True
-
-    @object_permission_for(User)
-    def has_object_permission_for_user(self, request, instance):
-        return request.user.username == 'admin'
-```
-
-Arguments:
-* `request`: holds the [http request](https://docs.djangoproject.com/en/1.11/ref/request-response/#httprequest-objects)
-* `instance`: instance being edited by specific request
-
-Save your permission module as `permissions.py` and inject it as Docker volume to path `/app/caluma/extensions/permissions.py`,
-
-Afterwards you can configure it in `PERMISSION_CLASSES` as `emeis.extensions.permissions.CustomPermission`.
-
+Read more about extending and configuring Emeis in
+[docs/extending_emeis.md].
 
 ## Contributing
 

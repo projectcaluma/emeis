@@ -19,6 +19,7 @@ from emeis.core.visibilities import (
     Union,
     filter_queryset_for,
 )
+from emeis.oidc_auth.authentication import OIDCUser
 
 
 @pytest.mark.parametrize("detail", [True, False])
@@ -245,10 +246,10 @@ def test_own_and_admin_visibility(
     request.user = AnonymousUser()
     expected_count = 0
     if requesting_user == "admin":
-        request.user = admin_user
+        request.user = OIDCUser(admin_user.username, {"sub": admin_user.username})
         expected_count = 2
     elif requesting_user == "user":
-        request.user = user
+        request.user = OIDCUser(user.username, {"sub": user.username})
         expected_count = 1
 
     scope1 = scope_factory()
@@ -263,7 +264,7 @@ def test_own_and_admin_visibility(
     role1.permissions.add(perm1)
 
     acl_factory(user=user, scope=scope1, role=role1)
-    acl_factory(user=admin_user, scope=scope2, role=role2)
+    acl_factory(user=admin_user.user, scope=scope2, role=role2)
 
     result = OwnAndAdmin().filter_queryset(User, User.objects, request)
     assert result.count() == expected_count
