@@ -96,6 +96,7 @@ VISIBILITY_CLASSES = env.list(
 PERMISSION_CLASSES = env.list(
     "PERMISSION_CLASSES", default=default(["emeis.core.permissions.AllowAny"])
 )
+EMEIS_VALIDATION_CLASSES = env.list("EMEIS_VALIDATION_CLASSES", default=[])
 
 
 # Internationalization

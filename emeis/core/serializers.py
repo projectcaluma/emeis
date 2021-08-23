@@ -2,9 +2,10 @@ from django.contrib.auth.models import AnonymousUser
 from rest_framework_json_api import serializers
 
 from .models import ACL, Permission, Role, Scope, User
+from .validation import ValidatorMixin
 
 
-class BaseSerializer(serializers.ModelSerializer):
+class BaseSerializer(ValidatorMixin, serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True)
     modified_at = serializers.DateTimeField(read_only=True)
     created_by_user = serializers.ResourceRelatedField(read_only=True)

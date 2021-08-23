@@ -86,6 +86,34 @@ Save your permission module as `permissions.py` and inject it as Docker volume t
 
 Afterwards you can configure it in `PERMISSION_CLASSES` as `emeis.extensions.permissions.CustomPermission`.
 
+### Data validation
+
+Some times, you need to validate the data sent to Emeis in a custom way. For
+example, your usernames need to be checked against an external source of truth,
+or you want to ensure usernames are lowercase.
+
+For this, you can use the `EMEIS_VALIDATION_CLASSES` setting. The settings is a
+list of strings that you can fill in via environment variable (comma separated
+list of class names).
+
+Here's an example validator class that ensures the username is lower case.
+
+```python
+from emeis.core.models import User
+from emeis.core.validation import EmeisBaseValidator, validator_for
+class LowercaseUsername(EmeisBaseValidator):
+    @validator_for(User)
+    def lowercase_username(self, data):
+        data["username"] = data["username"].lower()
+        return data
+```
+
+The `@validator_for` decorator telle Emeis that the method shall be called
+when a `User` is modified. The data passed in is already parsed and validated
+by Emeis, and it is expected that the method returns a `dict` with a compatible
+structure. You may also `raise ValidationError("some message")` if you don't
+want the validation to succeed.
+
 
 ### OIDC User factory
 

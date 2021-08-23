@@ -2,6 +2,7 @@ import importlib
 import inspect
 
 import pytest
+from django import apps
 from django.core.cache import cache
 from django.utils.module_loading import import_string
 from factory.base import FactoryMetaClass
@@ -21,6 +22,21 @@ def register_module(module):
 
 
 register_module(importlib.import_module(".core.factories", "emeis"))
+
+
+@pytest.fixture
+def reset_config_classes(settings):
+    """Reset the config classes to clean state after test.
+
+    The config classes (PERMISSION_CLASSES, VISIBILITY_CLASSES,
+    EMEIS_VALIDATION_CLASSES) need to be reset after running tests that
+    use them. Otherwise, unrelated tests may get affected.
+    """
+    # Let the tests run
+    yield
+    # Restore visibility, permissions etc to "clean" state
+    core_config = apps.apps.get_app_config("emeis_core")
+    core_config.ready()
 
 
 @pytest.fixture

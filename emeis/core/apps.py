@@ -9,6 +9,7 @@ class DefaultConfig(AppConfig):
 
     def ready(self):
         from .models import PermissionMixin, VisibilityMixin
+        from .serializers import ValidatorMixin
 
         # to avoid recursive import error, load extension classes
         # only once the app is ready
@@ -18,3 +19,6 @@ class DefaultConfig(AppConfig):
         VisibilityMixin.visibility_classes = [
             import_string(cls) for cls in settings.VISIBILITY_CLASSES
         ]
+        ValidatorMixin.register_validation_classes(
+            [import_string(cls) for cls in settings.EMEIS_VALIDATION_CLASSES]
+        )
