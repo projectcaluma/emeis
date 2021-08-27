@@ -2,67 +2,68 @@
 
 Emeis is used ideally as a stand-alone microservice. However, it also can be used
 as a Django app. When using Emeis as a standalone app, you can mount your own
-files into the container  and point to them via environment variables.
+configuration / customisation files into the container and point to them via environment variables.
 
+For customization some clear extension points are defined. In case a
+customization is needed where no extension point is defined, best
+[open an issue](https://github.com/projectcaluma/caluma/issues/new) for discussion.
 
 ## Extension points
 
-For customization some clear extension points are defined. In case a customization is needed
-where no extension point is defined, best [open an issue](https://github.com/projectcaluma/caluma/issues/new) for discussion.
+Emeis uses
+[Django-Generic-API-Permissions (DGAP)](https://github.com/adfinis-sygroup/django-generic-api-permissions)
+to provide customizable visibility, permission, and validation.
 
-### Visibility classes
+each of those aspects is configured the same way: A settings points to one or
+more classes that you need to write. Each of those classes contains one or more
+methods to configure the given aspect.
 
-The visibility part defines what you can see at all. Anything you cannot see, you're implicitly also not allowed to modify. The visibility classes define what you see depending on your roles, permissions, etc. Building on top of this follow the permission classes (see below) that define what you can do with the data you see.
+Here, we only explain this in a very short version. Read the DGAP documentation linked above
+for details.
 
-Visibility classes are configured as `VISIBILITY_CLASSES`.
 
-Following pre-defined classes are available:
-* `emeis.core.visibilities.Any`: Allow any user without any filtering
-* `emeis.core.visibilities.Union`: Union result of a list of configured visibility classes. May only be used as base class.
-* `emeis.user.visibilities.OwnAndAdmin`: Only show data that belongs to the current user. For admin show all data
+### Visibility
 
-In case this default classes do not cover your use case, it is also possible to create your custom
-visibility class defining per node how to filter.
+Visibility defines what a user can see.
 
-Example:
 ```python
-from emeis.core.visibilities import BaseVisibility, filter_queryset_for
-from emeis.core.models import BaseModel, Scope
+# Put the fully qualified name of the class into the settings
+# under `EMEIS_VISIBILITY_CLASSES`.
+# For example, if you mount this under /app/emeis/custom/visibilities.py,
+# set EMEIS_VISIBILITY_CLASSES to 'emeis.custom.visibilities.MyCustomVisibilities'
 
+from generic_permissions.visibilities import filter_queryset_for
+from emeis.core.models import BaseModel
+class MyCustomVisibilities:
+    """Custom visibilities:
 
-class CustomVisibility(BaseVisibility):
+    * Scopes are visible to everyone
+    * All other objects are only visible to their respective creators
+    """
     @filter_queryset_for(BaseModel)
-    def filter_queryset_for_all(self, queryset, request):
+    def show_only_mine(self, queryset, request):
         return queryset.filter(created_by_user=request.user.username)
+
     @filter_queryset_for(Scope)
-    def filter_queryset_for_scope(self, queryset, request):
-        return queryset.exclude(slug='protected-scope')
+    def filter_scopes(self, queryset, request):
+        return queryset
+
 ```
 
-Arguments:
-* `queryset`: [Queryset](https://docs.djangoproject.com/en/2.1/ref/models/querysets/) of specific node type
-* `request`: holds the [http request](https://docs.djangoproject.com/en/1.11/ref/request-response/#httprequest-objects)
 
-Save your visibility module as `visibilities.py` and inject it as Docker volume to path `/app/caluma/extensions/visibilities.py`,
+### Permissions
 
-Afterwards you can configure it in `VISIBILITY_CLASSES` as `emeis.extensions.visibilities.CustomVisibility`.
+Permissions define what a user can do with the data that the visibilities allow
+them to see.
 
-### Permission classes
-
-Permission classes define who may perform which data mutation. Such can be configured as `PERMISSION_CLASSES`.
-
-Following pre-defined classes are available:
-* `emeis.core.permissions.AllowAny`: allow any users to perform any mutation.
-
-In case this default classes do not cover your use case, it is also possible to create your custom
-permission class defining per mutation and mutation object what is allowed.
-
-Example:
 ```python
-from emeis.core.permissions import BasePermission, object_permission_for, permission_for
-from emeis.core.models import BaseModel, User
+# Put the fully qualified name of the class into the settings
+# under `EMEIS_PERMISSION_CLASSES`.
+# For example, if you mount this under /app/emeis/custom/permissions.py,
+# set EMEIS_PERMISSION_CLASSES to 'emeis.custom.permissions.CustomPermission'
+from generic_permissions.permissions import permission_for, object_permission_for
 
-class CustomPermission(BasePermission):
+class CustomPermission:
     @permission_for(BaseModel)
     def has_permission_default(self, request):
         # change default permission to False when no more specific
@@ -78,13 +79,29 @@ class CustomPermission(BasePermission):
         return request.user.username == 'admin'
 ```
 
-Arguments:
-* `request`: holds the [http request](https://docs.djangoproject.com/en/1.11/ref/request-response/#httprequest-objects)
-* `instance`: instance being edited by specific request
+### Validation
 
-Save your permission module as `permissions.py` and inject it as Docker volume to path `/app/caluma/extensions/permissions.py`,
+You can add your custom validation methods to Emeis in a similar manner.
 
-Afterwards you can configure it in `PERMISSION_CLASSES` as `emeis.extensions.permissions.CustomPermission`.
+For this, you can use the `EMEIS_VALIDATION_CLASSES` setting. The settings is a
+list of strings that you can fill in via environment variable (comma separated
+list of class names).
+
+Here's an example validator class that ensures the username is lower case.
+
+```python
+# Put the fully qualified name of the class into the settings
+# under `EMEIS_VALIDATION_CLASSES`.
+# For example, if you mount this under /app/emeis/custom/validation.py,
+# set EMEIS_VALIDATION_CLASSES to 'emeis.custom.validation.LowercaseUsername'
+from emeis.core.models import User
+from emeis.core.validation import EmeisBaseValidator, validator_for
+class LowercaseUsername:
+    @validator_for(User)
+    def lowercase_username(self, data, context):
+        data["username"] = data["username"].lower()
+        return data
+```
 
 
 ### OIDC User factory

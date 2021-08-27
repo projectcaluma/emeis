@@ -1,6 +1,7 @@
 import pytest
-from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse
+from generic_permissions.config import ObjectPermissionsConfig, PermissionsConfig
+from generic_permissions.permissions import object_permission_for, permission_for
 from rest_framework.status import (
     HTTP_200_OK,
     HTTP_201_CREATED,
@@ -8,21 +9,9 @@ from rest_framework.status import (
     HTTP_403_FORBIDDEN,
 )
 
-from emeis.core.models import PermissionMixin, Scope, User
-from emeis.core.permissions import (
-    AllowAny,
-    BasePermission,
-    object_permission_for,
-    permission_for,
-)
+from emeis.core.models import User
 
 TIMESTAMP = "2017-05-21T11:25:41.123840Z"
-
-
-@pytest.fixture
-def reset_permission_classes():
-    yield
-    PermissionMixin.permission_classes = [AllowAny]
 
 
 @pytest.mark.freeze_time(TIMESTAMP)
@@ -43,11 +32,11 @@ def test_permission(
     method,
     status,
     use_admin_client,
-    reset_permission_classes,
+    reset_config_classes,
 ):
     client = admin_client if use_admin_client else client
 
-    class CustomPermission(BasePermission):
+    class CustomPermission:
         @permission_for(User)
         def has_permission_for_user(self, request):
             if request.user.username == "admin" or request.data["phone"] == "232355":
@@ -61,7 +50,8 @@ def test_permission(
                 return True
             return False
 
-    PermissionMixin.permission_classes = [CustomPermission]
+    PermissionsConfig.register_handler_class(CustomPermission)
+    ObjectPermissionsConfig.register_handler_class(CustomPermission)
 
     user = user_factory(username="foo")
 
@@ -106,80 +96,3 @@ def test_permission(
     elif method == "patch":
         user.refresh_from_db()
         assert user.username == "mark48"
-
-
-def test_permission_no_permissions_configured(client, reset_permission_classes):
-    PermissionMixin.permission_classes = None
-
-    data = {
-        "data": {
-            "type": "users",
-            "attributes": {
-                "username": "mark48",
-                "email": "banderson@example.com",
-                "language": "en",
-            },
-        }
-    }
-
-    url = reverse("user-list")
-    with pytest.raises(ImproperlyConfigured):
-        client.post(url, data=data)
-
-
-def test_custom_permission_override_has_permission_with_duplicates():
-    class CustomPermission(BasePermission):
-        @permission_for(User)
-        def has_permission_for_custom_mutation(self, request):  # pragma: no cover
-            return False
-
-        @permission_for(User)
-        def has_permission_for_custom_mutation_2(self, request):  # pragma: no cover
-            return False
-
-    with pytest.raises(ImproperlyConfigured):
-        CustomPermission()
-
-
-def test_custom_permission_override_has_object_permission_with_duplicates():
-    class CustomPermission(BasePermission):
-        @object_permission_for(User)
-        def has_object_permission_for_custom_mutation(
-            self, request, instance
-        ):  # pragma: no cover
-            return False
-
-        @object_permission_for(User)
-        def has_object_permission_for_custom_mutation_2(
-            self, request, instance
-        ):  # pragma: no cover
-            return False
-
-    with pytest.raises(ImproperlyConfigured):
-        CustomPermission()
-
-
-def test_custom_permission_override_has_permission_with_multiple_models(request):
-    class CustomPermission(BasePermission):
-        @permission_for(User)
-        @permission_for(Scope)
-        def has_permission_for_both_mutations(self, request):  # pragma: no cover
-            return False
-
-    assert not CustomPermission().has_permission(User, request)
-    assert not CustomPermission().has_permission(Scope, request)
-
-
-def test_custom_permission_override_has_object_permission_with_multiple_mutations(
-    db, request, user, scope
-):
-    class CustomPermission(BasePermission):
-        @object_permission_for(User)
-        @object_permission_for(Scope)
-        def has_object_permission_for_both_mutations(
-            self, request, instance
-        ):  # pragma: no cover
-            return False
-
-    assert not CustomPermission().has_object_permission(User, request, user)
-    assert not CustomPermission().has_object_permission(Scope, request, scope)

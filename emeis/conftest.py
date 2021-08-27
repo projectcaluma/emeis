@@ -2,6 +2,7 @@ import importlib
 import inspect
 
 import pytest
+from django.apps import apps
 from django.core.cache import cache
 from django.utils.module_loading import import_string
 from factory.base import FactoryMetaClass
@@ -9,6 +10,19 @@ from pytest_factoryboy import register
 from rest_framework.test import APIClient
 
 from emeis.core.models import ACL, Role, Scope, User
+
+
+@pytest.fixture(autouse=True)
+def reset_config_classes(settings):
+    """Reset the config classes to clean state after test.
+
+    The config classes need to be reset after running tests that
+    use them. Otherwise, unrelated tests may get affected.
+    """
+
+    # First, set config to original value
+    core_config = apps.get_app_config("generic_permissions")
+    core_config.ready()
 
 
 def register_module(module):

@@ -1,5 +1,6 @@
 import os
 import re
+from warnings import warn
 
 import environ
 from django.conf import global_settings
@@ -36,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "mozilla_django_oidc",
     "mptt",
+    "generic_permissions.apps.GenericPermissionsConfig",
     "emeis.core.apps.DefaultConfig",
 ]
 
@@ -89,14 +91,53 @@ CACHES = {
 
 # Extensions
 
+EMEIS_VISIBILITY_CLASSES = env.list(
+    "EMEIS_VISIBILITY_CLASSES", default=(["generic_permissions.visibilities.Any"])
+)
+
+EMEIS_PERMISSION_CLASSES = env.list(
+    "EMEIS_PERMISSION_CLASSES", default=(["generic_permissions.permissions.AllowAny"])
+)
+
 VISIBILITY_CLASSES = env.list(
-    "VISIBILITY_CLASSES", default=default(["emeis.core.visibilities.Any"])
+    "VISIBILITY_CLASSES", default=default(["generic_permissions.visibilities.Any"])
 )
 
 PERMISSION_CLASSES = env.list(
-    "PERMISSION_CLASSES", default=default(["emeis.core.permissions.AllowAny"])
+    "PERMISSION_CLASSES", default=default(["generic_permissions.permissions.AllowAny"])
 )
 
+# Reading PERMISSION_CLASSES, VISIBILITY_CLASSES is still supported. If
+# it's set but EMEIS_* is not, copy over the config
+if PERMISSION_CLASSES and not EMEIS_PERMISSION_CLASSES:  # pragma: no cover
+    EMEIS_PERMISSION_CLASSES = PERMISSION_CLASSES
+if VISIBILITY_CLASSES and not EMEIS_VISIBILITY_CLASSES:  # pragma: no cover
+    EMEIS_VISIBILITY_CLASSES = VISIBILITY_CLASSES
+
+
+# VISIBILITY_CLASSES and PERMISSION_CLASSES are deprecated, but
+# still supported for now. If they're set, notify the user.
+def _deprecate_env(name, replacement):
+    if env.str(name, default=False):  # pragma: no cover
+        warn(
+            DeprecationWarning(
+                f"The {name} setting is deprecated and will be removed "
+                f"in a future version of Emeis. Use {replacement}"
+            )
+        )
+
+
+_deprecate_env("PERMISSION_CLASSES", "EMEIS_PERMISSION_CLASSES")
+_deprecate_env("VISIBILITY_CLASSES", "EMEIS_VISIBILITY_CLASSES")
+
+
+EMEIS_VALIDATION_CLASSES = env.list("EMEIS_VALIDATION_CLASSES", default=[])
+
+# We use DGAP as a permission/visibility/validation handler. Copy
+# the configuration over so DGAP knows
+GENERIC_PERMISSIONS_VISIBILITY_CLASSES = EMEIS_VISIBILITY_CLASSES
+GENERIC_PERMISSIONS_PERMISSION_CLASSES = EMEIS_PERMISSION_CLASSES
+GENERIC_PERMISSIONS_VALIDATION_CLASSES = EMEIS_VALIDATION_CLASSES
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

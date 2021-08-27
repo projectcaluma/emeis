@@ -132,11 +132,7 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={"verbose_name": "user", "verbose_name_plural": "users"},
-            bases=(
-                emeis.core.models.VisibilityMixin,
-                emeis.core.models.PermissionMixin,
-                models.Model,
-            ),
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name="Permission",
@@ -178,11 +174,7 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={"abstract": False},
-            bases=(
-                emeis.core.models.VisibilityMixin,
-                emeis.core.models.PermissionMixin,
-                models.Model,
-            ),
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name="Scope",
@@ -243,11 +235,7 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={"abstract": False},
-            bases=(
-                emeis.core.models.VisibilityMixin,
-                emeis.core.models.PermissionMixin,
-                models.Model,
-            ),
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name="Role",
@@ -295,11 +283,7 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={"ordering": ["slug"]},
-            bases=(
-                emeis.core.models.VisibilityMixin,
-                emeis.core.models.PermissionMixin,
-                models.Model,
-            ),
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name="ACL",
@@ -355,10 +339,6 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={"unique_together": {("user", "scope", "role")}},
-            bases=(
-                emeis.core.models.VisibilityMixin,
-                emeis.core.models.PermissionMixin,
-                models.Model,
-            ),
+            bases=(models.Model,),
         ),
     ]

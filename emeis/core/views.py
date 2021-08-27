@@ -1,27 +1,17 @@
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
+from generic_permissions.permissions import PermissionViewMixin
+from generic_permissions.visibilities import VisibilityViewMixin
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.status import HTTP_204_NO_CONTENT
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
 
 from . import models, serializers
 
 
-class BaseViewset(views.ModelViewSet):
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset.model.visibility_queryset_filter(queryset, self.request)
-
-    def destroy(self, request, *args, **kwargs):
-        self.queryset.model.check_permissions(request)
-        instance = self.get_object()
-        instance.check_object_permissions(request)
-        # we do not call `super()` in order to not fetch the object twice.
-        self.perform_destroy(instance)
-        return Response(status=HTTP_204_NO_CONTENT)
+class BaseViewset(VisibilityViewMixin, PermissionViewMixin, views.ModelViewSet):
+    pass
 
 
 class MeViewSet(RetrieveModelMixin, GenericViewSet):

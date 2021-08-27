@@ -1,10 +1,11 @@
 from django.contrib.auth.models import AnonymousUser
+from generic_permissions.validation import ValidatorMixin
 from rest_framework_json_api import serializers
 
 from .models import ACL, Permission, Role, Scope, User
 
 
-class BaseSerializer(serializers.ModelSerializer):
+class BaseSerializer(ValidatorMixin, serializers.ModelSerializer):
     created_at = serializers.DateTimeField(read_only=True)
     modified_at = serializers.DateTimeField(read_only=True)
     created_by_user = serializers.ResourceRelatedField(read_only=True)
@@ -15,14 +16,6 @@ class BaseSerializer(serializers.ModelSerializer):
             validated_data["created_by_user"] = user.user
 
         return super().create(validated_data)
-
-    def validate(self, *args, **kwargs):
-        validated_data = super().validate(*args, **kwargs)
-        self.Meta.model.check_permissions(self.context["request"])
-        if self.instance is not None:
-            self.instance.check_object_permissions(self.context["request"])
-
-        return validated_data
 
     class Meta:
         fields = ("created_at", "modified_at", "created_by_user", "meta")
