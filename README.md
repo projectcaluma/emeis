@@ -67,7 +67,7 @@ Most of the settings below are documented in it's [respective documentation](htt
 * `OIDC_RP_CLIENT_ID`: ID of the client (optionally needed for Client Credentials Grant)
 * `OIDC_RP_CLIENT_SECRET`: Secret of the client (optionally needed for Client Credentials Grant)
 * `EMEIS_OIDC_USER_FACTORY`: Optional, factory function (or class) that defines
-   an OIDC user object. See also [docs/extending_emeis.md]
+   an OIDC user object. See also here: [Extending Emeis](docs/extending_emeis.md)
 
 ##### Cache
 
@@ -117,8 +117,7 @@ creates a user, scope, role and and ACL for administration based on the settings
 
 You can now access the api at [http://localhost:8000/api/v1/](http://localhost:8000/api/v1/).
 
-Read more about extending and configuring Emeis in
-[docs/extending_emeis.md].
+Read more about extending and configuring Emeis here: [Extending Emeis](docs/extending_emeis.md).
 
 ## Contributing
 
