@@ -54,3 +54,14 @@ def test_can_authenticate(db, user):
         request, username=user.username, password="test_password"
     )
     assert auth == user
+
+
+def test_scope_hierarchical_name(scope_factory):
+    root = scope_factory()
+    child = scope_factory(parent=root)
+    grandchild = scope_factory(parent=child)
+
+    assert (
+        grandchild.full_name(sep=">")
+        == f"{root.name} > {child.name} > {grandchild.name}"
+    )
