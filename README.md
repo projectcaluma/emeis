@@ -41,10 +41,6 @@ A list of configuration options which you might need to configure to get emeis s
 * `LANGUAGE_CODE`: Language code of the default language (default: en)
 * `LANGUAGES`: A list of supported languages (default: \[en\])
 
-##### Bootstrapping
-* `ADMIN_USERNAME`: Username of the admin user (will be created on first run - default: admin)
-* `ADMIN_ROLE_SLUG`: Slug of the admin role (will be created on first run - default: admin)
-* `ADMIN_SCOPE_NAME`: Name of the admin scope (will be created on first run - default: admin)
 
 #### Additional options
 

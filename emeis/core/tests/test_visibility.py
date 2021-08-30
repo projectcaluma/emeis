@@ -16,6 +16,7 @@ def test_own_and_admin_visibility(
     admin_user,
     settings,
     client,
+    user,
     requesting_user,
 ):
 
@@ -24,33 +25,30 @@ def test_own_and_admin_visibility(
     ]
     apps.get_app_config("generic_permissions").ready()
 
-    user = user_factory()
+    admin_role = role_factory(slug="admin")
+
+    other_user = user_factory()
+
+    scope1 = scope_factory()
+    role1 = role_factory()
+    perm1 = permission_factory()
+    permission_factory()
+    role1.permissions.add(perm1)
+    acl_factory(user=user, scope=scope1, role=role1)
 
     expected_count = 0
     if requesting_user == "admin":
         client.force_authenticate(
             OIDCUser(username=admin_user.username, claims={"sub": admin_user.username})
         )
+        user.acls.create(role=admin_role, scope=scope_factory())
         expected_count = 2
     elif requesting_user == "user":
         client.force_authenticate(
-            OIDCUser(username=user.username, claims={"sub": user.username})
+            OIDCUser(username=other_user.username, claims={"sub": other_user.username})
         )
+        acl_factory(user=other_user, role=role1)
         expected_count = 1
-
-    scope1 = scope_factory()
-    scope2 = scope_factory()
-
-    role1 = role_factory()
-    role2 = role_factory()
-
-    perm1 = permission_factory()
-    permission_factory()
-
-    role1.permissions.add(perm1)
-
-    acl_factory(user=user, scope=scope1, role=role1)
-    acl_factory(user=admin_user.user, scope=scope2, role=role2)
 
     resp = client.get(reverse("user-list"))
     assert len(resp.json()["data"]) == expected_count
