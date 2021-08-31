@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from generic_permissions.validation import ValidatorMixin
 from rest_framework_json_api import serializers
@@ -73,9 +74,23 @@ class UserSerializer(BaseSerializer):
 
 
 class ScopeSerializer(BaseSerializer):
+    full_name = serializers.SerializerMethodField()
+
+    def get_full_name(self, instance):
+        return {
+            language: instance.full_name(language=language)
+            for language, _ in settings.LANGUAGES
+        }
+
     class Meta:
         model = Scope
-        fields = BaseSerializer.Meta.fields + ("name", "description", "parent", "level")
+        fields = BaseSerializer.Meta.fields + (
+            "name",
+            "description",
+            "parent",
+            "level",
+            "full_name",
+        )
 
 
 class PermissionSerializer(BaseSerializer):

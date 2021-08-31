@@ -170,12 +170,15 @@ class Scope(MPTTModel, UUIDModel):
         related_name="children",
     )
 
-    def full_name(self, sep="\u00bb"):
+    def full_name(self, sep="\u00bb", language=None):
         """Return full name of the scope, including parent scopes."""
+        own_name = str(self.name) if language is None else self.name[language]
+
         if self.parent:
-            parent_name = self.parent.full_name(sep)
-            return f"{parent_name} {sep} {self.name}"
-        return str(self.name)
+            parent_name = self.parent.full_name(sep, language)
+            return f"{parent_name} {sep} {own_name}"
+
+        return own_name
 
     def __str__(self):
         name = self.full_name()
