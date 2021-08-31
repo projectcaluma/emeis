@@ -141,6 +141,19 @@ def test_scope_search_filter(db, scope_factory, client):
     assert len(result["data"]) == 3
 
 
+def test_scope_full_name_api(db, scope_factory, client):
+    parent = scope_factory()
+    child = scope_factory(parent=parent)
+
+    url = reverse("scope-detail", args=[child.pk])
+    response = client.get(url)
+
+    full_name = response.json()["data"]["attributes"]["full-name"]
+    assert full_name["en"] == child.full_name(language="en")
+    assert full_name["en"].startswith(parent.name["en"])
+    assert full_name["en"].endswith(child.name["en"])
+
+
 def test_cannot_write_level(db, client, settings, user):
     data = {
         "data": {
