@@ -102,7 +102,7 @@ class User(UUIDModel, AbstractBaseUser):
     objects = UserManager()
 
     def __str__(self):
-        return "%s object (%s - %s)" % (self.__class__.__name__, self.pk, self.username)
+        return "%s (username=%s)" % (type(self).__name__, self.username)
 
     class Meta:
         verbose_name = _("user")
@@ -170,6 +170,17 @@ class Scope(MPTTModel, UUIDModel):
         related_name="children",
     )
 
+    def full_name(self, sep="\u00bb"):
+        """Return full name of the scope, including parent scopes."""
+        if self.parent:
+            parent_name = self.parent.full_name(sep)
+            return f"{parent_name} {sep} {self.name}"
+        return str(self.name)
+
+    def __str__(self):
+        name = self.full_name()
+        return f"{type(self).__name__} ({name}, pk={self.pk})"
+
 
 class Role(SlugModel):
     name = LocalizedCharField(_("role name"), blank=False, null=False, required=False)
@@ -177,6 +188,9 @@ class Role(SlugModel):
         _("role description"), null=True, blank=True, required=False
     )
     permissions = models.ManyToManyField("Permission", related_name="roles")
+
+    def __str__(self):
+        return f"{type(self).__name__} ({self.pk})"
 
     class Meta:
         ordering = ["slug"]
@@ -197,12 +211,7 @@ class ACL(UUIDModel):
     role = models.ForeignKey("Role", on_delete=models.CASCADE, related_name="acls")
 
     def __str__(self):
-        return "%s object (%s - %s - %s)" % (
-            self.__class__.__name__,
-            self.user.username,
-            self.scope,
-            self.role,
-        )
+        return f"{type(self).__name__} (username={self.user.username}, scope=self.scope, role={self.role.pk})"
 
     class Meta:
         unique_together = ["user", "scope", "role"]
