@@ -1,3 +1,12 @@
+## unreleased
+
+### Feature
+
+* new `create_scope` command (TODO: proper commit link)
+  Note: The settings `ADMIN_USERNAME`, `ADMIN_ROLE_SLUG`, and `ADMIN_SCOPE_NAME`
+  have been removed. Use `manage.py createsuperuser` and `manage.py create_scope`
+  instead.
+
 ##  v0.3.0 (27 August 2021)
 
 ### Feature

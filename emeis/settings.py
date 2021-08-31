@@ -69,12 +69,6 @@ DATABASES = {
     }
 }
 
-# Bootstrapping
-
-ADMIN_USERNAME = env.str("ADMIN_USERNAME", default="admin")
-ADMIN_ROLE_SLUG = env.str("ADMIN_ROLE_SLUG", default="admin")
-ADMIN_SCOPE_NAME = env.str("ADMIN_SCOPE_NAME", default="admin")
-
 
 # Cache
 # https://docs.djangoproject.com/en/1.11/ref/settings/#caches
