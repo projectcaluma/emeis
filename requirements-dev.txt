@@ -19,7 +19,7 @@ pre_commit==2.7.1
 psycopg2-binary==2.8.6
 pytest==6.2.4
 pytest-cov==2.12.1
-pytest-django==3.9.0
+pytest-django==4.5.1
 pytest-env==0.6.2
 pytest-factoryboy==2.0.3
 pytest-freezegun==0.4.2
