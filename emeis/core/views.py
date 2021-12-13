@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
 
-from . import models, serializers
+from . import filters, models, serializers
 
 
 class BaseViewset(VisibilityViewMixin, PermissionViewMixin, views.ModelViewSet):
@@ -45,13 +45,8 @@ class MyACLViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet):
 class UserViewSet(BaseViewset):
     serializer_class = serializers.UserSerializer
     queryset = models.User.objects.all()
-    filterset_fields = {
-        "id": ["exact", "in"],
-        "username": ["exact", "in"],
-        "first_name": ["exact", "icontains", "contains"],
-        "last_name": ["exact", "icontains", "contains"],
-        "email": ["exact", "in"],
-    }
+
+    filterset_class = filters.UserFilterset
 
     search_fields = (
         "username",
