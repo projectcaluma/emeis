@@ -1,3 +1,10 @@
+## v0.5.0 (14 December 2021)
+
+### Feature
+* Expose full scope name on api ([`3465b97`](https://github.com/projectcaluma/emeis/commit/3465b97862e1b56a7ebfe6f4e2aeb273025141b7))
+* New create_scope command ([`6813833`](https://github.com/projectcaluma/emeis/commit/68138334729d7cf53bc90acf629a7e0ade1ff56b))
+
+
 ## v0.4.0 (31 August 2021)
 
 ### Feature
@@ -28,7 +35,7 @@
 
 ### Fixes
 
-*  auth: make emeis user model able to authenticate (#249) 
+*  auth: make emeis user model able to authenticate (#249)
 
 ## v0.2.0 (22 July 2021)
 
