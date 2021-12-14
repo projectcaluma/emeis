@@ -21,7 +21,7 @@ def test_search_users(
 
 @pytest.mark.parametrize(
     "filter_name, expect_result",
-    [("hasRole", True), ("has_role", True), ("has_Role", False)],
+    [("hasRole", True), ("has_role", True), ("hasrole", False)],
 )
 def test_user_has_role(admin_client, acl_factory, filter_name, expect_result):
     users_list = [acl.user for acl in acl_factory.create_batch(3)]
@@ -37,7 +37,7 @@ def test_user_has_role(admin_client, acl_factory, filter_name, expect_result):
 
         assert expected == ret_users
     else:
-        assert resp.status == status.HTTP_400_BAD_REQUEST
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
 
 @pytest.mark.parametrize(
