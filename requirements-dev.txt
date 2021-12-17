@@ -16,7 +16,7 @@ ipython==7.16.1
 isort==5.8.0
 pdbpp==0.10.3
 pre_commit==2.16.0
-psycopg2-binary==2.8.6
+psycopg2-binary==2.9.2
 pytest==6.2.4
 pytest-cov==2.12.1
 pytest-django==4.5.2
