@@ -25,9 +25,16 @@ class UserFilterset(FilterSet):
 
 
 class CaseInsensitiveOrderingFilter(filters.OrderingFilter):
+    def _make_ordering_field(self, field, view):
+        desc = field.startswith("-")
+        field_name = field[1:] if desc else field
+
+        if field_name in getattr(view, "case_insensitive_ordering_fields", []):
+            return Lower(field_name).desc() if desc else Lower(field_name)
+        return field
+
     def get_ordering(self, request, queryset, view):
-        case_insensitive_fields = getattr(view, "case_insensitive_ordering_fields", [])
         ordering = super().get_ordering(request, queryset, view)
         if not ordering:
             return ordering
-        return [(Lower(o) if o in case_insensitive_fields else o) for o in ordering]
+        return [self._make_ordering_field(field, view) for field in ordering]
