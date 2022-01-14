@@ -1,4 +1,4 @@
-django==2.2.25
+django==2.2.26
 django-cors-headers==3.7.0
 django-environ==0.4.5
 django-filter==21.1
