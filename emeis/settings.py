@@ -4,6 +4,7 @@ from warnings import warn
 
 import environ
 from django.conf import global_settings
+from pkg_resources import resource_filename
 
 env = environ.Env()
 django_root = environ.Path(__file__) - 2
@@ -145,6 +146,7 @@ LANGUAGE_CODE = env.str("LANGUAGE_CODE", "en")
 LANGUAGES = (
     parse_languages(env.list("LANGUAGES", default=["en"])) or global_settings.LANGUAGES
 )
+LOCALE_PATHS = env.list("LOCALE_PATHS", default=[django_root("emeis", "locale")])
 
 TIME_ZONE = env.str("TIME_ZONE", "UTC")
 USE_I18N = True
@@ -243,6 +245,10 @@ def parse_admins(admins):
 
 ADMINS = parse_admins(env.list("ADMINS", default=[]))
 
+USER_EXPORT_TEMPLATE_PATH = env.str(
+    "USER_EXPORT_TEMPLATE_PATH",
+    default=resource_filename("emeis.core", "templates/user_list.xlsx"),
+)
 
 # Cors headers
 CORS_ORIGIN_ALLOW_ALL = env.bool("CORS_ORIGIN_ALLOW_ALL", default=False)

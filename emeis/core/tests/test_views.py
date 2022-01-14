@@ -1,5 +1,6 @@
 from uuid import uuid4
 
+import pyexcel
 import pytest
 from django.urls import reverse
 from rest_framework.status import (
@@ -247,3 +248,20 @@ def test_anonymous_writing(db, client, settings, user, allow_anon, method):
         if allow_anon
         else HTTP_403_FORBIDDEN
     )
+
+
+def test_user_export(client, user_factory, acl_factory, snapshot):
+    user = user_factory()
+    acl_factory.create_batch(9)
+    acl_factory.create_batch(2, user=user)
+
+    url = reverse("user-export")
+
+    response = client.get(url)
+
+    assert response.status_code == HTTP_200_OK
+
+    book = pyexcel.get_book(file_content=response.content, file_type="xlsx")
+    sheet = book.bookdict.popitem()[1]
+
+    snapshot.assert_match(sheet)

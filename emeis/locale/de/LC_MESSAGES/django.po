@@ -1,0 +1,126 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-01-05 15:07+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: emeis/core/models.py:35
+msgid "meta"
+msgstr ""
+
+#: emeis/core/models.py:72
+msgid "username"
+msgstr ""
+
+#: emeis/core/models.py:76
+msgid "Required. 255 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+
+#: emeis/core/models.py:79
+msgid "A user with that username already exists."
+msgstr ""
+
+#: emeis/core/models.py:82
+msgid "first name"
+msgstr ""
+
+#: emeis/core/models.py:84
+msgid "last name"
+msgstr ""
+
+#: emeis/core/models.py:85
+msgid "email address"
+msgstr ""
+
+#: emeis/core/models.py:86
+msgid "phone"
+msgstr ""
+
+#: emeis/core/models.py:87
+msgid "language"
+msgstr ""
+
+#: emeis/core/models.py:88
+msgid "address"
+msgstr ""
+
+#: emeis/core/models.py:89
+msgid "city"
+msgstr ""
+
+#: emeis/core/models.py:90
+msgid "zip"
+msgstr ""
+
+#: emeis/core/models.py:92
+msgid "active"
+msgstr ""
+
+#: emeis/core/models.py:94
+msgid "Designates whether this user should be treated as active."
+msgstr ""
+
+#: emeis/core/models.py:96
+msgid "date joined"
+msgstr ""
+
+#: emeis/core/models.py:108
+msgid "user"
+msgstr ""
+
+#: emeis/core/models.py:109
+msgid "users"
+msgstr ""
+
+#: emeis/core/models.py:161
+msgid "scope name"
+msgstr ""
+
+#: emeis/core/models.py:163
+msgid "scope description"
+msgstr ""
+
+#: emeis/core/models.py:189
+msgid "role name"
+msgstr ""
+
+#: emeis/core/models.py:191
+msgid "role description"
+msgstr ""
+
+#: emeis/core/models.py:204
+msgid "permission name"
+msgstr ""
+
+#: emeis/core/models.py:207
+msgid "permission description"
+msgstr ""
+
+#: emeis/core/views.py:83
+msgid "Name"
+msgstr "Name"
+
+#: emeis/core/views.py:84
+msgid "First Name"
+msgstr "Vorname"
+
+#: emeis/core/views.py:85
+msgid "Email"
+msgstr "Email"
+
+#: emeis/core/views.py:86
+msgid "Roles and organizations"
+msgstr "Rollen und Organisationen"
