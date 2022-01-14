@@ -2,6 +2,8 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
+from emeis.core.models import User
+
 
 def test_search_users(
     admin_client,
@@ -70,7 +72,8 @@ def test_declared_filters(
         assert ret_users == []
 
 
-def test_user_ordering_case_insensitive(admin_client, admin_user, user_factory):
+@pytest.mark.parametrize("sort", ["email", "-email"])
+def test_user_ordering_case_insensitive(admin_client, admin_user, user_factory, sort):
     emails = [
         "Aaaa@example.com",
         "Zzzzz@example.com",
@@ -80,8 +83,25 @@ def test_user_ordering_case_insensitive(admin_client, admin_user, user_factory):
     for email in emails:
         user_factory.create(email=email)
 
-    resp = admin_client.get(reverse("user-list"), {"sort": "email"})
+    resp = admin_client.get(reverse("user-list"), {"sort": sort})
 
-    assert sorted(emails + [admin_user.user.email], key=lambda e: e.lower()) == [
-        d["attributes"]["email"] for d in resp.json()["data"]
-    ]
+    expect_emails = sorted(
+        emails + [admin_user.user.email],
+        key=lambda e: e.lower(),
+        reverse=sort.startswith("-"),
+    )
+
+    assert expect_emails == [d["attributes"]["email"] for d in resp.json()["data"]]
+
+
+@pytest.mark.parametrize("sort", ["username", "-username"])
+def test_user_ordering_case_sensitive(admin_client, admin_user, user_factory, sort):
+    user_factory.create_batch(5)
+
+    resp = admin_client.get(reverse("user-list"), {"sort": sort})
+
+    expected = list(
+        User.objects.all().order_by(sort).values_list("username", flat=True)
+    )
+
+    assert expected == [d["attributes"]["username"] for d in resp.json()["data"]]
