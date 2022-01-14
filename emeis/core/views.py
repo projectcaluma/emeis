@@ -64,6 +64,14 @@ class UserViewSet(BaseViewset):
         "city",
     )
 
+    case_insensitive_ordering_fields = [
+        "first_name",
+        "last_name",
+        "email",
+        "address",
+        "city",
+    ]
+
     @action(methods=["get"], detail=False)
     def export(self, request):
         """Export user list as excel table."""
@@ -115,6 +123,10 @@ class ScopeViewSet(BaseViewset):
         "name",
         "description",
     )
+    case_insensitive_ordering_fields = [
+        "name",
+        "description",
+    ]
 
 
 class RoleViewSet(BaseViewset):
@@ -125,6 +137,10 @@ class RoleViewSet(BaseViewset):
         "name",
         "description",
     )
+    case_insensitive_ordering_fields = [
+        "name",
+        "description",
+    ]
 
 
 class PermissionViewSet(BaseViewset):
@@ -136,6 +152,10 @@ class PermissionViewSet(BaseViewset):
         "name",
         "description",
     )
+    case_insensitive_ordering_fields = [
+        "name",
+        "description",
+    ]
 
 
 class ACLViewSet(BaseViewset):
