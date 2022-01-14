@@ -1,3 +1,9 @@
+## v0.6.0 (14 January 2022)
+
+### Feature
+* Case insensitive ordering ([`f0570ab`](https://github.com/projectcaluma/emeis/commit/f0570ab9a25e02d8e5aff96a8eb30a48b5d24692))
+* Add user list export as xlsx file ([`190c2a6`](https://github.com/projectcaluma/emeis/commit/190c2a6d2ca05a7f862d84623d4675a730b03ad4))
+
 ## v0.5.0 (14 December 2021)
 
 ### Feature
