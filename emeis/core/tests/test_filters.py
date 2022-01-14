@@ -68,3 +68,20 @@ def test_declared_filters(
         assert [user1.username] == ret_users
     else:
         assert ret_users == []
+
+
+def test_user_ordering_case_insensitive(admin_client, admin_user, user_factory):
+    emails = [
+        "Aaaa@example.com",
+        "Zzzzz@example.com",
+        "aaaaa@example.com",
+        "m@example.com",
+    ]
+    for email in emails:
+        user_factory.create(email=email)
+
+    resp = admin_client.get(reverse("user-list"), {"sort": "email"})
+
+    assert sorted(emails + [admin_user.user.email], key=lambda e: e.lower()) == [
+        d["attributes"]["email"] for d in resp.json()["data"]
+    ]
