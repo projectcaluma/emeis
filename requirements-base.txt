@@ -1,5 +1,5 @@
 django==2.2.26
-django-cors-headers==3.7.0
+django-cors-headers==3.11.0
 django-environ==0.8.1
 django-filter==21.1
 django-generic-api-permissions==0.2.0
