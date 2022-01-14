@@ -68,3 +68,25 @@ def test_declared_filters(
         assert [user1.username] == ret_users
     else:
         assert ret_users == []
+
+
+@pytest.mark.parametrize("sort", ["email", "-email"])
+def test_user_ordering_case_insensitive(admin_client, admin_user, user_factory, sort):
+    emails = [
+        "Aaaa@example.com",
+        "Zzzzz@example.com",
+        "aaaaa@example.com",
+        "m@example.com",
+    ]
+    for email in emails:
+        user_factory.create(email=email)
+
+    resp = admin_client.get(reverse("user-list"), {"sort": sort})
+
+    expect_emails = sorted(
+        emails + [admin_user.user.email],
+        key=lambda e: e.lower(),
+        reverse=sort.startswith("-"),
+    )
+
+    assert expect_emails == [d["attributes"]["email"] for d in resp.json()["data"]]
