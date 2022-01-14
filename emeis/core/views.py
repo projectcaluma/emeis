@@ -80,10 +80,14 @@ class UserViewSet(BaseViewset):
         sheet["D1"] = _("Roles and organizations")
 
         for row, user in enumerate(queryset.iterator(), start=2):
-            acl_string = "\n".join([
-                f"{acl.role.name}: {acl.scope.full_name()}"
-                for acl in user.acls.all().select_related("scope", "role").order_by("role__name")
-            ])
+            acl_string = "\n".join(
+                [
+                    f"{acl.role.name}: {acl.scope.full_name()}"
+                    for acl in user.acls.all()
+                    .select_related("scope", "role")
+                    .order_by("role__name")
+                ]
+            )
 
             sheet[f"A{row}"] = user.last_name
             sheet[f"B{row}"] = user.first_name

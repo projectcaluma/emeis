@@ -250,9 +250,7 @@ def test_anonymous_writing(db, client, settings, user, allow_anon, method):
     )
 
 
-def test_user_export(
-    client, user_factory, acl_factory, snapshot
-):
+def test_user_export(client, user_factory, acl_factory, snapshot):
     user = user_factory()
     acl_factory.create_batch(9)
     acl_factory.create_batch(2, user=user)
