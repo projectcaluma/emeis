@@ -1,6 +1,6 @@
 django==2.2.26
 django-cors-headers==3.7.0
-django-environ==0.4.5
+django-environ==0.8.1
 django-filter==21.1
 django-generic-api-permissions==0.2.0
 django-localized-fields==6.4
