@@ -15,7 +15,6 @@ def test_search_users(
     resp = admin_client.get(
         reverse("user-list"), {"filter[search]": users_list[0].first_name}
     )
-
     returned_user_ids = [us["id"] for us in resp.json()["data"]]
 
     assert str(users_list[0].pk) in returned_user_ids

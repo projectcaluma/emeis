@@ -33,7 +33,6 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=default(["*"]))
 INSTALLED_APPS = [
     "django.contrib.postgres",
     "localized_fields",
-    "psqlextra",
     "django.contrib.contenttypes",
     "django.contrib.auth",
     "mozilla_django_oidc",

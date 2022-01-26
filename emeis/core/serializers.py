@@ -11,6 +11,8 @@ class BaseSerializer(ValidatorMixin, serializers.ModelSerializer):
     modified_at = serializers.DateTimeField(read_only=True)
     created_by_user = serializers.ResourceRelatedField(read_only=True)
 
+    _reserved_field_names = {'result', 'type'}  # TODO: remove this and find a solution for discarding the meta field
+
     def create(self, validated_data):
         user = self.context["request"].user
         if not isinstance(user, AnonymousUser):

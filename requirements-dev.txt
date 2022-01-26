@@ -1,10 +1,10 @@
 -r requirements-base.txt
-black==21.5b1
-django_extensions==3.0.8
+black
+django_extensions
 factory-boy==3.2.0
-flake8==3.9.2
-flake8-blind-except==0.2.0
-flake8-bugbear==21.4.3
+flake8
+flake8-blind-except
+flake8-bugbear
 flake8-debugger==3.2.1
 flake8-docstrings==1.6.0
 flake8-isort==4.0.0
