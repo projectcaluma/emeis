@@ -9,8 +9,6 @@ from factory.base import FactoryMetaClass
 from pytest_factoryboy import register
 from rest_framework.test import APIClient
 
-from emeis.core.models import ACL, Role, Scope, User
-
 
 @pytest.fixture(autouse=True)
 def reset_config_classes(settings):
@@ -62,9 +60,3 @@ def client(db):
 @pytest.fixture(scope="function", autouse=True)
 def _autoclear_cache():
     cache.clear()
-
-
-@pytest.fixture(autouse=True)
-def _remove_bootstrap_data(db):
-    for model in [User, Scope, Role, ACL]:
-        getattr(model, "objects").all().delete()
