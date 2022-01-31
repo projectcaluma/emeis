@@ -14,17 +14,6 @@ with open(os.path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
 
-def deps_from_file(filename):
-    lines = [line.strip().split("#")[0] for line in open(filename).readlines()]
-    # filter out comment lines
-    return [line for line in lines if line and not line == "-r requirements-base.txt"]
-
-
-dependencies = deps_from_file("requirements-base.txt") + deps_from_file(
-    "requirements-prod.txt"
-)
-
-
 setup(
     name=version["__title__"],
     version=version["__version__"],
@@ -41,5 +30,22 @@ setup(
         "Programming Language :: Python :: 3.7",
     ],
     packages=find_packages(),
-    install_requires=dependencies,
+    install_requires=[
+        "django~=3.2",
+        "django-cors-headers >=3.7.0, <=3.13.1",
+        "django-environ==0.8.1",
+        "django-filter==21.1",
+        "django-generic-api-permissions==0.2.0",
+        "django-localized-fields>=6.4,<=6.6",
+        "django_mptt>=0.11,<=0.13.4",
+        "django-postgres-extra==2.0.3",
+        "djangorestframework>=3.12.4,<=3.13.1",
+        "djangorestframework-jsonapi>=4.3.0,<=5.0.0",
+        "mozilla-django-oidc==1.2.4",
+        "pyexcel==0.6.7",
+        "pyexcel-xlsx==0.6.0",
+        "requests==2.26.0",
+        "uwsgi==2.0.19.1",
+        "openpyxl==3.0.9",
+    ],
 )

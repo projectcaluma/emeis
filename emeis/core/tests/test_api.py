@@ -10,7 +10,6 @@ from django.db.models.fields.related import ManyToManyDescriptor
 from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
 from rest_framework_json_api.renderers import JSONRenderer
-from rest_framework_json_api.utils import get_included_serializers
 
 from ..views import (
     ACLViewSet,
@@ -94,14 +93,13 @@ def fixture(
 ):
     """Get fixture and many to many relations of given viewset."""
     fixture = request.getfixturevalue(viewset.factory_name)()
-
-    included = get_included_serializers(viewset.serializer_class)
-    for name in sorted(included.keys()):
-        relation_type = getattr(fixture.__class__, name)
-        # pytest factory boy doesn't have native ManyToMany support
-        # so needs to be handled manually
-        if isinstance(relation_type, ManyToManyDescriptor):
-            request.getfixturevalue("{0}_{1}".format(viewset.instance_name, name))
+    if hasattr(viewset.serializer_class, "included_serializers"):
+        for name in sorted(viewset.serializer_class.included_serializers.keys()):
+            relation_type = getattr(fixture.__class__, name)
+            # pytest factory boy doesn't have native ManyToMany support
+            # so needs to be handled manually
+            if isinstance(relation_type, ManyToManyDescriptor):
+                request.getfixturevalue("{0}_{1}".format(viewset.instance_name, name))
 
     return fixture
 

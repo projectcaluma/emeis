@@ -19,7 +19,7 @@ class BaseSerializer(ValidatorMixin, serializers.ModelSerializer):
         return super().create(validated_data)
 
     class Meta:
-        fields = ("created_at", "modified_at", "created_by_user", "meta")
+        fields = ("created_at", "modified_at", "created_by_user", "metainfo")
 
 
 class MeSerializer(BaseSerializer):
@@ -69,7 +69,7 @@ class UserSerializer(BaseSerializer):
             "modified_at",
             "created_at",
             "created_by_user",
-            "meta",
+            "metainfo",
         ]
 
 

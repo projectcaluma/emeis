@@ -56,7 +56,7 @@ def test_can_authenticate(db, user):
     assert auth == user
 
 
-def test_scope_hierarchical_name(scope_factory):
+def test_scope_hierarchical_name(db, scope_factory):
     root = scope_factory()
     child = scope_factory(parent=root)
     grandchild = scope_factory(parent=child)

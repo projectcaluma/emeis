@@ -32,7 +32,7 @@ class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     modified_at = models.DateTimeField(auto_now=True, db_index=True)
     created_by_user = models.ForeignKey("User", null=True, on_delete=models.SET_NULL)
-    meta = JSONField(_("meta"), default=dict)
+    metainfo = JSONField(_("metainfo"), default=dict)
 
     class Meta:
         abstract = True
