@@ -1,3 +1,14 @@
+## v1.0.0 (1 February 2022)
+
+## Update to Django 3.2
+Bump to latest Django LTS and lift other dependencies while giving some slack on the version requirements in `setup.py` so it won't be too hard to bump to this release.
+
+### Feature
+* **core** Rename the basemodel's `meta` field to `metainfo` in order to respect reserved words of [django-restframework-json-api](https://github.com/django-json-api/django-rest-framework-json-api/blob/main/CHANGELOG.md#430---2021-12-10) ([`be444a6`](https://github.com/projectcaluma/emeis/pull/298/commits/be444a622b05139df041b2530018672cb95dad91))
+
+### Breaking
+* Rename basemodel's `meta` field to `metainfo`
+
 ## v0.6.0 (14 January 2022)
 
 ### Feature
