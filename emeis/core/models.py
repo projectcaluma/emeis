@@ -4,7 +4,6 @@ import uuid
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, UserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -32,7 +31,7 @@ class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     modified_at = models.DateTimeField(auto_now=True, db_index=True)
     created_by_user = models.ForeignKey("User", null=True, on_delete=models.SET_NULL)
-    metainfo = JSONField(_("metainfo"), default=dict)
+    metainfo = models.JSONField(_("metainfo"), default=dict)
 
     class Meta:
         abstract = True
