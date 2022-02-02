@@ -1,3 +1,8 @@
+## v1.0.1 (2 February 2022)
+
+Release only pinning dependency version, not adding any features.
+* chore: upgrade dependency psycopg2 to 2.9.3
+
 ## v1.0.0 (1 February 2022)
 
 ## Update to Django 3.2
