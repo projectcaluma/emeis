@@ -12,5 +12,5 @@ mozilla-django-oidc==1.2.4
 pyexcel==0.6.7
 pyexcel-xlsx==0.6.0
 requests==2.26.0
-uwsgi==2.0.19.1
+uwsgi==2.0.20
 openpyxl==3.0.9
