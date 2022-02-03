@@ -1,3 +1,10 @@
+## v1.0.2 (3 February 2022)
+
+This release upgrades dependency pinnings and loosens requirement ranges in `setup.py`.
+
+### Fixes
+* **core** Alter deprecated postgres JSON field to Django's own ([`f6cded9`](https://github.com/projectcaluma/emeis/commit/f6cded94a602ff16842f85340ece0dfa55ad12dc))
+
 ## v1.0.1 (2 February 2022)
 
 Release only pinning dependency version, not adding any features.
