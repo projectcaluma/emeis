@@ -10,7 +10,7 @@ services:
     volumes:
       - dbdata:/var/lib/postgresql/data
   emeis:
-    image: projectcaluma/emeis:latest
+    image: ghcr.io/projectcaluma/emeis:latest
     ports:
       - "8000:8000"
     depends_on:
