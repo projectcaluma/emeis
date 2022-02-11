@@ -1,3 +1,8 @@
+## v1.0.3 (11 February 2022)
+
+### Fix
+* Set correct content-disposition header in export ([`35e0f09`](https://github.com/projectcaluma/emeis/commit/35e0f09aa99d552d70f6920ce61df989fb9d01ad))
+
 ## v1.0.2 (3 February 2022)
 
 This release upgrades dependency pinnings and loosens requirement ranges in `setup.py`.
