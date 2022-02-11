@@ -60,4 +60,4 @@ You should then edit the release on Github and paste the changelog there as well
 The `pypi` github workflow will automatically build a source package and a wheel and
 publish them on [PyPI](https://pypi.org/project/emeis/).
 
-TODO: GHCR push
+The `ghcr` github workflow will automatically publish the new docker image on [ghcr.io/projectcaluma/emeis](https://ghcr.io/projectcaluma/emeis).
