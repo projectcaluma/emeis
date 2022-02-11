@@ -1,9 +1,10 @@
+import io
 from tempfile import NamedTemporaryFile
 
 import openpyxl
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
+from django.http import FileResponse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext as _
 from generic_permissions.permissions import PermissionViewMixin
@@ -107,13 +108,15 @@ class UserViewSet(BaseViewset):
         with NamedTemporaryFile() as tmp:
             workbook.save(tmp.name)
             tmp.seek(0)
-            stream = tmp.read()
+            binary_data = tmp.read()
             workbook.close()
             tmp.close()
 
-        response = HttpResponse(stream, content_type="application/vnd.ms-excel")
-        response["Content-Disposition"] = "attachment; filename=export.xlsx"
-        return response
+        return FileResponse(
+            io.BytesIO(binary_data),
+            as_attachment=True,
+            filename="export.xlsx",
+        )
 
 
 class ScopeViewSet(BaseViewset):

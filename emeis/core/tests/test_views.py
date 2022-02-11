@@ -261,7 +261,7 @@ def test_user_export(client, user_factory, acl_factory, snapshot):
 
     assert response.status_code == HTTP_200_OK
 
-    book = pyexcel.get_book(file_content=response.content, file_type="xlsx")
+    book = pyexcel.get_book(file_content=response.getvalue(), file_type="xlsx")
     sheet = book.bookdict.popitem()[1]
 
     snapshot.assert_match(sheet)
