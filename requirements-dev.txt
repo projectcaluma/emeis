@@ -24,7 +24,7 @@ pytest-env==0.6.2
 pytest-factoryboy==2.1.0
 pytest-freezegun==0.4.2
 pytest-mock==3.3.1
-pytest-randomly==3.10.3
+pytest-randomly==3.11.0
 python-semantic-release==7.24.0
 requests-mock==1.9.3
 snapshottest==0.6.0
