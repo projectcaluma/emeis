@@ -41,7 +41,7 @@ setup(
         "django-postgres-extra<3",
         "djangorestframework>=3.12.4,<4",
         "djangorestframework-jsonapi>=4.3.0,<=5.0.0",
-        "mozilla-django-oidc<2",
+        "mozilla-django-oidc<3",
         "pyexcel>0.6,<1",
         "pyexcel-xlsx>=0.6.0,<1",
         "psycopg2>=2.9,<3",
