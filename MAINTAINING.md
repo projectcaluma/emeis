@@ -4,7 +4,7 @@
 
 Here is a rough outline / checklist for the release (explained further below):
 
-1. Checkout `master` branch, ensure you have all tags
+1. Checkout `main` branch, ensure you have all tags
 2. Prepare changelog
 3. Figure out the next version
 4. Update code (CHANGELOG, version info)
@@ -21,7 +21,7 @@ checklist:
 
 ```bash
 # Ensure you're on the current main and have all release tags
-git checkout master
+git checkout main
 git pull origin --tags
 
 # Prepare changelog

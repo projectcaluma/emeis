@@ -7,12 +7,12 @@ on:
   # Run build for any PRs - we won't push in those however
   pull_request:
     branches:
-      - master
+      - main
 
-  # Publish `master` as Docker `latest` image.
+  # Publish `main` as Docker `latest` image.
   push:
     branches:
-      - master
+      - main
 
 env:
   IMAGE_NAME: emeis
@@ -47,8 +47,8 @@ jobs:
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `latest` tag convention
-          if [[ "$VERSION" == "master" ]]; then
-            # only push "dev" image from master branch build
+          if [[ "$VERSION" == "main" ]]; then
+            # only push "dev" image from main branch build
             echo "Pushing $IMAGE_ID:dev"
             docker tag $IMAGE_NAME $IMAGE_ID:dev
             docker push $IMAGE_ID:dev
