@@ -22,6 +22,7 @@ setup(
     long_description_content_type="text/markdown",
     include_package_data=True,
     package_data={"": ["*.xlsx"]},
+    data_files=[("emeis/core/templates", ["emeis/core/templates/user_list.xlsx"])],
     author="projectcaluma",
     url="https://github.com/projectcaluma/emeis",
     license="License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
