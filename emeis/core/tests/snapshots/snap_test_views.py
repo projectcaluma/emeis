@@ -8,7 +8,7 @@ from snapshottest import Snapshot
 snapshots = Snapshot()
 
 snapshots["test_user_export 1"] = [
-    ["Name", "First Name", "Email", "Roles and organizations"],
+    ["Name", "First Name", "Email", "Roles and scopes"],
     [
         "Marsh",
         "Heather",
