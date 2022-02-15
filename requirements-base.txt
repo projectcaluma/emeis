@@ -8,7 +8,7 @@ django_mptt==0.13.4
 django-postgres-extra==2.0.4
 djangorestframework==3.13.1
 djangorestframework-jsonapi==5.0.0
-mozilla-django-oidc==1.2.4
+mozilla-django-oidc==2.0.0
 pyexcel==0.6.7
 pyexcel-xlsx==0.6.0
 requests==2.27.1
