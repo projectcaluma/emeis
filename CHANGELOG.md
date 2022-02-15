@@ -1,3 +1,8 @@
+## v1.0.4 (15 February 2022)
+
+### Fix
+* Add xlsx template to pip package ([`532b379`](https://github.com/projectcaluma/emeis/commit/532b379edfcebc6d8a7ea6ff6c176682a0b74806))
+
 ## v1.0.3 (11 February 2022)
 
 ### Fix
