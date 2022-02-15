@@ -20,6 +20,7 @@ setup(
     description=version["__description__"],
     long_description=long_description,
     long_description_content_type="text/markdown",
+    include_package_data=True,
     author="projectcaluma",
     url="https://github.com/projectcaluma/emeis",
     license="License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
