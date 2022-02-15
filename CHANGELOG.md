@@ -1,3 +1,8 @@
+## v1.0.5 (15 February 2022)
+
+### Fix
+* Include xlsx file in pypi publish, take 2 ([`5acc687`](https://github.com/projectcaluma/emeis/commit/5acc68780a6ce2403c6780fd8766f1b99d299e50))
+
 ## v1.0.4 (15 February 2022)
 
 ### Fix
