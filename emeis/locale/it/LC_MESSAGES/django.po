@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 15:08+0100\n"
+"POT-Creation-Date: 2022-02-15 10:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,110 +17,113 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: emeis/core/models.py:35
-msgid "meta"
+
+#: emeis/core/models.py:34
+msgid "metainfo"
 msgstr ""
 
-#: emeis/core/models.py:72
+#: emeis/core/models.py:71
 msgid "username"
 msgstr ""
 
-#: emeis/core/models.py:76
+#: emeis/core/models.py:75
 msgid "Required. 255 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr ""
 
-#: emeis/core/models.py:79
+#: emeis/core/models.py:78
 msgid "A user with that username already exists."
 msgstr ""
 
-#: emeis/core/models.py:82
+#: emeis/core/models.py:81
 msgid "first name"
 msgstr ""
 
-#: emeis/core/models.py:84
+#: emeis/core/models.py:83
 msgid "last name"
 msgstr ""
 
-#: emeis/core/models.py:85
+#: emeis/core/models.py:84
 msgid "email address"
 msgstr ""
 
-#: emeis/core/models.py:86
+#: emeis/core/models.py:85
 msgid "phone"
 msgstr ""
 
-#: emeis/core/models.py:87
+#: emeis/core/models.py:86
 msgid "language"
 msgstr ""
 
-#: emeis/core/models.py:88
+#: emeis/core/models.py:87
 msgid "address"
 msgstr ""
 
-#: emeis/core/models.py:89
+#: emeis/core/models.py:88
 msgid "city"
 msgstr ""
 
-#: emeis/core/models.py:90
+#: emeis/core/models.py:89
 msgid "zip"
 msgstr ""
 
-#: emeis/core/models.py:92
+#: emeis/core/models.py:91
 msgid "active"
 msgstr ""
 
-#: emeis/core/models.py:94
+#: emeis/core/models.py:93
 msgid "Designates whether this user should be treated as active."
 msgstr ""
 
-#: emeis/core/models.py:96
+#: emeis/core/models.py:95
 msgid "date joined"
 msgstr ""
 
-#: emeis/core/models.py:108
+#: emeis/core/models.py:107
 msgid "user"
 msgstr ""
 
-#: emeis/core/models.py:109
+#: emeis/core/models.py:108
 msgid "users"
 msgstr ""
 
-#: emeis/core/models.py:161
+#: emeis/core/models.py:160
 msgid "scope name"
 msgstr ""
 
-#: emeis/core/models.py:163
+#: emeis/core/models.py:162
 msgid "scope description"
 msgstr ""
 
-#: emeis/core/models.py:189
+#: emeis/core/models.py:188
 msgid "role name"
 msgstr ""
 
-#: emeis/core/models.py:191
+#: emeis/core/models.py:190
 msgid "role description"
 msgstr ""
 
-#: emeis/core/models.py:204
+#: emeis/core/models.py:203
 msgid "permission name"
 msgstr ""
 
-#: emeis/core/models.py:207
+#: emeis/core/models.py:206
 msgid "permission description"
 msgstr ""
 
-#: emeis/core/views.py:83
+#: emeis/core/views.py:86
 msgid "Name"
 msgstr "Cognome"
 
-#: emeis/core/views.py:84
+#: emeis/core/views.py:87
 msgid "First Name"
 msgstr "Nome"
 
-#: emeis/core/views.py:85
+#: emeis/core/views.py:88
 msgid "Email"
 msgstr "Email"
 
-#: emeis/core/views.py:86
-msgid "Roles and organizations"
+#: emeis/core/views.py:89
+#, fuzzy
+#| msgid "Roles and organizations"
+msgid "Roles and scopes"
 msgstr "Ruoli e organizzazioni"

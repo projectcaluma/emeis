@@ -86,7 +86,7 @@ class UserViewSet(BaseViewset):
         sheet["A1"] = _("Name")
         sheet["B1"] = _("First Name")
         sheet["C1"] = _("Email")
-        sheet["D1"] = _("Roles and organizations")
+        sheet["D1"] = _("Roles and scopes")
 
         for row, user in enumerate(queryset.iterator(), start=2):
             acl_string = "\n".join(
