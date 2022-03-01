@@ -25,7 +25,7 @@ pytest-factoryboy==2.1.0
 pytest-freezegun==0.4.2
 pytest-mock==3.7.0
 pytest-randomly==3.11.0
-python-semantic-release==7.24.0
+python-semantic-release==7.25.2
 requests-mock==1.9.3
 snapshottest==0.6.0
 werkzeug==2.0.3
