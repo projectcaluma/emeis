@@ -64,6 +64,9 @@ class UserViewSet(BaseViewset):
         "=zip",
         "city",
     )
+    multilingual_search_fields = [
+        "city",
+    ]
 
     case_insensitive_ordering_fields = [
         "first_name",
@@ -126,6 +129,11 @@ class ScopeViewSet(BaseViewset):
         "name",
         "description",
     )
+    multilingual_search_fields = [
+        "name",
+        "description",
+    ]
+
     case_insensitive_ordering_fields = [
         "name",
         "description",
@@ -140,6 +148,11 @@ class RoleViewSet(BaseViewset):
         "name",
         "description",
     )
+    multilingual_search_fields = [
+        "name",
+        "description",
+    ]
+
     case_insensitive_ordering_fields = [
         "name",
         "description",
@@ -155,6 +168,10 @@ class PermissionViewSet(BaseViewset):
         "name",
         "description",
     )
+    multilingual_search_fields = [
+        "name",
+        "description",
+    ]
     case_insensitive_ordering_fields = [
         "name",
         "description",
@@ -176,3 +193,11 @@ class ACLViewSet(BaseViewset):
         "=user__zip",
         "user__city",
     )
+
+    multilingual_search_fields = [
+        "scope__name",
+        "scope__description",
+        "role__name",
+        "role__description",
+        "user__city",
+    ]

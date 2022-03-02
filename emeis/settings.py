@@ -147,6 +147,21 @@ LANGUAGES = (
 )
 LOCALE_PATHS = env.list("LOCALE_PATHS", default=[django_root("emeis", "locale")])
 
+# Force models to be monolingual despite them having
+# multilingual fields. This causes searches to use a "fixed"
+# locale instead of the currently-selected one. Note that
+# you MUST set the corresponding setting in ember-emeis as well
+# as it will then store the values in a "fixed" locale as well.
+#
+# If set via env var, set EMEIS_FORCE_MODEL_LOCALE=user:de,scope:de,...
+# where the model names must be lowercase
+EMEIS_FORCE_MODEL_LOCALE = {
+    model: lang
+    for path in env.list("EMEIS_FORCE_MODEL_LOCALE", default=[])
+    for model, lang in path.split(":")
+}
+
+
 TIME_ZONE = env.str("TIME_ZONE", "UTC")
 USE_I18N = True
 USE_L10N = True
@@ -198,7 +213,7 @@ REST_FRAMEWORK = {
         "rest_framework_json_api.filters.QueryParameterValidationFilter",
         "emeis.core.filters.CaseInsensitiveOrderingFilter",
         "rest_framework_json_api.django_filters.DjangoFilterBackend",
-        "rest_framework.filters.SearchFilter",
+        "emeis.core.filters.MonolingualSearchFilter",
     ),
     "SEARCH_PARAM": "filter[search]",
     "ORDERING_PARAM": "sort",

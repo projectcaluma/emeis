@@ -1,5 +1,6 @@
 import pytest
 from django.urls import reverse
+from django.utils import translation
 from rest_framework import status
 
 from emeis.core.models import User
@@ -104,3 +105,28 @@ def test_user_ordering_case_sensitive(admin_client, admin_user, user_factory, so
     )
 
     assert expected == [d["attributes"]["username"] for d in resp.json()["data"]]
+
+
+@pytest.mark.parametrize(
+    "force_lang, search_term, expect_result",
+    [
+        ("de", "deutscher", 1),
+        ("de", "english", 0),
+        ("en", "deutscher", 0),
+        ("en", "english", 1),
+        (None, "deutscher", 0),
+        (None, "english", 1),
+    ],
+)
+def test_search_monolingual(
+    settings, admin_client, role_factory, force_lang, search_term, expect_result
+):
+    role_factory(name={"de": "deutscher name", "en": "english name"})
+
+    if force_lang:
+        settings.EMEIS_FORCE_MODEL_LOCALE = {"role": force_lang}
+
+    with translation.override("en"):
+        resp = admin_client.get(reverse("role-list"), {"filter[search]": search_term})
+
+    assert len(resp.json()["data"]) == expect_result

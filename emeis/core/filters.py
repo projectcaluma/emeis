@@ -1,9 +1,38 @@
+from django.conf import settings
 from django.db.models.functions import Lower
 from django_filters import FilterSet
 from django_filters.filters import CharFilter
 from rest_framework import filters
 
 from emeis.core.models import User
+
+
+class MonolingualSearchFilter(filters.SearchFilter):
+
+    multilingual_search_fields = []
+
+    def get_search_fields(self, view, request):
+        """Return search fields for the current view.
+
+        The search fields are defined on the viewset as normal, but if the
+        model is configured as a "forced monolingual" model, we use the default
+        language instead for searching.
+
+        """
+
+        model_name = view.queryset.model.__name__.lower()
+
+        if model_name not in settings.EMEIS_FORCE_MODEL_LOCALE:
+            return super().get_search_fields(view, request)
+
+        forced_lang = settings.EMEIS_FORCE_MODEL_LOCALE[model_name]
+
+        return [
+            f"{field}__{forced_lang}"
+            if field in view.multilingual_search_fields
+            else field
+            for field in view.search_fields
+        ]
 
 
 class UserFilterset(FilterSet):
