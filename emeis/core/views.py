@@ -60,12 +60,16 @@ class UserViewSet(BaseViewset):
         "username",
         "first_name",
         "last_name",
+        "acls__role__name",
+        "acls__scope__name",
         "email",
         "=zip",
         "city",
     )
     multilingual_search_fields = [
         "city",
+        "acls__role__name",
+        "acls__scope__name",
     ]
 
     case_insensitive_ordering_fields = [
