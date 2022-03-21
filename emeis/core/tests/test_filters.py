@@ -6,19 +6,31 @@ from rest_framework import status
 from emeis.core.models import User
 
 
-def test_search_users(
-    admin_client,
-    acl_factory,
-):
+@pytest.mark.parametrize(
+    "user_attribute",
+    [
+        lambda u: u.first_name,
+        lambda u: u.last_name,
+        lambda u: u.acls.first().scope.name,
+        lambda u: u.acls.first().role.name,
+    ],
+)
+@pytest.mark.parametrize(
+    "partial_search", [lambda val: val[:-2], lambda val: val[2:], lambda val: val]
+)
+def test_search_users(admin_client, acl_factory, user_attribute, partial_search):
 
     users_list = [acl.user for acl in acl_factory.create_batch(5)]
 
     resp = admin_client.get(
-        reverse("user-list"), {"filter[search]": users_list[0].first_name}
+        reverse("user-list"),
+        {"filter[search]": partial_search(str(user_attribute(users_list[0])))},
     )
     returned_user_ids = [us["id"] for us in resp.json()["data"]]
 
     assert str(users_list[0].pk) in returned_user_ids
+    # ensure we don't just return the full user list
+    assert len(returned_user_ids) < len(users_list)
 
 
 @pytest.mark.parametrize(
