@@ -1,5 +1,5 @@
 -r requirements-base.txt
-black==22.1.0
+black==22.3.0
 django_extensions==3.1.5
 factory-boy==3.2.1
 flake8==4.0.1
