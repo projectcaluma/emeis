@@ -90,6 +90,7 @@ class ScopeSerializer(BaseSerializer):
             "parent",
             "level",
             "full_name",
+            "is_active",
         )
 
 
