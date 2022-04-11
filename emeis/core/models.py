@@ -168,6 +168,7 @@ class Scope(MPTTModel, UUIDModel):
         blank=True,
         related_name="children",
     )
+    is_active = models.BooleanField(default=True)
 
     def full_name(self, sep="\u00bb", language=None):
         """Return full name of the scope, including parent scopes."""
