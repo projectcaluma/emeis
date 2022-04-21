@@ -28,4 +28,4 @@ pytest-randomly==3.11.0
 python-semantic-release==7.27.1
 requests-mock==1.9.3
 snapshottest==0.6.0
-werkzeug==2.1.1
+werkzeug==2.0.3
