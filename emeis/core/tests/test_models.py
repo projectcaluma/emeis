@@ -42,6 +42,22 @@ def test_scope_model(db):
         parent_scope.save()
 
 
+def test_scope_deletion(db, scope_factory):
+    root = scope_factory()  # not deleted
+    child = scope_factory(parent=root)
+    grandchild = scope_factory(parent=child)
+    scope_factory(parent=grandchild)
+    scope_factory(parent=grandchild)
+
+    other_child = scope_factory(parent=root)  # not deleted
+    scope_factory(parent=other_child)  # not deleted
+
+    child.delete()
+
+    assert Scope.objects.count() == 3
+    assert list(Scope.objects.root_nodes()) == [root]
+
+
 def test_can_authenticate(db, user):
     # Test whether the authentication mechanism works correctly
     user.set_password("test_password")
