@@ -11,7 +11,7 @@ flake8-isort==4.1.1
 flake8-string-format==0.3.0
 flake8-tuple==0.4.1
 gitlint==0.17.0
-hypothesis==6.43.1
+hypothesis==6.46.9
 ipython==8.2.0
 isort==5.10.1
 pdbpp==0.10.3
