@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.db.models.functions import Lower
 from django_filters import FilterSet
-from django_filters.filters import CharFilter
+from django_filters.filters import BaseInFilter, CharFilter, NumberFilter
 from rest_framework import filters
 
-from emeis.core.models import User
+from emeis.core.models import Scope, User
 
 
 class MonolingualSearchFilter(filters.SearchFilter):
@@ -35,6 +35,26 @@ class MonolingualSearchFilter(filters.SearchFilter):
         ]
 
 
+class NumberInFilter(BaseInFilter, NumberFilter):
+    pass
+
+
+class CaseInsensitiveOrderingFilter(filters.OrderingFilter):
+    def _make_ordering_field(self, field, view):
+        desc = field.startswith("-")
+        field_name = field[1:] if desc else field
+
+        if field_name in getattr(view, "case_insensitive_ordering_fields", []):
+            return Lower(field_name).desc() if desc else Lower(field_name)
+        return field
+
+    def get_ordering(self, request, queryset, view):
+        ordering = super().get_ordering(request, queryset, view)
+        if not ordering:
+            return ordering
+        return [self._make_ordering_field(field, view) for field in ordering]
+
+
 class UserFilterset(FilterSet):
     has_role = CharFilter(
         field_name="acls__role__pk",
@@ -53,17 +73,9 @@ class UserFilterset(FilterSet):
         }
 
 
-class CaseInsensitiveOrderingFilter(filters.OrderingFilter):
-    def _make_ordering_field(self, field, view):
-        desc = field.startswith("-")
-        field_name = field[1:] if desc else field
+class ScopeFilterset(FilterSet):
+    id__in = NumberInFilter(field_name="id", lookup_expr="in")
 
-        if field_name in getattr(view, "case_insensitive_ordering_fields", []):
-            return Lower(field_name).desc() if desc else Lower(field_name)
-        return field
-
-    def get_ordering(self, request, queryset, view):
-        ordering = super().get_ordering(request, queryset, view)
-        if not ordering:
-            return ordering
-        return [self._make_ordering_field(field, view) for field in ordering]
+    class Meta:
+        model = Scope
+        fields = ["id"]

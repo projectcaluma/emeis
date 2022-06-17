@@ -129,6 +129,9 @@ class UserViewSet(BaseViewset):
 class ScopeViewSet(BaseViewset):
     serializer_class = serializers.ScopeSerializer
     queryset = models.Scope.objects.all()
+
+    filterset_class = filters.ScopeFilterset
+
     search_fields = (
         "name",
         "description",
