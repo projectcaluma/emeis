@@ -142,6 +142,7 @@ class ScopeViewSet(BaseViewset):
         "name",
         "description",
     ]
+    filterset_class = filters.ScopeFilterset
 
 
 class RoleViewSet(BaseViewset):
