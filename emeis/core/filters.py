@@ -4,7 +4,7 @@ from django_filters import FilterSet
 from django_filters.filters import CharFilter
 from rest_framework import filters
 
-from emeis.core.models import User
+from emeis.core.models import Scope, User
 
 
 class MonolingualSearchFilter(filters.SearchFilter):
@@ -67,3 +67,11 @@ class CaseInsensitiveOrderingFilter(filters.OrderingFilter):
         if not ordering:
             return ordering
         return [self._make_ordering_field(field, view) for field in ordering]
+
+
+class ScopeFilterset(FilterSet):
+    class Meta:
+        model = Scope
+        fields = {
+            "id": ["exact", "in"],
+        }

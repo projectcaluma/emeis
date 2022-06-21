@@ -84,6 +84,19 @@ def test_declared_filters(
         assert ret_users == []
 
 
+def test_scope_id_filter(admin_client, scope_factory):
+    scope1, _, scope3 = scope_factory.create_batch(3)
+
+    resp = admin_client.get(
+        reverse("scope-list"),
+        {"filter[id__in]": ",".join([str(scope1.pk), str(scope3.pk)])},
+    )
+
+    ret_scopes = [us["id"] for us in resp.json()["data"]]
+
+    assert set(ret_scopes) == set([str(scope1.pk), str(scope3.pk)])
+
+
 @pytest.mark.parametrize("sort", ["email", "-email"])
 def test_user_ordering_case_insensitive(admin_client, admin_user, user_factory, sort):
     emails = [
