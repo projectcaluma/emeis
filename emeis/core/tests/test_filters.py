@@ -119,6 +119,26 @@ def test_user_ordering_case_insensitive(admin_client, admin_user, user_factory, 
     assert expect_emails == [d["attributes"]["email"] for d in resp.json()["data"]]
 
 
+@pytest.mark.parametrize("sort", ["metainfo__position", "-metainfo__position"])
+def test_ordering_metainfo(admin_client, admin_user, user_factory, sort, settings):
+    settings.EMEIS_META_FIELDS = ["position"]
+    admin_user.user.metainfo = {"position": "d"}
+    admin_user.user.save()
+    positions = ["B", "a", "C"]
+    for position in positions:
+        user_factory.create(metainfo={"position": position})
+
+    resp = admin_client.get(reverse("user-list"), {"sort": sort})
+
+    expect = sorted(
+        positions + ["d"], key=lambda e: e.lower(), reverse=sort.startswith("-")
+    )
+
+    assert expect == [
+        d["attributes"]["metainfo"].get("position") for d in resp.json()["data"]
+    ]
+
+
 @pytest.mark.parametrize("sort", ["username", "-username"])
 def test_user_ordering_case_sensitive(admin_client, admin_user, user_factory, sort):
     user_factory.create_batch(5)

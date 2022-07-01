@@ -211,7 +211,7 @@ REST_FRAMEWORK = {
     "DEFAULT_METADATA_CLASS": "rest_framework_json_api.metadata.JSONAPIMetadata",
     "DEFAULT_FILTER_BACKENDS": (
         "rest_framework_json_api.filters.QueryParameterValidationFilter",
-        "emeis.core.filters.CaseInsensitiveOrderingFilter",
+        "emeis.core.filters.EmeisOrderingFilter",
         "rest_framework_json_api.django_filters.DjangoFilterBackend",
         "emeis.core.filters.MonolingualSearchFilter",
     ),
@@ -278,3 +278,5 @@ LOGGING = {
         "": {"handlers": ["console"], "level": env.str("LOG_LEVEL", default="INFO")}
     },
 }
+
+EMEIS_META_FIELDS = env.list("EMEIS_META_FIELDS", default=[])
