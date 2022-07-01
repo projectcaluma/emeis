@@ -213,7 +213,7 @@ REST_FRAMEWORK = {
         "rest_framework_json_api.filters.QueryParameterValidationFilter",
         "emeis.core.filters.EmeisOrderingFilter",
         "rest_framework_json_api.django_filters.DjangoFilterBackend",
-        "emeis.core.filters.MonolingualSearchFilter",
+        "emeis.core.filters.EmeisSearchFilter",
     ),
     "SEARCH_PARAM": "filter[search]",
     "ORDERING_PARAM": "sort",

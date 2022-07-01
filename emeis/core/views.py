@@ -56,7 +56,7 @@ class UserViewSet(BaseViewset):
 
     filterset_class = filters.UserFilterset
 
-    search_fields = (
+    search_fields = [
         "username",
         "first_name",
         "last_name",
@@ -65,7 +65,8 @@ class UserViewSet(BaseViewset):
         "email",
         "=zip",
         "city",
-    )
+    ]
+
     multilingual_search_fields = [
         "city",
         "acls__role__name",
@@ -187,7 +188,7 @@ class ACLViewSet(BaseViewset):
     serializer_class = serializers.ACLSerializer
     queryset = models.ACL.objects.all()
     filterset_fields = ("user", "scope", "role")
-    search_fields = (
+    search_fields = [
         "scope__name",
         "scope__description",
         "role__name",
@@ -197,7 +198,7 @@ class ACLViewSet(BaseViewset):
         "user__last_name",
         "=user__zip",
         "user__city",
-    )
+    ]
 
     multilingual_search_fields = [
         "scope__name",
