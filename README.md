@@ -46,6 +46,12 @@ A list of configuration options which you might need to configure to get emeis s
 
 Additional options you might want to configure
 
+##### Metainfo fields
+
+Emeis supports custom properties on all models via the `metainfo` JSON fields containing key-value pairs.
+
+If you want to support ordering of such custom fields, add the respective keys to the `EMEIS_META_FIELDS` setting.
+
 ##### OIDC
 
 For OIDC, a customized [mozilla-django-oidc](https://github.com/mozilla/mozilla-django-oidc) is used.

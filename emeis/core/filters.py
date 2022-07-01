@@ -1,5 +1,6 @@
 from django.conf import settings
-from django.db.models.functions import Lower
+from django.db.models import TextField
+from django.db.models.functions import Cast, Lower
 from django_filters import FilterSet
 from django_filters.filters import CharFilter
 from rest_framework import filters
@@ -53,13 +54,28 @@ class UserFilterset(FilterSet):
         }
 
 
-class CaseInsensitiveOrderingFilter(filters.OrderingFilter):
+class EmeisOrderingFilter(filters.OrderingFilter):
+    """Custom ordering filter for Emeis.
+
+    This adds two things:
+    - case insensitive ordering via "case_insensitive_ordering_fields"
+    - ordering by metainfo fields
+    """
+
+    def get_valid_fields(self, queryset, view, context=None):
+        ordering_fields = super().get_valid_fields(queryset, view, context or {})
+        return ordering_fields + [
+            (f"metainfo__{field}", f"{field} in metainfo")
+            for field in settings.EMEIS_META_FIELDS
+        ]
+
     def _make_ordering_field(self, field, view):
         desc = field.startswith("-")
         field_name = field[1:] if desc else field
 
-        if field_name in getattr(view, "case_insensitive_ordering_fields", []):
-            return Lower(field_name).desc() if desc else Lower(field_name)
+        if field_name in self._get_case_insensitive_fields(view):
+            field_expr = Lower(Cast(field_name, output_field=TextField()))
+            return field_expr.desc() if desc else field_expr
         return field
 
     def get_ordering(self, request, queryset, view):
@@ -67,6 +83,11 @@ class CaseInsensitiveOrderingFilter(filters.OrderingFilter):
         if not ordering:
             return ordering
         return [self._make_ordering_field(field, view) for field in ordering]
+
+    def _get_case_insensitive_fields(self, view):
+        return getattr(view, "case_insensitive_ordering_fields", []) + [
+            f"metainfo__{field}" for field in settings.EMEIS_META_FIELDS
+        ]
 
 
 class ScopeFilterset(FilterSet):
