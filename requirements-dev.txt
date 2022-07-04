@@ -15,7 +15,7 @@ hypothesis==6.48.2
 ipython==8.2.0
 isort==5.10.1
 pdbpp==0.10.3
-pre_commit==2.18.1
+pre_commit==2.19.0
 psycopg2-binary==2.9.3
 pytest==7.1.1
 pytest-cov==3.0.0
