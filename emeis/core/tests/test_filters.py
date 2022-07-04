@@ -175,3 +175,25 @@ def test_search_monolingual(
         resp = admin_client.get(reverse("role-list"), {"filter[search]": search_term})
 
     assert len(resp.json()["data"]) == expect_result
+
+
+@pytest.mark.parametrize(
+    "search_term, expect_result",
+    [
+        ("foobar", 1),
+        ("bar", 2),
+        ("buzzybuzz", 0),
+    ],
+)
+def test_search_metainfo(
+    settings, admin_client, user_factory, search_term, expect_result
+):
+    settings.EMEIS_META_FIELDS = ["position"]
+    user_factory(metainfo={"position": "bar"})
+    user_factory(metainfo={"position": "baz"})
+    user_factory(metainfo={"blubb": "bar"})
+    user_factory(metainfo={"position": "Foobar"})
+
+    resp = admin_client.get(reverse("user-list"), {"filter[search]": search_term})
+
+    assert len(resp.json()["data"]) == expect_result

@@ -8,7 +8,13 @@ from rest_framework import filters
 from emeis.core.models import Scope, User
 
 
-class MonolingualSearchFilter(filters.SearchFilter):
+class EmeisSearchFilter(filters.SearchFilter):
+    """Custom search filter for Emeis.
+
+    This adds two things:
+    - "monolingual" search support via EMEIS_FORCE_MODEL_LOCALE
+    - search support for EMEIS_META_FIELDS
+    """
 
     multilingual_search_fields = []
 
@@ -23,8 +29,11 @@ class MonolingualSearchFilter(filters.SearchFilter):
 
         model_name = view.queryset.model.__name__.lower()
 
+        meta_fields = [f"metainfo__{f}" for f in settings.EMEIS_META_FIELDS]
+
         if model_name not in settings.EMEIS_FORCE_MODEL_LOCALE:
-            return super().get_search_fields(view, request)
+            default_fields = super().get_search_fields(view, request)
+            return list(default_fields) + meta_fields if default_fields else meta_fields
 
         forced_lang = settings.EMEIS_FORCE_MODEL_LOCALE[model_name]
 
@@ -33,7 +42,7 @@ class MonolingualSearchFilter(filters.SearchFilter):
             if field in view.multilingual_search_fields
             else field
             for field in view.search_fields
-        ]
+        ] + meta_fields
 
 
 class UserFilterset(FilterSet):
