@@ -60,6 +60,7 @@ class UserFilterset(FilterSet):
             "first_name": ["exact", "icontains", "contains"],
             "last_name": ["exact", "icontains", "contains"],
             "email": ["exact", "in"],
+            "is_active": ["exact"],
         }
 
 

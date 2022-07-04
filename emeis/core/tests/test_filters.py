@@ -55,6 +55,22 @@ def test_user_has_role(admin_client, acl_factory, filter_name, expect_result):
 
 
 @pytest.mark.parametrize(
+    "filter_value, expect_count",
+    [("true", 4), ("false", 2)],
+)
+def test_user_is_active_filter(admin_client, user_factory, filter_value, expect_count):
+    user_factory.create_batch(3, is_active=True)
+    user_factory.create_batch(2, is_active=False)
+
+    resp = admin_client.get(
+        reverse("user-list"),
+        {"filter[is_active]": filter_value},
+    )
+
+    assert len(resp.json()["data"]) == expect_count
+
+
+@pytest.mark.parametrize(
     "filter_field, model_attr, expect_result",
     [
         ("id__in", "pk", True),
