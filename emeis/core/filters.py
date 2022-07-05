@@ -5,7 +5,7 @@ from django_filters import FilterSet
 from django_filters.filters import CharFilter
 from rest_framework import filters
 
-from emeis.core.models import Scope, User
+from emeis.core.models import ACL, Scope, User
 
 
 class EmeisSearchFilter(filters.SearchFilter):
@@ -61,6 +61,17 @@ class UserFilterset(FilterSet):
             "last_name": ["exact", "icontains", "contains"],
             "email": ["exact", "in"],
             "is_active": ["exact"],
+        }
+
+
+class ACLFilterset(FilterSet):
+    class Meta:
+        model = ACL
+        fields = {
+            "id": ["exact", "in"],
+            "user": ["exact", "in"],
+            "scope": ["exact", "in"],
+            "role": ["exact", "in"],
         }
 
 

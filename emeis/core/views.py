@@ -187,7 +187,7 @@ class PermissionViewSet(BaseViewset):
 class ACLViewSet(BaseViewset):
     serializer_class = serializers.ACLSerializer
     queryset = models.ACL.objects.all()
-    filterset_fields = ("user", "scope", "role")
+    filterset_class = filters.ACLFilterset
     search_fields = [
         "scope__name",
         "scope__description",
