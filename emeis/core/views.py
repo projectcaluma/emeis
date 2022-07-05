@@ -4,6 +4,7 @@ from tempfile import NamedTemporaryFile
 import openpyxl
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
+from django.db.models import Prefetch
 from django.http import FileResponse
 from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext as _
@@ -19,7 +20,29 @@ from . import filters, models, serializers
 
 
 class BaseViewset(VisibilityViewMixin, PermissionViewMixin, views.ModelViewSet):
-    pass
+    def replace_prefetch(self, qs, lookup, viewset_to_use):
+        """Replace prefetch with a new prefetch respecting visibilities.
+
+        This also works if DRF didn't already add a prefetch itself.
+        Pass in the lookup (name of the field to the related object)
+        as well as the viewset from where the queryset should be pulled:
+        When retrieving the queryset from a viewset, the visibilities
+        are automatically applied.
+
+        Return a new queryset with the prefetch replaced or added
+        """
+
+        # Hacky hacky - remove the conflicting prefetches that DRF added,
+        # as otherwise the queries won't work anymore.
+        # There's no "official" way to do this in the ORM, and overriding
+        # DRF's get_queryset() method would be even more hacky.
+        qs._prefetch_related_lookups = tuple(
+            [p for p in qs._prefetch_related_lookups if lookup not in p]
+        )
+
+        # Now: prefetch using the visibility-filtered relation
+        related_queryset = viewset_to_use(request=self.request).get_queryset()
+        return qs.prefetch_related(Prefetch(lookup, queryset=related_queryset))
 
 
 class MeViewSet(RetrieveModelMixin, GenericViewSet):
@@ -80,6 +103,10 @@ class UserViewSet(BaseViewset):
         "address",
         "city",
     ]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return self.replace_prefetch(qs, "acls", ACLViewSet)
 
     @action(methods=["get"], detail=False)
     def export(self, request):
@@ -145,6 +172,10 @@ class ScopeViewSet(BaseViewset):
     ]
     filterset_class = filters.ScopeFilterset
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return self.replace_prefetch(qs, "acls", ACLViewSet)
+
 
 class RoleViewSet(BaseViewset):
     serializer_class = serializers.RoleSerializer
@@ -163,6 +194,10 @@ class RoleViewSet(BaseViewset):
         "name",
         "description",
     ]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return self.replace_prefetch(qs, "acls", ACLViewSet)
 
 
 class PermissionViewSet(BaseViewset):
@@ -186,7 +221,7 @@ class PermissionViewSet(BaseViewset):
 
 class ACLViewSet(BaseViewset):
     serializer_class = serializers.ACLSerializer
-    queryset = models.ACL.objects.all()
+    queryset = models.ACL.objects.all().select_related("user", "scope", "role")
     filterset_class = filters.ACLFilterset
     search_fields = [
         "scope__name",

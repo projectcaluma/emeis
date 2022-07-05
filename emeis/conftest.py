@@ -23,6 +23,15 @@ def reset_config_classes(settings):
     core_config.ready()
 
 
+@pytest.fixture
+def set_visibilities(settings):
+    def fixture(visibility_classes):
+        settings.GENERIC_PERMISSIONS_VISIBILITY_CLASSES = visibility_classes
+        apps.get_app_config("generic_permissions").ready()
+
+    return fixture
+
+
 def register_module(module):
     for _, obj in inspect.getmembers(module):
         if isinstance(obj, FactoryMetaClass) and not obj._meta.abstract:
