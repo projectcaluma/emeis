@@ -2,6 +2,8 @@ from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from generic_permissions.validation import ValidatorMixin
 from rest_framework_json_api import serializers
+from rest_framework_json_api.relations import SerializerMethodResourceRelatedField
+
 
 from .models import ACL, Permission, Role, Scope, User
 
@@ -45,11 +47,21 @@ class MyACLSerializer(BaseSerializer):
 
 
 class UserSerializer(BaseSerializer):
-    acls = serializers.ResourceRelatedField(many=True, read_only=True)
+    acls = SerializerMethodResourceRelatedField(model=ACL, many=True, read_only=True)
 
     included_serializers = {
         "acls": "emeis.core.serializers.ACLSerializer",
     }
+
+    def get_acls(self, instance):
+        if "request" not in self.context:
+            return instance.acls.all()
+
+        from emeis.core.views import ACLViewSet
+
+        view = ACLViewSet()
+        view.request = self.context["request"]
+        return view.get_queryset().filter(user=instance)
 
     class Meta:
         model = User
