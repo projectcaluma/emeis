@@ -100,6 +100,29 @@ def test_declared_filters(
         assert ret_users == []
 
 
+@pytest.mark.parametrize(
+    "filter_field, model_attr",
+    [
+        ("user__in", "user_id"),
+        ("role__in", "role_id"),
+        ("scope__in", "scope_id"),
+    ],
+)
+def test_acl_filters(admin_client, acl_factory, filter_field, model_attr):
+    acl1, acl2, _ = acl_factory.create_batch(3)
+
+    attr_value_1 = getattr(acl1, model_attr)
+    attr_value_2 = getattr(acl2, model_attr)
+
+    resp = admin_client.get(
+        reverse("acl-list"),
+        {f"filter[{filter_field}]": f"{attr_value_1},{attr_value_2}"},
+    )
+
+    ret_acls = [acl["id"] for acl in resp.json()["data"]]
+    assert set([str(acl1.pk), str(acl2.pk)]) == set(ret_acls)
+
+
 def test_scope_id_filter(admin_client, scope_factory):
     scope1, _, scope3 = scope_factory.create_batch(3)
 
