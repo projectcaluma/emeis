@@ -1,6 +1,6 @@
 django~=3.2
 django-cors-headers==3.11.0
-django-environ==0.8.1
+django-environ~=0.9
 django-filter==22.1
 django-generic-api-permissions==0.2.0
 django-localized-fields==6.6
@@ -13,4 +13,4 @@ pyexcel==0.7.0
 pyexcel-xlsx==0.6.0
 requests==2.27.1
 uwsgi==2.0.20
-openpyxl==3.0.9
+openpyxl==3.0.10
