@@ -36,7 +36,7 @@ setup(
     install_requires=[
         "django~=3.2",
         "django-cors-headers>=3.7.0,<4",
-        "django-environ<0.9",
+        "django-environ~=0.9",
         "django-filter<23",
         "django-generic-api-permissions<1",
         "django-localized-fields>=6.4,<7",
