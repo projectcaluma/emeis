@@ -1,8 +1,12 @@
 from django.conf import settings
+from django.contrib.postgres.fields.hstore import KeyTransform
+from django.core.exceptions import FieldDoesNotExist
 from django.db.models import TextField
 from django.db.models.functions import Cast, Lower
+from django.utils import translation
 from django_filters import FilterSet
 from django_filters.filters import CharFilter
+from localized_fields.fields import LocalizedField
 from rest_framework import filters
 
 from emeis.core.models import ACL, Scope, User
@@ -94,8 +98,18 @@ class EmeisOrderingFilter(filters.OrderingFilter):
         desc = field.startswith("-")
         field_name = field[1:] if desc else field
 
+        field_col = field_name
+        try:
+            model_field = view.queryset.model._meta.get_field(field_name)
+            if isinstance(model_field, LocalizedField):
+                field_col = KeyTransform(translation.get_language(), field_name)
+        except FieldDoesNotExist:
+            # This happens with metainfo__foobar style lookups,
+            # which we don't need to worry about here
+            pass
+
         if field_name in self._get_case_insensitive_fields(view):
-            field_expr = Lower(Cast(field_name, output_field=TextField()))
+            field_expr = Lower(Cast(field_col, output_field=TextField()))
             return field_expr.desc() if desc else field_expr
         return field
 

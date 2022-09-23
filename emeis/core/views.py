@@ -126,7 +126,7 @@ class UserViewSet(BaseViewset):
         for row, user in enumerate(queryset.iterator(), start=2):
             acl_string = "\n".join(
                 [
-                    f"{acl.role.name}: {acl.scope.full_name()}"
+                    f"{acl.role.name}: {acl.scope.full_name}"
                     for acl in user.acls.all()
                     .select_related("scope", "role")
                     .order_by("role__name")
@@ -169,6 +169,7 @@ class ScopeViewSet(BaseViewset):
     case_insensitive_ordering_fields = [
         "name",
         "description",
+        "full_name",
     ]
     filterset_class = filters.ScopeFilterset
 

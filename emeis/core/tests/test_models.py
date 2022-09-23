@@ -78,6 +78,6 @@ def test_scope_hierarchical_name(db, scope_factory):
     grandchild = scope_factory(parent=child)
 
     assert (
-        grandchild.full_name(sep=">")
-        == f"{root.name} > {child.name} > {grandchild.name}"
+        grandchild.full_name
+        == f"{root.name} \u00bb {child.name} \u00bb {grandchild.name}"
     )

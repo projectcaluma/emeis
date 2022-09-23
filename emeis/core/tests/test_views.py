@@ -150,7 +150,7 @@ def test_scope_full_name_api(db, scope_factory, client):
     response = client.get(url)
 
     full_name = response.json()["data"]["attributes"]["full-name"]
-    assert full_name["en"] == child.full_name(language="en")
+    assert full_name["en"] == child.full_name
     assert full_name["en"].startswith(parent.name["en"])
     assert full_name["en"].endswith(child.name["en"])
 
@@ -265,3 +265,39 @@ def test_user_export(client, user_factory, acl_factory, snapshot):
     sheet = book.bookdict.popitem()[1]
 
     snapshot.assert_match(sheet)
+
+
+def test_order_scopes_by_full_name(client, scope_factory, settings):
+    settings.LANGUAGES = [
+        ("de", "german"),
+        ("en", "english"),
+    ]
+    r1 = scope_factory(name={"de": "erster", "en": "secondary"})
+    r2 = scope_factory(name={"de": "zweiter", "en": "primary"})
+
+    r1child1 = scope_factory(name={"de": "alfa", "en": "mike"}, parent=r1)
+    r1child2 = scope_factory(name={"de": "kilo", "en": "echo"}, parent=r1)
+    r1child3 = scope_factory(name={"de": "zulu", "en": "bravo"}, parent=r1)
+
+    r2child1 = scope_factory(name={"de": "delta", "en": "hotel"}, parent=r2)
+    r2child2 = scope_factory(name={"de": "golf", "en": "foxtrot"}, parent=r2)
+
+    expected_sorting = {
+        "de": [r1, r1child1, r1child2, r1child3, r2, r2child1, r2child2],
+        "en": [r2, r2child2, r2child1, r1, r1child3, r1child2, r1child1],
+    }
+
+    for lang in ["de", "en"]:
+        resp = client.get(
+            reverse("scope-list"),
+            {"sort": "full_name"},
+            HTTP_ACCEPT_LANGUAGE=lang,
+        )
+        received_names = [
+            entry["attributes"]["full-name"][lang] for entry in resp.json()["data"]
+        ]
+        received_ids = [entry["id"] for entry in resp.json()["data"]]
+        expected_ids = [str(entry.pk) for entry in expected_sorting[lang]]
+
+        assert sorted(received_names) == received_names
+        assert received_ids == expected_ids
