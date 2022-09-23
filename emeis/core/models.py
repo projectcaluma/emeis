@@ -5,6 +5,8 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, UserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from localized_fields.fields import LocalizedCharField, LocalizedTextField
@@ -158,6 +160,11 @@ class User(UUIDModel, AbstractBaseUser):
 
 class Scope(MPTTModel, UUIDModel):
     name = LocalizedCharField(_("scope name"), blank=False, null=False, required=False)
+
+    full_name = LocalizedCharField(
+        _("scope name"), blank=True, null=True, required=False
+    )
+
     description = LocalizedTextField(
         _("scope description"), null=True, blank=True, required=False
     )
@@ -170,19 +177,25 @@ class Scope(MPTTModel, UUIDModel):
     )
     is_active = models.BooleanField(default=True)
 
-    def full_name(self, sep="\u00bb", language=None):
-        """Return full name of the scope, including parent scopes."""
-        own_name = str(self.name) if language is None else self.name[language]
-
-        if self.parent:
-            parent_name = self.parent.full_name(sep, language)
-            return f"{parent_name} {sep} {own_name}"
-
-        return own_name
-
     def __str__(self):
-        name = self.full_name()
-        return f"{type(self).__name__} ({name}, pk={self.pk})"
+        return f"{type(self).__name__} ({self.full_name}, pk={self.pk})"
+
+
+@receiver(pre_save, sender=Scope)
+def set_full_name(instance, sender, **kwargs):
+    sep = "\u00bb"
+
+    languages = [lang for lang, _ in settings.LANGUAGES]
+
+    instance.full_name = {lang: instance.name[lang] for lang in languages}
+
+    parent = instance.parent
+    while parent:
+        instance.full_name = {
+            lang: f"{parent.name[lang]} {sep} {instance.full_name[lang]}"
+            for lang in languages
+        }
+        parent = parent.parent
 
 
 class Role(SlugModel):
