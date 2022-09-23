@@ -13,4 +13,4 @@ pyexcel==0.7.0
 pyexcel-xlsx==0.6.0
 requests==2.27.1
 uwsgi==2.0.20
-openpyxl==3.0.9
+openpyxl==3.0.10
