@@ -1,3 +1,4 @@
+## v1.1.0 (23. September 2022)
 
 ### Feature
 * **scopes:** Denormalize full_name and use it for sorting ([`4921028`](https://github.com/projectcaluma/emeis/commit/49210282c2dca850f895cb6e2b394f9ed35171bc))
