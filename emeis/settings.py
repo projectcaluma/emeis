@@ -147,6 +147,12 @@ LANGUAGES = (
 )
 LOCALE_PATHS = env.list("LOCALE_PATHS", default=[django_root("emeis", "locale")])
 
+_lang_codes = [lang for lang, _ in LANGUAGES]
+LOCALIZED_FIELDS_FALLBACKS = {
+    lang: [LANGUAGE_CODE] + _lang_codes for lang, _ in LANGUAGES
+}
+del _lang_codes
+
 # Force models to be monolingual despite them having
 # multilingual fields. This causes searches to use a "fixed"
 # locale instead of the currently-selected one. Note that

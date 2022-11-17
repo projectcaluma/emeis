@@ -3,12 +3,12 @@ from django.contrib.postgres.fields.hstore import KeyTransform
 from django.core.exceptions import FieldDoesNotExist
 from django.db.models import TextField
 from django.db.models.functions import Cast, Lower
-from django.utils import translation
 from django_filters import FilterSet
 from django_filters.filters import CharFilter
 from localized_fields.fields import LocalizedField
 from rest_framework import filters
 
+from emeis.core import utils
 from emeis.core.models import ACL, Scope, User
 
 
@@ -95,6 +95,9 @@ class EmeisOrderingFilter(filters.OrderingFilter):
         ]
 
     def _make_ordering_field(self, field, view):
+        model_name = view.queryset.model.__name__
+        lang = utils.forced_or_current_lang(model_name)
+
         desc = field.startswith("-")
         field_name = field[1:] if desc else field
 
@@ -102,7 +105,8 @@ class EmeisOrderingFilter(filters.OrderingFilter):
         try:
             model_field = view.queryset.model._meta.get_field(field_name)
             if isinstance(model_field, LocalizedField):
-                field_col = KeyTransform(translation.get_language(), field_name)
+
+                field_col = KeyTransform(lang, field_name)
         except FieldDoesNotExist:
             # This happens with metainfo__foobar style lookups,
             # which we don't need to worry about here
