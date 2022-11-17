@@ -7,7 +7,7 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from django.utils import timezone
+from django.utils import timezone, translation
 from django.utils.translation import gettext_lazy as _
 from localized_fields.fields import LocalizedCharField, LocalizedTextField
 from mptt.models import MPTTModel, TreeForeignKey
@@ -180,6 +180,9 @@ class Scope(MPTTModel, UUIDModel):
     def __str__(self):
         return f"{type(self).__name__} ({self.full_name}, pk={self.pk})"
 
+    class Meta:
+        ordering = ["full_name"]
+
 
 @receiver(pre_save, sender=Scope)
 def set_full_name(instance, sender, **kwargs):
@@ -187,15 +190,29 @@ def set_full_name(instance, sender, **kwargs):
 
     languages = [lang for lang, _ in settings.LANGUAGES]
 
-    instance.full_name = {lang: instance.name[lang] for lang in languages}
+    forced_lang = settings.EMEIS_FORCE_MODEL_LOCALE.get("scope", None)
+
+    if forced_lang:
+        # If scope is forced monolingual, do not fill non-forced language fields
+        languages = [forced_lang]
+
+    for lang in languages:
+        with translation.override(lang):
+            instance.full_name[lang] = str(instance.name)
 
     parent = instance.parent
     while parent:
-        instance.full_name = {
-            lang: f"{parent.name[lang]} {sep} {instance.full_name[lang]}"
-            for lang in languages
-        }
+        for lang in languages:
+            with translation.override(lang):
+                new_fullname = f"{parent.name} {sep} {instance.full_name[lang]}"
+                instance.full_name[lang] = new_fullname
         parent = parent.parent
+
+    if forced_lang:
+        # Ensure only the "forced" language full_name is set, and nothing else
+        full_name = instance.full_name[forced_lang]
+        instance.full_name.clear()
+        instance.full_name[forced_lang] = full_name
 
 
 class Role(SlugModel):

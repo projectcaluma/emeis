@@ -3,6 +3,7 @@ from unicodedata import normalize
 import pytest
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.base_user import BaseUserManager
+from django.utils import translation
 from hypothesis import given
 from hypothesis.strategies import emails, text
 from mptt.exceptions import InvalidMove
@@ -81,3 +82,50 @@ def test_scope_hierarchical_name(db, scope_factory):
         grandchild.full_name
         == f"{root.name} \u00bb {child.name} \u00bb {grandchild.name}"
     )
+
+
+@pytest.mark.parametrize(
+    "language, expected",
+    [
+        ("de", "DE ROOT » FR CHILD » DE GRANDCHILD"),
+        ("fr", "DE ROOT » FR CHILD » FR GRANDCHILD"),
+    ],
+)
+def test_scope_hierarchical_name_fallbacks(
+    db, language, scope_factory, expected, settings
+):
+    settings.LANGUAGE_CODE = "de"
+    settings.LANGUAGES = [("de", "de"), ("fr", "fr")]
+    settings.LOCALIZED_FIELDS_FALLBACKS = {"fr": ["de"], "de": ["fr"]}
+    with translation.override(language):
+        root = scope_factory()
+        root.name = {"de": "DE ROOT"}
+        root.save()
+        child = scope_factory(parent=root)
+        child.name = {"fr": "FR CHILD"}
+        child.save()
+        grandchild = scope_factory(parent=child)
+        grandchild.name = {"de": "DE GRANDCHILD", "fr": "FR GRANDCHILD"}
+        grandchild.save()
+
+        assert str(grandchild.full_name) == expected
+
+
+@pytest.mark.parametrize("language", ["de", "fr"])
+def test_scope_fullname_when_forced_language(db, language, scope_factory, settings):
+
+    settings.LANGUAGE_CODE = "de"
+    settings.LANGUAGES = [("de", "de"), ("fr", "fr")]
+    settings.EMEIS_FORCE_MODEL_LOCALE = {"scope": "de"}
+
+    with translation.override(language):
+        root = scope_factory(name="DE ROOT")
+        child = scope_factory(parent=root, name={"de": "DE CHILD", "fr": "FR CHILD"})
+        grandchild = scope_factory(
+            parent=child, name={"de": "DE GRANDCHILD", "fr": "FR GRANDCHILD"}
+        )
+
+        # Trigger pre_save `set_full_name()` hook
+        grandchild.save()
+        assert grandchild.full_name.de == "DE ROOT » DE CHILD » DE GRANDCHILD"
+        assert grandchild.full_name.fr == ""
