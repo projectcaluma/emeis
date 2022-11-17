@@ -301,3 +301,30 @@ def test_order_scopes_by_full_name(client, scope_factory, settings):
 
         assert sorted(received_names) == received_names
         assert received_ids == expected_ids
+
+
+@pytest.mark.parametrize("language", ["de", "fr"])
+def test_sorted_scopes_when_forced_language(
+    db, client, language, scope_factory, settings
+):
+    # If forced locale is used, the request language should play no
+    # role in the resulting order
+    settings.LANGUAGE_CODE = "de"
+    settings.LANGUAGES = [("de", "de"), ("fr", "fr")]
+    settings.EMEIS_FORCE_MODEL_LOCALE = {"scope": "de"}
+
+    # contrary sorting: de: eins -> zwei, fr: deux -> un
+    scope_factory(name={"de": "eins", "fr": "un"})
+    scope_factory(name={"de": "zwei", "fr": "deux"})
+
+    resp = client.get(
+        reverse("scope-list"),
+        {"sort": "full_name"},
+        HTTP_ACCEPT_LANGUAGE=language,
+    )
+
+    received_names = [
+        entry["attributes"]["full-name"]["de"] for entry in resp.json()["data"]
+    ]
+
+    assert received_names == ["eins", "zwei"]
