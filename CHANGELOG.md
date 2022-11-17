@@ -1,3 +1,13 @@
+## v1.2.0 (17 November 2022)
+
+### Feature
+* **views:** Apply localized default ordering ([`7e1265c`](https://github.com/projectcaluma/emeis/commit/7e1265ccdd3f2a81dba3060320f58ab7d99b2dde))
+
+### Fix
+* **models:** Set scope full_name correctly in all situations ([`47ff9b5`](https://github.com/projectcaluma/emeis/commit/47ff9b502eeeaa056113bd40966b6052491384b6))
+* **ordering:** Correct ordering when forced local is in use ([`a7ee5d3`](https://github.com/projectcaluma/emeis/commit/a7ee5d3bc8e93d5f778b452530aa12219ba9ab15))
+
+
 ## v1.1.0 (23. September 2022)
 
 ### Feature
