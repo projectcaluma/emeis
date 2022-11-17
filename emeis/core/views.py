@@ -1,6 +1,7 @@
 import io
 from tempfile import NamedTemporaryFile
 
+import localized_fields.fields
 import openpyxl
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
@@ -15,6 +16,8 @@ from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_json_api import views
+
+from emeis.core import utils
 
 from . import filters, models, serializers
 
@@ -154,7 +157,43 @@ class UserViewSet(BaseViewset):
         )
 
 
-class ScopeViewSet(BaseViewset):
+class MultilingualDefaultOrdering:
+    """Add / modify default ordering for localized fields.
+
+    Even though Django can deal with localized fields and will happily
+    add them to "ORDER BY" clause, Postgresql's documentation states that
+    this is not "particularly useful". We should sort by a specific language
+    instead, even "by default".
+
+    This adds a .order_by() call to the base queryset, using the model's
+    default ordering. If the default ordering is a localized field, we
+    use the currently used language for it (respecting forced-monolingual
+    models as well)
+
+    Each order_by() call will clear any previous ordering, so it's safe
+    for us to "force" a default ordering here, it can still be overridden
+    in regular ordering filters etc which come after
+    """
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        lang = utils.forced_or_current_lang(qs.model.__name__)
+        ordering = qs.model._meta.ordering
+
+        def _order_field_suffix_if_needed(field_name):
+            field = qs.model._meta.get_field(field_name)
+            if isinstance(field, localized_fields.fields.LocalizedField):
+                return f"{field_name}__{lang}"
+
+            return field_name
+
+        new_ordering = [_order_field_suffix_if_needed(field) for field in ordering]
+
+        qs = qs.order_by(*new_ordering)
+        return qs
+
+
+class ScopeViewSet(MultilingualDefaultOrdering, BaseViewset):
     serializer_class = serializers.ScopeSerializer
     queryset = models.Scope.objects.all()
     search_fields = (
@@ -175,10 +214,12 @@ class ScopeViewSet(BaseViewset):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return self.replace_prefetch(qs, "acls", ACLViewSet)
+        qs = self.replace_prefetch(qs, "acls", ACLViewSet)
+
+        return qs
 
 
-class RoleViewSet(BaseViewset):
+class RoleViewSet(MultilingualDefaultOrdering, BaseViewset):
     serializer_class = serializers.RoleSerializer
     queryset = models.Role.objects.all()
     search_fields = (
