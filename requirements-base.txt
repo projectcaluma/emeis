@@ -4,7 +4,7 @@ django-environ~=0.9
 django-filter==22.1
 django-generic-api-permissions==0.2.0
 django-localized-fields==6.6
-django_mptt==0.13.4
+django_mptt==0.14.0
 django-postgres-extra==2.0.5
 djangorestframework==3.13.1
 djangorestframework-jsonapi==5.0.0
