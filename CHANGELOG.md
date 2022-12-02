@@ -1,3 +1,9 @@
+## v1.2.1 (2 December 2022)
+
+### Fix
+* **signals:** Do not crash while loading fixtures ([`be45eff`](https://github.com/projectcaluma/emeis/commit/be45eff565e25c060dd0ddb9f2a4962e692e7b35))
+
+
 ## v1.2.0 (17 November 2022)
 
 ### Feature
