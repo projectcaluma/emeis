@@ -186,6 +186,11 @@ class Scope(MPTTModel, UUIDModel):
 
 @receiver(pre_save, sender=Scope)
 def set_full_name(instance, sender, **kwargs):
+    if kwargs.get("raw"):  # pragma: no cover
+        # Raw is set while loading fixtures. In those
+        # cases we don't want to mess with data that
+        # may not be there yet
+        return
     sep = "\u00bb"
 
     languages = [lang for lang, _ in settings.LANGUAGES]
