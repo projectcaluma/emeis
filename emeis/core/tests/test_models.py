@@ -113,7 +113,6 @@ def test_scope_hierarchical_name_fallbacks(
 
 @pytest.mark.parametrize("language", ["de", "fr"])
 def test_scope_fullname_when_forced_language(db, language, scope_factory, settings):
-
     settings.LANGUAGE_CODE = "de"
     settings.LANGUAGES = [("de", "de"), ("fr", "fr")]
     settings.EMEIS_FORCE_MODEL_LOCALE = {"scope": "de"}
@@ -129,3 +128,22 @@ def test_scope_fullname_when_forced_language(db, language, scope_factory, settin
         grandchild.save()
         assert grandchild.full_name.de == "DE ROOT » DE CHILD » DE GRANDCHILD"
         assert grandchild.full_name.fr == ""
+
+
+def test_update_full_name_of_child(db, scope_factory):
+    root = scope_factory(parent=None, name="r")
+    child = scope_factory(parent=root, name="c")
+    grandchild = scope_factory(parent=child, name="g")
+
+    # full name should be r -> c -> g
+    assert str(grandchild.full_name) == "r » c » g"
+
+    sibling = scope_factory(parent=root, name="s")
+
+    # move parent of grandchild - this should trigger an
+    # update on the grandchild's full name
+    child.parent = sibling
+    child.save()
+
+    grandchild.refresh_from_db()
+    assert str(grandchild.full_name) == "r » s » c » g"
