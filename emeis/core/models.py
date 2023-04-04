@@ -219,6 +219,12 @@ def set_full_name(instance, sender, **kwargs):
         instance.full_name.clear()
         instance.full_name[forced_lang] = full_name
 
+    # Force update of all children (recursively)
+    for child in instance.children.all():
+        # save() triggers the set_full_name signal handler, which will
+        # recurse all the way down, updating the full_name
+        child.save()
+
 
 class Role(SlugModel):
     name = LocalizedCharField(_("role name"), blank=False, null=False, required=False)
