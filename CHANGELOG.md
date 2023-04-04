@@ -1,3 +1,9 @@
+## v1.2.2 (4 April 2023)
+
+### Fix
+* **scopes:** Update subscope's full names when scope changes ([`4f125ce`](https://github.com/projectcaluma/emeis/commit/4f125cee8f2191f4410d333eea951e47317270d0))
+
+
 ## v1.2.1 (2 December 2022)
 
 ### Fix
