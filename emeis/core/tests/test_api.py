@@ -209,3 +209,37 @@ def test_api_destroy(fixture, admin_client, snapshot, viewset):
         response = admin_client.delete(url)
 
     assert_response(response, context, snapshot, False)
+
+
+@pytest.mark.parametrize(
+    "set_new_parent_to, expect_error",
+    [
+        ("self", "A node may not be made a child of itself."),
+        ("child", "A node may not be made a child of any of its descendants."),
+    ],
+)
+def test_validate_circular_parents(
+    admin_client, scope_factory, set_new_parent_to, expect_error
+):
+    scope_1 = scope_factory()
+    scope_2 = scope_factory(parent=scope_1)
+    scope_3 = scope_factory(parent=scope_2)
+
+    new_parent = {"self": scope_2.pk, "child": scope_3.pk}[set_new_parent_to]
+
+    url = reverse("scope-detail", args=[scope_2.pk])
+    data = {
+        "data": {
+            "attributes": {},
+            "relationships": {
+                "parent": {"data": {"type": "scopes", "id": str(new_parent)}}
+            },
+            "id": str(scope_2.pk),
+            "type": "scopes",
+        }
+    }
+
+    with pytest.raises(Exception) as excinfo:
+        admin_client.patch(url, data)
+
+    assert excinfo.match(expect_error)
