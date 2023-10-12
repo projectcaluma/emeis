@@ -1,3 +1,9 @@
+## v1.3.0 (12 October 2023)
+
+### Feature
+* **export:** Add filtering support ([`7830dc3`](https://github.com/projectcaluma/emeis/commit/7830dc3c96fdc5ee376576eab434e6e6f22eb85f))
+* **tests:** Verify that creating circular scope structures fails ([`629c20e`](https://github.com/projectcaluma/emeis/commit/629c20eb81d3cb0510777a5999b6a7826fb36592))
+
 ## v1.2.2 (4 April 2023)
 
 ### Fix
