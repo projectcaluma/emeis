@@ -114,7 +114,7 @@ class UserViewSet(BaseViewset):
     @action(methods=["get"], detail=False)
     def export(self, request):
         """Export user list as excel table."""
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset())
 
         # we use a template to set the headers to bold and align the columns to fit on a DIN-A4 page
         workbook = openpyxl.load_workbook(settings.USER_EXPORT_TEMPLATE_PATH)

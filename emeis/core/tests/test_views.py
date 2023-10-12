@@ -254,10 +254,12 @@ def test_user_export(client, user_factory, acl_factory, snapshot):
     user = user_factory()
     acl_factory.create_batch(9)
     acl_factory.create_batch(2, user=user)
+    # this user should not be exported
+    user_factory(is_active=False)
 
     url = reverse("user-export")
 
-    response = client.get(url)
+    response = client.get(url, {"filter[isActive]": "true"})
 
     assert response.status_code == HTTP_200_OK
 

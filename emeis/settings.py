@@ -42,7 +42,14 @@ INSTALLED_APPS = [
 ]
 
 if ENV == "dev":
-    INSTALLED_APPS.append("django_extensions")
+    try:
+        __import__("django_extensions")
+        INSTALLED_APPS.append("django_extensions")
+    except ImportError:  # pragma: no cover
+        # Nothing bad, just won't have django-extensions
+        # niceties installed (Most likely Emeis was built
+        # without dev dependencies)
+        pass
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
