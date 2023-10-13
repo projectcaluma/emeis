@@ -11,6 +11,6 @@ djangorestframework-jsonapi==5.0.0
 mozilla-django-oidc==2.0.0
 pyexcel==0.7.0
 pyexcel-xlsx==0.6.0
-requests==2.27.1
+requests==2.31.0
 uwsgi==2.0.22
 openpyxl==3.0.10
