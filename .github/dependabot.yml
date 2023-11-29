@@ -24,7 +24,8 @@ updates:
   ignore:
   - dependency-name: python
     versions:
-    - ">=3.7"
+    # Django 3.2 LTS only supports Python up to 3.10
+    - ">3.10"
   commit-message:
     prefix: chore
     include: scope
