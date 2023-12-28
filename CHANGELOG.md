@@ -1,3 +1,8 @@
+## v1.3.1 (28 December 2023)
+
+### Fix
+* **deps:** update dependencies([`8890b3b`](https://github.com/projectcaluma/emeis/commit/8890b3beb5b31c7f36d5dd71b69afedc10ecf2f9))
+
 ## v1.3.0 (12 October 2023)
 
 ### Feature
