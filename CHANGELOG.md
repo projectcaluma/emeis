@@ -1,3 +1,9 @@
+## v1.3.2 (28 December 2023)
+
+## Fix
+
+* fix(setup): update install requirements ([`2dff19b`](https://github.com/projectcaluma/emeis/commit/2dff19bf08af138f1b09e778fc7a15eda52cbcc1))
+
 ## v1.3.1 (28 December 2023)
 
 ### Fix
