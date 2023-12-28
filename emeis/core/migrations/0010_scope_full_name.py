@@ -15,7 +15,6 @@ def set_full_name(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("emeis_core", "0009_alter_scope_parent"),
     ]

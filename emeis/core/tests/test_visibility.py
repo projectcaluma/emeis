@@ -19,7 +19,6 @@ def test_own_and_admin_visibility(
     user,
     requesting_user,
 ):
-
     settings.GENERIC_PERMISSIONS_VISIBILITY_CLASSES = [
         "emeis.core.visibilities.OwnAndAdmin"
     ]

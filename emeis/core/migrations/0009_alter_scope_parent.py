@@ -6,7 +6,6 @@ import mptt.fields
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("emeis_core", "0008_scope_is_active"),
     ]

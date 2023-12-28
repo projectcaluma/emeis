@@ -19,7 +19,6 @@ from emeis.core.models import User
     "partial_search", [lambda val: val[:-2], lambda val: val[2:], lambda val: val]
 )
 def test_search_users(admin_client, acl_factory, user_attribute, partial_search):
-
     users_list = [acl.user for acl in acl_factory.create_batch(5)]
 
     resp = admin_client.get(
