@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("emeis_core", "0007_change_JSONField_to_native_django_model_field"),
     ]

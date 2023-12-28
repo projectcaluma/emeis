@@ -5,7 +5,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("emeis_core", "0004_use_abstract_base_user"),
     ]

@@ -14,7 +14,6 @@ import emeis.core.models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = []

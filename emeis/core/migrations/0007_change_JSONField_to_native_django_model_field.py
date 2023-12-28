@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("emeis_core", "0006_rename_field_meta_metainfo"),
     ]

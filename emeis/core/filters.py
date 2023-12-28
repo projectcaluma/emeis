@@ -105,7 +105,6 @@ class EmeisOrderingFilter(filters.OrderingFilter):
         try:
             model_field = view.queryset.model._meta.get_field(field_name)
             if isinstance(model_field, LocalizedField):
-
                 field_col = KeyTransform(lang, field_name)
         except FieldDoesNotExist:
             # This happens with metainfo__foobar style lookups,

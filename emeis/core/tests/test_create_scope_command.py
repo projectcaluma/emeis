@@ -8,7 +8,7 @@ from emeis.core.models import ACL, Scope
 
 
 def _replace_in_text(in_str, **kwargs):
-    if type(in_str) == dict:
+    if isinstance(in_str, dict):
         return {k: _replace_in_text(v, **kwargs) for k, v in in_str.items()}
     for key, val in kwargs.items():
         in_str = in_str.replace(f"${key}", str(val))
@@ -168,7 +168,7 @@ def test_create_success(
         assert new_scope != scope
 
     stdout, stderr = capsys.readouterr()
-    if type(expect_out) == dict:
+    if isinstance(expect_out, dict):
         assert json.loads(stdout) == expect_out
     else:
         assert stdout.strip() == expect_out.strip()
