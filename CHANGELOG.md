@@ -1,3 +1,9 @@
+# v1.3.4 (16 December 2024)
+
+## Fix
+
+* fix(setup): further loosen base requirements ([`8b21078`](https://github.com/projectcaluma/emeis/commit/8b21078f9273203a16da6077cf8efddad03fd217))
+
 # v1.3.3 (29 December 2023)
 
 ## Fix
