@@ -1,31 +1,36 @@
 version: 2
 updates:
-- package-ecosystem: pip
-  directory: "/"
-  schedule:
-    interval: weekly
-    day: friday
-    time: "12:00"
-    timezone: "Europe/Zurich"
-  ignore:
-  - dependency-name: django
-    versions:
-    - ">=3"
-  commit-message:
-    prefix: chore
-    include: scope
-- package-ecosystem: docker
-  directory: "/"
-  schedule:
-    interval: weekly
-    day: friday
-    time: "12:00"
-    timezone: "Europe/Zurich"
-  ignore:
-  - dependency-name: python
-    versions:
-    # Django 3.2 LTS only supports Python up to 3.10
-    - ">3.10"
-  commit-message:
-    prefix: chore
-    include: scope
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: friday
+      time: "12:00"
+      timezone: "Europe/Zurich"
+    open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: django
+        versions:
+          - ">=4"
+      - dependency-name: python-semantic-release
+        versions:
+          - ">=8"
+  - package-ecosystem: docker
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: friday
+      time: "12:00"
+      timezone: "Europe/Zurich"
+    open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: python
+        versions:
+          - ">=3.9"
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: friday
+      time: "12:00"
+      timezone: "Europe/Zurich"
