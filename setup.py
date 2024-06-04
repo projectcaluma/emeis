@@ -40,7 +40,7 @@ setup(
         "django-filter<24",
         "django-generic-api-permissions<1",
         "django-localized-fields>=6.4,<7",
-        "django_mptt>=0.11,<2",
+        "django-tree-queries>=0.19.0",
         "django-postgres-extra<3",
         "djangorestframework>=3.12.4,<4",
         "djangorestframework-jsonapi>=4.3.0,<=6.1.0",

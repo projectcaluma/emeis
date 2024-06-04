@@ -1,4 +1,5 @@
 """Module to test api in a generic way."""
+
 import hashlib
 import json
 import re
@@ -10,6 +11,8 @@ from django.db.models.fields.related import ManyToManyDescriptor
 from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
 from rest_framework_json_api.renderers import JSONRenderer
+
+from emeis.core.models import Scope
 
 from ..views import (
     ACLViewSet,
@@ -188,6 +191,10 @@ def test_api_create(transactional_db, fixture, admin_client, viewset, snapshot):
 
 @pytest.mark.freeze_time("2017-05-21")
 def test_api_patch(fixture, admin_client, viewset, snapshot):
+    if isinstance(fixture, Scope):
+        # We need to get Scope through it's Tree manager, to get access to it's
+        # CTE attributes
+        fixture = Scope.objects.get(pk=fixture.pk)
     url = reverse("{0}-detail".format(viewset.base_name), args=[fixture.pk])
 
     serializer = viewset.serializer_class(fixture)
@@ -214,8 +221,8 @@ def test_api_destroy(fixture, admin_client, snapshot, viewset):
 @pytest.mark.parametrize(
     "set_new_parent_to, expect_error",
     [
-        ("self", "A node may not be made a child of itself."),
-        ("child", "A node may not be made a child of any of its descendants."),
+        ("self", "A node cannot be made a descendant of itself."),
+        ("child", "A node cannot be made a descendant of itself."),
     ],
 )
 def test_validate_circular_parents(

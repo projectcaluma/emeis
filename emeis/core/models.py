@@ -10,7 +10,7 @@ from django.dispatch import receiver
 from django.utils import timezone, translation
 from django.utils.translation import gettext_lazy as _
 from localized_fields.fields import LocalizedCharField, LocalizedTextField
-from mptt.models import MPTTModel, TreeForeignKey
+from tree_queries.models import TreeNode, TreeQuerySet
 
 
 def make_uuid():
@@ -158,7 +158,7 @@ class User(UUIDModel, AbstractBaseUser):
         return True
 
 
-class Scope(MPTTModel, UUIDModel):
+class Scope(TreeNode, UUIDModel):
     name = LocalizedCharField(_("scope name"), blank=False, null=False, required=False)
 
     full_name = LocalizedCharField(
@@ -168,20 +168,21 @@ class Scope(MPTTModel, UUIDModel):
     description = LocalizedTextField(
         _("scope description"), null=True, blank=True, required=False
     )
-    parent = TreeForeignKey(
-        "self",
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        related_name="children",
-    )
     is_active = models.BooleanField(default=True)
+
+    objects = TreeQuerySet.as_manager(with_tree_fields=True)
+
+    def save(self, *args, **kwargs):
+        # django-tree-queries does validation in TreeNode.clean(), which is not
+        # called by DRF (only by django forms), so we have to do this here
+        self.clean()
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{type(self).__name__} ({self.full_name}, pk={self.pk})"
 
     class Meta:
-        ordering = ["full_name"]
+        ordering = ["name"]
 
 
 @receiver(pre_save, sender=Scope)

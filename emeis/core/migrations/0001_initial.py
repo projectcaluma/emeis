@@ -6,7 +6,6 @@ import django.db.models.deletion
 import django.utils.timezone
 import localized_fields.fields.char_field
 import localized_fields.fields.text_field
-import mptt.fields
 from django.conf import settings
 from django.db import migrations, models
 
@@ -224,7 +223,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "parent",
-                    mptt.fields.TreeForeignKey(
+                    models.ForeignKey(
                         blank=True,
                         null=True,
                         on_delete=django.db.models.deletion.SET_NULL,

@@ -3,7 +3,6 @@ import json
 from django.core.management.base import BaseCommand
 
 from emeis.core.models import ACL, Role, Scope, User
-from emeis.core.utils import rebuild_mptt_model
 
 
 class Command(BaseCommand):
@@ -78,7 +77,6 @@ class Command(BaseCommand):
             options["name"] = json.loads(options["name"])
 
         new_scope = Scope.objects.create(name=options["name"], parent=parent)
-        rebuild_mptt_model(Scope)
         out_info["scope_id"] = str(new_scope.pk)
 
         if options["user"]:
