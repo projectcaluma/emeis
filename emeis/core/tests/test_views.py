@@ -3,6 +3,7 @@ from uuid import uuid4
 import pyexcel
 import pytest
 from django.urls import reverse
+from django.utils import translation
 from rest_framework.status import (
     HTTP_200_OK,
     HTTP_201_CREATED,
@@ -290,11 +291,12 @@ def test_order_scopes_by_full_name(client, scope_factory, settings):
     }
 
     for lang in ["de", "en"]:
-        resp = client.get(
-            reverse("scope-list"),
-            {"sort": "full_name"},
-            HTTP_ACCEPT_LANGUAGE=lang,
-        )
+        with translation.override(lang):
+            resp = client.get(
+                reverse("scope-list"),
+                {"sort": "full_name"},
+                HTTP_ACCEPT_LANGUAGE=lang,
+            )
         received_names = [
             entry["attributes"]["full-name"][lang] for entry in resp.json()["data"]
         ]

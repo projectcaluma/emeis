@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.auth",
     "mozilla_django_oidc",
-    "mptt",
     "generic_permissions.apps.GenericPermissionsConfig",
     "emeis.core.apps.DefaultConfig",
 ]

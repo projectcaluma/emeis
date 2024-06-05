@@ -3,10 +3,10 @@ from unicodedata import normalize
 import pytest
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.base_user import BaseUserManager
+from django.core.exceptions import ValidationError
 from django.utils import translation
 from hypothesis import given
 from hypothesis.strategies import emails, text
-from mptt.exceptions import InvalidMove
 
 from ..models import Scope, User
 
@@ -39,8 +39,9 @@ def test_scope_model(db):
     assert scope.parent.name["en"] == "parent scope"
 
     parent_scope.parent = scope
-    with pytest.raises(InvalidMove):
+    with pytest.raises(ValidationError) as excinfo:
         parent_scope.save()
+    assert excinfo.match("A node cannot be made a descendant of itself.")
 
 
 def test_scope_deletion(db, scope_factory):
@@ -56,7 +57,8 @@ def test_scope_deletion(db, scope_factory):
     child.delete()
 
     assert Scope.objects.count() == 3
-    assert list(Scope.objects.root_nodes()) == [root]
+
+    assert list(Scope.objects.filter(parent=None)) == [root]
 
 
 def test_can_authenticate(db, user):

@@ -142,12 +142,21 @@ def test_param_validation(
     ],
 )
 def test_create_success(
-    transactional_db, capsys, cmd_args, expect_out, expect_err, role, user, scope, acl
+    transactional_db,
+    capsys,
+    cmd_args,
+    expect_out,
+    expect_err,
+    role,
+    user,
+    scope,
+    acl,
 ):
     _replace_in_args(cmd_args, user=user, role=role, scope=scope)
+    count_before = Scope.objects.count()
     call_command("create_scope", *cmd_args)
 
-    new_scope = Scope.objects.all().order_by("created_at").last()
+    new_scope = Scope.objects.all().order_siblings_by("created_at").last()
     new_acl = ACL.objects.all().order_by("created_at").last()
 
     def replace_expectations(in_str):
@@ -165,7 +174,8 @@ def test_create_success(
 
     if not expect_err:
         # Check that a scope has indeed been created
-        assert new_scope != scope
+        count_after = Scope.objects.count()
+        assert count_before + 1 == count_after
 
     stdout, stderr = capsys.readouterr()
     if isinstance(expect_out, dict):

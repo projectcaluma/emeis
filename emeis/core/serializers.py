@@ -33,6 +33,10 @@ class MeSerializer(BaseSerializer):
 
 
 class MyACLSerializer(BaseSerializer):
+    scope = serializers.ResourceRelatedField(
+        queryset=Scope.objects.all(), required=False, many=False
+    )
+
     included_serializers = {
         "scope": "emeis.core.serializers.ScopeSerializer",
         "role": "emeis.core.serializers.RoleSerializer",
@@ -73,6 +77,22 @@ class UserSerializer(BaseSerializer):
 
 
 class ScopeSerializer(BaseSerializer):
+    level = serializers.SerializerMethodField()
+
+    def get_level(self, obj):
+        depth = getattr(obj, "tree_depth", None)
+        if depth is not None:
+            return depth
+
+        # Note: This should only happen on CREATE, never in GET (Either list,
+        # detail, or include!) In CREATE, it's a new object that doesn't come
+        # from a QS
+
+        # Sometimes, the model object may come out of a non-django-tree-queries
+        # QS, and thus would not have the `tree_*` attributes amended. Then we
+        # need to go the "slow path"
+        return obj.ancestors().count()
+
     class Meta:
         model = Scope
         fields = BaseSerializer.Meta.fields + (
@@ -83,7 +103,7 @@ class ScopeSerializer(BaseSerializer):
             "full_name",
             "is_active",
         )
-        read_only_fields = ["full_name"]
+        read_only_fields = ["full_name", "level"]
 
 
 class PermissionSerializer(BaseSerializer):
@@ -111,6 +131,9 @@ class RoleSerializer(BaseSerializer):
 
 
 class ACLSerializer(BaseSerializer):
+    scope = serializers.ResourceRelatedField(
+        queryset=Scope.objects.all(), required=False, many=False
+    )
     included_serializers = {
         "user": UserSerializer,
         "scope": ScopeSerializer,

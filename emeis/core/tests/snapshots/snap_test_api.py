@@ -9,8 +9,44 @@ snapshots = Snapshot()
 
 snapshots["test_api_create[ACLViewSet] 1"] = {
     "queries": [
+        """
+    WITH RECURSIVE __rank_table(
+        
+        "id",
+        "parent_id",
+        "rank_order"
+    ) AS (
+        SELECT "emeis_core_scope"."id", "emeis_core_scope"."parent_id", ROW_NUMBER() OVER (ORDER BY "emeis_core_scope"."name" ASC) AS "rank_order" FROM "emeis_core_scope"
+    ),
+    __tree (
+        
+        "tree_depth",
+        "tree_path",
+        "tree_ordering",
+        "tree_pk"
+    ) AS (
+        SELECT
+            
+            0,
+            array[T.id],
+            array[T.rank_order],
+            T."id"
+        FROM __rank_table T
+        WHERE T."parent_id" IS NULL
+
+        UNION ALL
+
+        SELECT
+            
+            __tree.tree_depth + 1,
+            __tree.tree_path || T.id,
+            __tree.tree_ordering || T.rank_order,
+            T."id"
+        FROM __rank_table T
+        JOIN __tree ON T."parent_id" = __tree.tree_pk
+    )
+    SELECT (__tree.tree_depth) AS "tree_depth", (__tree.tree_path) AS "tree_path", (__tree.tree_ordering) AS "tree_ordering", "emeis_core_scope"."parent_id", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."is_active" FROM "emeis_core_scope" , "__tree" WHERE ("emeis_core_scope"."id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid AND (__tree.tree_pk = emeis_core_scope.id)) ORDER BY ("__tree".tree_ordering) ASC LIMIT 21""",
         'SELECT "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid LIMIT 21',
-        'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" WHERE "emeis_core_scope"."id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid LIMIT 21',
         'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'fund-executive-most\' LIMIT 21',
         'SELECT (1) AS "a" FROM "emeis_core_acl" WHERE ("emeis_core_acl"."role_id" = \'fund-executive-most\' AND "emeis_core_acl"."scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid AND "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid) LIMIT 1',
         'INSERT INTO "emeis_core_acl" ("created_at", "modified_at", "created_by_user_id", "metainfo", "id", "user_id", "scope_id", "role_id") VALUES (\'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'ea416ed0-759d-46a8-de58-f63a59077499\'::uuid, \'{}\', \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'fund-executive-most\')',
@@ -154,10 +190,82 @@ Central meeting anyone remember. There today material minute ago get. Range whos
 
 snapshots["test_api_create[ScopeViewSet] 1"] = {
     "queries": [
-        'SELECT MAX("emeis_core_scope"."tree_id") AS "tree_id__max" FROM "emeis_core_scope"',
-        'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" WHERE "emeis_core_scope"."parent_id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid ORDER BY "emeis_core_scope"."tree_id" ASC, "emeis_core_scope"."lft" ASC',
-        """INSERT INTO "emeis_core_scope" ("created_at", "modified_at", "created_by_user_id", "metainfo", "id", "name", "full_name", "description", "parent_id", "is_active", "lft", "rght", "tree_id", "level") VALUES (\'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'{}\', \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid, hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Pamela Horton\',\'\',\'\']), hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Pamela Horton\',\'Pamela Horton\',\'Pamela Horton\']), hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Effort meet relationship far. Option program interesting station. First where during teach country talk across.
-Argue move appear catch toward help wind. Material minute ago get.','','']), NULL, true, 1, 2, 1, 0)""",
+        """
+    WITH RECURSIVE __rank_table(
+        
+        "id",
+        "parent_id",
+        "rank_order"
+    ) AS (
+        SELECT "emeis_core_scope"."id", "emeis_core_scope"."parent_id", ROW_NUMBER() OVER (ORDER BY "emeis_core_scope"."name" ASC) AS "rank_order" FROM "emeis_core_scope"
+    ),
+    __tree (
+        
+        "tree_depth",
+        "tree_path",
+        "tree_ordering",
+        "tree_pk"
+    ) AS (
+        SELECT
+            
+            0,
+            array[T.id],
+            array[T.rank_order],
+            T."id"
+        FROM __rank_table T
+        WHERE T."parent_id" IS NULL
+
+        UNION ALL
+
+        SELECT
+            
+            __tree.tree_depth + 1,
+            __tree.tree_path || T.id,
+            __tree.tree_ordering || T.rank_order,
+            T."id"
+        FROM __rank_table T
+        JOIN __tree ON T."parent_id" = __tree.tree_pk
+    )
+    SELECT (__tree.tree_depth) AS "tree_depth", (__tree.tree_path) AS "tree_path", (__tree.tree_ordering) AS "tree_ordering", "emeis_core_scope"."parent_id", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."is_active" FROM "emeis_core_scope" , "__tree" WHERE ("emeis_core_scope"."parent_id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid AND (__tree.tree_pk = emeis_core_scope.id)) ORDER BY ("__tree".tree_ordering) ASC""",
+        """INSERT INTO "emeis_core_scope" ("parent_id", "created_at", "modified_at", "created_by_user_id", "metainfo", "id", "name", "full_name", "description", "is_active") VALUES (NULL, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'{}\', \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid, hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Pamela Horton\',\'\',\'\']), hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Pamela Horton\',\'Pamela Horton\',\'Pamela Horton\']), hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Effort meet relationship far. Option program interesting station. First where during teach country talk across.
+Argue move appear catch toward help wind. Material minute ago get.','','']), true)""",
+        """
+    WITH RECURSIVE __rank_table(
+        
+        "id",
+        "parent_id",
+        "rank_order"
+    ) AS (
+        SELECT "emeis_core_scope"."id", "emeis_core_scope"."parent_id", ROW_NUMBER() OVER (ORDER BY "emeis_core_scope"."name" ASC) AS "rank_order" FROM "emeis_core_scope"
+    ),
+    __tree (
+        
+        "tree_depth",
+        "tree_path",
+        "tree_ordering",
+        "tree_pk"
+    ) AS (
+        SELECT
+            
+            0,
+            array[T.id],
+            array[T.rank_order],
+            T."id"
+        FROM __rank_table T
+        WHERE T."parent_id" IS NULL
+
+        UNION ALL
+
+        SELECT
+            
+            __tree.tree_depth + 1,
+            __tree.tree_path || T.id,
+            __tree.tree_ordering || T.rank_order,
+            T."id"
+        FROM __rank_table T
+        JOIN __tree ON T."parent_id" = __tree.tree_pk
+    )
+    SELECT (__tree.tree_depth) AS "tree_depth", (__tree.tree_path) AS "tree_path", (__tree.tree_ordering) AS "tree_ordering", "emeis_core_scope"."parent_id", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."is_active" FROM "emeis_core_scope" , "__tree" WHERE ("emeis_core_scope"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid AND (__tree.tree_pk = emeis_core_scope.id)) ORDER BY ("__tree".tree_ordering) ASC LIMIT 21""",
     ],
     "request": {
         "CONTENT_LENGTH": "614",
@@ -254,7 +362,44 @@ snapshots["test_api_create[UserViewSet] 1"] = {
 
 snapshots["test_api_destroy[ACLViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid LIMIT 21',
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid LIMIT 21',
+        """
+    WITH RECURSIVE __rank_table(
+        
+        "id",
+        "parent_id",
+        "rank_order"
+    ) AS (
+        SELECT "emeis_core_scope"."id", "emeis_core_scope"."parent_id", ROW_NUMBER() OVER (ORDER BY "emeis_core_scope"."name" ASC) AS "rank_order" FROM "emeis_core_scope"
+    ),
+    __tree (
+        
+        "tree_depth",
+        "tree_path",
+        "tree_ordering",
+        "tree_pk"
+    ) AS (
+        SELECT
+            
+            0,
+            array[T.id],
+            array[T.rank_order],
+            T."id"
+        FROM __rank_table T
+        WHERE T."parent_id" IS NULL
+
+        UNION ALL
+
+        SELECT
+            
+            __tree.tree_depth + 1,
+            __tree.tree_path || T.id,
+            __tree.tree_ordering || T.rank_order,
+            T."id"
+        FROM __rank_table T
+        JOIN __tree ON T."parent_id" = __tree.tree_pk
+    )
+    SELECT (__tree.tree_depth) AS "tree_depth", (__tree.tree_path) AS "tree_path", (__tree.tree_ordering) AS "tree_ordering", "emeis_core_scope"."parent_id", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."is_active" FROM "emeis_core_scope" , "__tree" WHERE ("emeis_core_scope"."id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid) AND (__tree.tree_pk = emeis_core_scope.id)) ORDER BY ("__tree".tree_ordering) ASC""",
         'DELETE FROM "emeis_core_acl" WHERE "emeis_core_acl"."id" IN (\'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid)',
     ],
     "request": {
@@ -285,7 +430,7 @@ snapshots["test_api_destroy[PermissionViewSet] 1"] = {
 snapshots["test_api_destroy[RoleViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'note-act-source\' LIMIT 21',
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") WHERE "emeis_core_acl"."role_id" IN (\'note-act-source\')',
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") WHERE "emeis_core_acl"."role_id" IN (\'note-act-source\')',
         'DELETE FROM "emeis_core_role_permissions" WHERE "emeis_core_role_permissions"."role_id" IN (\'note-act-source\')',
         'DELETE FROM "emeis_core_acl" WHERE "emeis_core_acl"."role_id" IN (\'note-act-source\')',
         'DELETE FROM "emeis_core_role" WHERE "emeis_core_role"."slug" IN (\'note-act-source\')',
@@ -301,22 +446,45 @@ snapshots["test_api_destroy[RoleViewSet] 1"] = {
 
 snapshots["test_api_destroy[ScopeViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" WHERE "emeis_core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid LIMIT 21',
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."scope_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
-        'SELECT "emeis_core_scope"."id", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id" FROM "emeis_core_scope" WHERE "emeis_core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid LIMIT 21',
         """
-            UPDATE "emeis_core_scope"
-            SET "lft" = CASE
-                    WHEN "lft" > 2
-                        THEN "lft" +  -2
-                    ELSE "lft" END,
-                "rght" = CASE
-                    WHEN "rght" > 2
-                        THEN "rght" +  -2
-                    ELSE "rght" END
-            WHERE "tree_id" = 1
-              AND ("lft" > 2 OR "rght" > 2)""",
-        'SELECT "emeis_core_scope"."id" FROM "emeis_core_scope" WHERE "emeis_core_scope"."parent_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid) ORDER BY "emeis_core_scope"."full_name" ASC',
+    WITH RECURSIVE __rank_table(
+        
+        "id",
+        "parent_id",
+        "rank_order"
+    ) AS (
+        SELECT "emeis_core_scope"."id", "emeis_core_scope"."parent_id", ROW_NUMBER() OVER (ORDER BY ("emeis_core_scope"."name" -> \'en\') ASC) AS "rank_order" FROM "emeis_core_scope"
+    ),
+    __tree (
+        
+        "tree_depth",
+        "tree_path",
+        "tree_ordering",
+        "tree_pk"
+    ) AS (
+        SELECT
+            
+            0,
+            array[T.id],
+            array[T.rank_order],
+            T."id"
+        FROM __rank_table T
+        WHERE T."parent_id" IS NULL
+
+        UNION ALL
+
+        SELECT
+            
+            __tree.tree_depth + 1,
+            __tree.tree_path || T.id,
+            __tree.tree_ordering || T.rank_order,
+            T."id"
+        FROM __rank_table T
+        JOIN __tree ON T."parent_id" = __tree.tree_pk
+    )
+    SELECT (__tree.tree_depth) AS "tree_depth", (__tree.tree_path) AS "tree_path", (__tree.tree_ordering) AS "tree_ordering", "emeis_core_scope"."parent_id", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."is_active" FROM "emeis_core_scope" , "__tree" WHERE ("emeis_core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid AND (__tree.tree_pk = emeis_core_scope.id)) ORDER BY ("__tree".tree_ordering) ASC LIMIT 21""",
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."scope_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
+        'SELECT "emeis_core_scope"."id" FROM "emeis_core_scope" WHERE "emeis_core_scope"."parent_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid) ORDER BY "emeis_core_scope"."name" ASC',
         'DELETE FROM "emeis_core_acl" WHERE "emeis_core_acl"."scope_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
         'DELETE FROM "emeis_core_scope" WHERE "emeis_core_scope"."id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
     ],
@@ -332,9 +500,9 @@ snapshots["test_api_destroy[ScopeViewSet] 1"] = {
 snapshots["test_api_destroy[UserViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid LIMIT 21',
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
         'SELECT "emeis_core_user"."id" FROM "emeis_core_user" WHERE "emeis_core_user"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
-        'SELECT "emeis_core_scope"."id" FROM "emeis_core_scope" WHERE "emeis_core_scope"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid) ORDER BY "emeis_core_scope"."full_name" ASC',
+        'SELECT "emeis_core_scope"."id" FROM "emeis_core_scope" WHERE "emeis_core_scope"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid) ORDER BY "emeis_core_scope"."name" ASC',
         'SELECT "emeis_core_role"."slug" FROM "emeis_core_role" WHERE "emeis_core_role"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid) ORDER BY "emeis_core_role"."slug" ASC',
         'SELECT "emeis_core_permission"."slug" FROM "emeis_core_permission" WHERE "emeis_core_permission"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."created_by_user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
@@ -352,7 +520,44 @@ snapshots["test_api_destroy[UserViewSet] 1"] = {
 
 snapshots["test_api_detail[ACLViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid LIMIT 21',
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid LIMIT 21',
+        """
+    WITH RECURSIVE __rank_table(
+        
+        "id",
+        "parent_id",
+        "rank_order"
+    ) AS (
+        SELECT "emeis_core_scope"."id", "emeis_core_scope"."parent_id", ROW_NUMBER() OVER (ORDER BY "emeis_core_scope"."name" ASC) AS "rank_order" FROM "emeis_core_scope"
+    ),
+    __tree (
+        
+        "tree_depth",
+        "tree_path",
+        "tree_ordering",
+        "tree_pk"
+    ) AS (
+        SELECT
+            
+            0,
+            array[T.id],
+            array[T.rank_order],
+            T."id"
+        FROM __rank_table T
+        WHERE T."parent_id" IS NULL
+
+        UNION ALL
+
+        SELECT
+            
+            __tree.tree_depth + 1,
+            __tree.tree_path || T.id,
+            __tree.tree_ordering || T.rank_order,
+            T."id"
+        FROM __rank_table T
+        JOIN __tree ON T."parent_id" = __tree.tree_pk
+    )
+    SELECT (__tree.tree_depth) AS "tree_depth", (__tree.tree_path) AS "tree_path", (__tree.tree_ordering) AS "tree_ordering", "emeis_core_scope"."parent_id", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."is_active" FROM "emeis_core_scope" , "__tree" WHERE ("emeis_core_scope"."id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid) AND (__tree.tree_pk = emeis_core_scope.id)) ORDER BY ("__tree".tree_ordering) ASC""",
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."metainfo", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'fund-executive-most\'',
     ],
@@ -516,7 +721,7 @@ snapshots["test_api_detail[RoleViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'note-act-source\' LIMIT 21',
         'SELECT ("emeis_core_role_permissions"."role_id") AS "_prefetch_related_val_role_id", "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."metainfo", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" IN (\'note-act-source\')',
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") WHERE "emeis_core_acl"."role_id" IN (\'note-act-source\')',
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") WHERE "emeis_core_acl"."role_id" IN (\'note-act-source\')',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -553,8 +758,44 @@ Central meeting anyone remember. There today material minute ago get. Range whos
 
 snapshots["test_api_detail[ScopeViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" WHERE "emeis_core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid LIMIT 21',
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."scope_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
+        """
+    WITH RECURSIVE __rank_table(
+        
+        "id",
+        "parent_id",
+        "rank_order"
+    ) AS (
+        SELECT "emeis_core_scope"."id", "emeis_core_scope"."parent_id", ROW_NUMBER() OVER (ORDER BY ("emeis_core_scope"."name" -> \'en\') ASC) AS "rank_order" FROM "emeis_core_scope"
+    ),
+    __tree (
+        
+        "tree_depth",
+        "tree_path",
+        "tree_ordering",
+        "tree_pk"
+    ) AS (
+        SELECT
+            
+            0,
+            array[T.id],
+            array[T.rank_order],
+            T."id"
+        FROM __rank_table T
+        WHERE T."parent_id" IS NULL
+
+        UNION ALL
+
+        SELECT
+            
+            __tree.tree_depth + 1,
+            __tree.tree_path || T.id,
+            __tree.tree_ordering || T.rank_order,
+            T."id"
+        FROM __rank_table T
+        JOIN __tree ON T."parent_id" = __tree.tree_pk
+    )
+    SELECT (__tree.tree_depth) AS "tree_depth", (__tree.tree_path) AS "tree_path", (__tree.tree_ordering) AS "tree_ordering", "emeis_core_scope"."parent_id", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."is_active" FROM "emeis_core_scope" , "__tree" WHERE ("emeis_core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid AND (__tree.tree_pk = emeis_core_scope.id)) ORDER BY ("__tree".tree_ordering) ASC LIMIT 21""",
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."scope_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -598,7 +839,7 @@ Argue move appear catch toward help wind. Material minute ago get.""",
 snapshots["test_api_detail[UserViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid LIMIT 21',
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -638,7 +879,44 @@ snapshots["test_api_detail[UserViewSet] 1"] = {
 
 snapshots["test_api_list[ACLViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug")',
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug")',
+        """
+    WITH RECURSIVE __rank_table(
+        
+        "id",
+        "parent_id",
+        "rank_order"
+    ) AS (
+        SELECT "emeis_core_scope"."id", "emeis_core_scope"."parent_id", ROW_NUMBER() OVER (ORDER BY "emeis_core_scope"."name" ASC) AS "rank_order" FROM "emeis_core_scope"
+    ),
+    __tree (
+        
+        "tree_depth",
+        "tree_path",
+        "tree_ordering",
+        "tree_pk"
+    ) AS (
+        SELECT
+            
+            0,
+            array[T.id],
+            array[T.rank_order],
+            T."id"
+        FROM __rank_table T
+        WHERE T."parent_id" IS NULL
+
+        UNION ALL
+
+        SELECT
+            
+            __tree.tree_depth + 1,
+            __tree.tree_path || T.id,
+            __tree.tree_ordering || T.rank_order,
+            T."id"
+        FROM __rank_table T
+        JOIN __tree ON T."parent_id" = __tree.tree_pk
+    )
+    SELECT (__tree.tree_depth) AS "tree_depth", (__tree.tree_path) AS "tree_path", (__tree.tree_ordering) AS "tree_ordering", "emeis_core_scope"."parent_id", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."is_active" FROM "emeis_core_scope" , "__tree" WHERE ("emeis_core_scope"."id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'dad3a37a-a9d5-0688-b515-7698acfd7aee\'::uuid, \'aba369f7-d2b2-8a90-98a0-a26feb7dc965\'::uuid) AND (__tree.tree_pk = emeis_core_scope.id)) ORDER BY ("__tree".tree_ordering) ASC""",
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         'SELECT "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."metainfo", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" = \'fund-executive-most\'',
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'fb0e22c7-9ac7-5679-e988-1e6ba183b354\'::uuid',
@@ -1060,7 +1338,7 @@ snapshots["test_api_list[RoleViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" ORDER BY "emeis_core_role"."slug" ASC',
         'SELECT ("emeis_core_role_permissions"."role_id") AS "_prefetch_related_val_role_id", "emeis_core_permission"."created_at", "emeis_core_permission"."modified_at", "emeis_core_permission"."created_by_user_id", "emeis_core_permission"."metainfo", "emeis_core_permission"."slug", "emeis_core_permission"."name", "emeis_core_permission"."description" FROM "emeis_core_permission" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_permission"."slug" = "emeis_core_role_permissions"."permission_id") WHERE "emeis_core_role_permissions"."role_id" IN (\'front-her-occur\', \'kid-owner-car\', \'note-act-source\', \'run-too-successful\')',
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") WHERE "emeis_core_acl"."role_id" IN (\'front-her-occur\', \'kid-owner-car\', \'note-act-source\', \'run-too-successful\')',
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") WHERE "emeis_core_acl"."role_id" IN (\'front-her-occur\', \'kid-owner-car\', \'note-act-source\', \'run-too-successful\')',
         'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" INNER JOIN "emeis_core_role_permissions" ON ("emeis_core_role"."slug" = "emeis_core_role_permissions"."role_id") WHERE "emeis_core_role_permissions"."permission_id" = \'program-small\' ORDER BY "emeis_core_role"."slug" ASC',
     ],
     "request": {
@@ -1192,8 +1470,44 @@ Treat better note everybody party. Miss south speak industry.""",
 
 snapshots["test_api_list[ScopeViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" ORDER BY ("emeis_core_scope"."full_name" -> \'en\') ASC',
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."scope_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'ea416ed0-759d-46a8-de58-f63a59077499\'::uuid, \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid)',
+        """
+    WITH RECURSIVE __rank_table(
+        
+        "id",
+        "parent_id",
+        "rank_order"
+    ) AS (
+        SELECT "emeis_core_scope"."id", "emeis_core_scope"."parent_id", ROW_NUMBER() OVER (ORDER BY ("emeis_core_scope"."name" -> \'en\') ASC) AS "rank_order" FROM "emeis_core_scope"
+    ),
+    __tree (
+        
+        "tree_depth",
+        "tree_path",
+        "tree_ordering",
+        "tree_pk"
+    ) AS (
+        SELECT
+            
+            0,
+            array[T.id],
+            array[T.rank_order],
+            T."id"
+        FROM __rank_table T
+        WHERE T."parent_id" IS NULL
+
+        UNION ALL
+
+        SELECT
+            
+            __tree.tree_depth + 1,
+            __tree.tree_path || T.id,
+            __tree.tree_ordering || T.rank_order,
+            T."id"
+        FROM __rank_table T
+        JOIN __tree ON T."parent_id" = __tree.tree_pk
+    )
+    SELECT (__tree.tree_depth) AS "tree_depth", (__tree.tree_path) AS "tree_path", (__tree.tree_ordering) AS "tree_ordering", "emeis_core_scope"."parent_id", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."is_active" FROM "emeis_core_scope" , "__tree" WHERE (__tree.tree_pk = emeis_core_scope.id) ORDER BY ("__tree".tree_ordering) ASC""",
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."scope_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'ea416ed0-759d-46a8-de58-f63a59077499\'::uuid, \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid)',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -1294,7 +1608,7 @@ Son success provide beyond. Officer player possible issue ahead suffer.""",
 snapshots["test_api_list[UserViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user"',
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."user_id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'ea416ed0-759d-46a8-de58-f63a59077499\'::uuid, \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid)',
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."user_id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, \'ea416ed0-759d-46a8-de58-f63a59077499\'::uuid, \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid)',
     ],
     "request": {
         "CONTENT_TYPE": "application/octet-stream",
@@ -1408,9 +1722,82 @@ snapshots["test_api_list[UserViewSet] 1"] = {
 
 snapshots["test_api_patch[ACLViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid LIMIT 21',
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid LIMIT 21',
+        """
+    WITH RECURSIVE __rank_table(
+        
+        "id",
+        "parent_id",
+        "rank_order"
+    ) AS (
+        SELECT "emeis_core_scope"."id", "emeis_core_scope"."parent_id", ROW_NUMBER() OVER (ORDER BY "emeis_core_scope"."name" ASC) AS "rank_order" FROM "emeis_core_scope"
+    ),
+    __tree (
+        
+        "tree_depth",
+        "tree_path",
+        "tree_ordering",
+        "tree_pk"
+    ) AS (
+        SELECT
+            
+            0,
+            array[T.id],
+            array[T.rank_order],
+            T."id"
+        FROM __rank_table T
+        WHERE T."parent_id" IS NULL
+
+        UNION ALL
+
+        SELECT
+            
+            __tree.tree_depth + 1,
+            __tree.tree_path || T.id,
+            __tree.tree_ordering || T.rank_order,
+            T."id"
+        FROM __rank_table T
+        JOIN __tree ON T."parent_id" = __tree.tree_pk
+    )
+    SELECT (__tree.tree_depth) AS "tree_depth", (__tree.tree_path) AS "tree_path", (__tree.tree_ordering) AS "tree_ordering", "emeis_core_scope"."parent_id", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."is_active" FROM "emeis_core_scope" , "__tree" WHERE ("emeis_core_scope"."id" IN (\'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid) AND (__tree.tree_pk = emeis_core_scope.id)) ORDER BY ("__tree".tree_ordering) ASC""",
+        """
+    WITH RECURSIVE __rank_table(
+        
+        "id",
+        "parent_id",
+        "rank_order"
+    ) AS (
+        SELECT "emeis_core_scope"."id", "emeis_core_scope"."parent_id", ROW_NUMBER() OVER (ORDER BY "emeis_core_scope"."name" ASC) AS "rank_order" FROM "emeis_core_scope"
+    ),
+    __tree (
+        
+        "tree_depth",
+        "tree_path",
+        "tree_ordering",
+        "tree_pk"
+    ) AS (
+        SELECT
+            
+            0,
+            array[T.id],
+            array[T.rank_order],
+            T."id"
+        FROM __rank_table T
+        WHERE T."parent_id" IS NULL
+
+        UNION ALL
+
+        SELECT
+            
+            __tree.tree_depth + 1,
+            __tree.tree_path || T.id,
+            __tree.tree_ordering || T.rank_order,
+            T."id"
+        FROM __rank_table T
+        JOIN __tree ON T."parent_id" = __tree.tree_pk
+    )
+    SELECT (__tree.tree_depth) AS "tree_depth", (__tree.tree_path) AS "tree_path", (__tree.tree_ordering) AS "tree_ordering", "emeis_core_scope"."parent_id", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."is_active" FROM "emeis_core_scope" , "__tree" WHERE ("emeis_core_scope"."id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid AND (__tree.tree_pk = emeis_core_scope.id)) ORDER BY ("__tree".tree_ordering) ASC LIMIT 21""",
         'SELECT "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid LIMIT 21',
-        'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" WHERE "emeis_core_scope"."id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid LIMIT 21',
         'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'fund-executive-most\' LIMIT 21',
         'SELECT (1) AS "a" FROM "emeis_core_acl" WHERE ("emeis_core_acl"."role_id" = \'fund-executive-most\' AND "emeis_core_acl"."scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid AND "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid AND NOT ("emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid)) LIMIT 1',
         'UPDATE "emeis_core_acl" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "metainfo" = \'{}\', "user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid, "scope_id" = \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, "role_id" = \'fund-executive-most\' WHERE "emeis_core_acl"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid',
@@ -1500,7 +1887,7 @@ Central meeting anyone remember. There today material minute ago get. Range whos
 snapshots["test_api_patch[RoleViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_role" WHERE "emeis_core_role"."slug" = \'note-act-source\' LIMIT 21',
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") WHERE "emeis_core_acl"."role_id" IN (\'note-act-source\')',
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") WHERE "emeis_core_acl"."role_id" IN (\'note-act-source\')',
         'SELECT (1) AS "a" FROM "emeis_core_role" WHERE ("emeis_core_role"."slug" = \'note-act-source\' AND NOT ("emeis_core_role"."slug" = \'note-act-source\')) LIMIT 1',
         """UPDATE "emeis_core_role" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "metainfo" = \'{}\', "name" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Erin Scott\',\'\',\'\']), "description" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Far bit among again. Station story first. Team suggest traditional boy above.
 Central meeting anyone remember. There today material minute ago get. Range whose scientist draw free property consider.\',\'\',\'\']) WHERE "emeis_core_role"."slug" = \'note-act-source\'""",
@@ -1543,11 +1930,83 @@ Central meeting anyone remember. There today material minute ago get. Range whos
 
 snapshots["test_api_patch[ScopeViewSet] 1"] = {
     "queries": [
-        'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" WHERE "emeis_core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid LIMIT 21',
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."scope_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
-        'SELECT "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level" FROM "emeis_core_scope" WHERE "emeis_core_scope"."parent_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid ORDER BY "emeis_core_scope"."tree_id" ASC, "emeis_core_scope"."lft" ASC',
-        """UPDATE "emeis_core_scope" SET "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "metainfo" = \'{}\', "name" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Pamela Horton\',\'\',\'\']), "full_name" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Pamela Horton\',\'Pamela Horton\',\'Pamela Horton\']), "description" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Effort meet relationship far. Option program interesting station. First where during teach country talk across.
-Argue move appear catch toward help wind. Material minute ago get.\',\'\',\'\']), "parent_id" = NULL, "is_active" = true WHERE "emeis_core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid""",
+        """
+    WITH RECURSIVE __rank_table(
+        
+        "id",
+        "parent_id",
+        "rank_order"
+    ) AS (
+        SELECT "emeis_core_scope"."id", "emeis_core_scope"."parent_id", ROW_NUMBER() OVER (ORDER BY ("emeis_core_scope"."name" -> \'en\') ASC) AS "rank_order" FROM "emeis_core_scope"
+    ),
+    __tree (
+        
+        "tree_depth",
+        "tree_path",
+        "tree_ordering",
+        "tree_pk"
+    ) AS (
+        SELECT
+            
+            0,
+            array[T.id],
+            array[T.rank_order],
+            T."id"
+        FROM __rank_table T
+        WHERE T."parent_id" IS NULL
+
+        UNION ALL
+
+        SELECT
+            
+            __tree.tree_depth + 1,
+            __tree.tree_path || T.id,
+            __tree.tree_ordering || T.rank_order,
+            T."id"
+        FROM __rank_table T
+        JOIN __tree ON T."parent_id" = __tree.tree_pk
+    )
+    SELECT (__tree.tree_depth) AS "tree_depth", (__tree.tree_path) AS "tree_path", (__tree.tree_ordering) AS "tree_ordering", "emeis_core_scope"."parent_id", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."is_active" FROM "emeis_core_scope" , "__tree" WHERE ("emeis_core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid AND (__tree.tree_pk = emeis_core_scope.id)) ORDER BY ("__tree".tree_ordering) ASC LIMIT 21""",
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."scope_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
+        """
+    WITH RECURSIVE __rank_table(
+        
+        "id",
+        "parent_id",
+        "rank_order"
+    ) AS (
+        SELECT "emeis_core_scope"."id", "emeis_core_scope"."parent_id", ROW_NUMBER() OVER (ORDER BY "emeis_core_scope"."name" ASC) AS "rank_order" FROM "emeis_core_scope"
+    ),
+    __tree (
+        
+        "tree_depth",
+        "tree_path",
+        "tree_ordering",
+        "tree_pk"
+    ) AS (
+        SELECT
+            
+            0,
+            array[T.id],
+            array[T.rank_order],
+            T."id"
+        FROM __rank_table T
+        WHERE T."parent_id" IS NULL
+
+        UNION ALL
+
+        SELECT
+            
+            __tree.tree_depth + 1,
+            __tree.tree_path || T.id,
+            __tree.tree_ordering || T.rank_order,
+            T."id"
+        FROM __rank_table T
+        JOIN __tree ON T."parent_id" = __tree.tree_pk
+    )
+    SELECT (__tree.tree_depth) AS "tree_depth", (__tree.tree_path) AS "tree_path", (__tree.tree_ordering) AS "tree_ordering", "emeis_core_scope"."parent_id", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."is_active" FROM "emeis_core_scope" , "__tree" WHERE ("emeis_core_scope"."parent_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid AND (__tree.tree_pk = emeis_core_scope.id)) ORDER BY ("__tree".tree_ordering) ASC""",
+        """UPDATE "emeis_core_scope" SET "parent_id" = NULL, "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "metainfo" = \'{}\', "name" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Pamela Horton\',\'\',\'\']), "full_name" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Pamela Horton\',\'Pamela Horton\',\'Pamela Horton\']), "description" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Effort meet relationship far. Option program interesting station. First where during teach country talk across.
+Argue move appear catch toward help wind. Material minute ago get.\',\'\',\'\']), "is_active" = true WHERE "emeis_core_scope"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid""",
     ],
     "request": {
         "CONTENT_LENGTH": "614",
@@ -1592,7 +2051,7 @@ Argue move appear catch toward help wind. Material minute ago get.""",
 snapshots["test_api_patch[UserViewSet] 1"] = {
     "queries": [
         'SELECT "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined" FROM "emeis_core_user" WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid LIMIT 21',
-        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."parent_id", "emeis_core_scope"."is_active", "emeis_core_scope"."lft", "emeis_core_scope"."rght", "emeis_core_scope"."tree_id", "emeis_core_scope"."level", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_scope" ON ("emeis_core_acl"."scope_id" = "emeis_core_scope"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
+        'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id", "emeis_core_user"."password", "emeis_core_user"."last_login", "emeis_core_user"."created_at", "emeis_core_user"."modified_at", "emeis_core_user"."created_by_user_id", "emeis_core_user"."metainfo", "emeis_core_user"."id", "emeis_core_user"."username", "emeis_core_user"."first_name", "emeis_core_user"."last_name", "emeis_core_user"."email", "emeis_core_user"."phone", "emeis_core_user"."language", "emeis_core_user"."address", "emeis_core_user"."city", "emeis_core_user"."zip", "emeis_core_user"."is_active", "emeis_core_user"."date_joined", "emeis_core_role"."created_at", "emeis_core_role"."modified_at", "emeis_core_role"."created_by_user_id", "emeis_core_role"."metainfo", "emeis_core_role"."slug", "emeis_core_role"."name", "emeis_core_role"."description" FROM "emeis_core_acl" INNER JOIN "emeis_core_user" ON ("emeis_core_acl"."user_id" = "emeis_core_user"."id") INNER JOIN "emeis_core_role" ON ("emeis_core_acl"."role_id" = "emeis_core_role"."slug") WHERE "emeis_core_acl"."user_id" IN (\'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)',
         'SELECT (1) AS "a" FROM "emeis_core_user" WHERE ("emeis_core_user"."username" = \'mark48\' AND NOT ("emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid)) LIMIT 1',
         'UPDATE "emeis_core_user" SET "password" = \'_nNx5pap05\', "last_login" = \'2021-07-20T12:00:00+00:00\'::timestamptz, "created_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "modified_at" = \'2017-05-21T00:00:00+00:00\'::timestamptz, "created_by_user_id" = NULL, "metainfo" = \'{}\', "username" = \'mark48\', "first_name" = \'Amanda\', "last_name" = \'Gallagher\', "email" = \'kennethgarcia@example.org\', "phone" = NULL, "language" = \'en\', "address" = NULL, "city" = hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'\',\'\',\'\']), "zip" = NULL, "is_active" = true, "date_joined" = \'2017-05-21T00:00:00+00:00\'::timestamptz WHERE "emeis_core_user"."id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
         'SELECT "emeis_core_acl"."created_at", "emeis_core_acl"."modified_at", "emeis_core_acl"."created_by_user_id", "emeis_core_acl"."metainfo", "emeis_core_acl"."id", "emeis_core_acl"."user_id", "emeis_core_acl"."scope_id", "emeis_core_acl"."role_id" FROM "emeis_core_acl" WHERE "emeis_core_acl"."user_id" = \'9dd4e461-268c-8034-f5c8-564e155c67a6\'::uuid',
