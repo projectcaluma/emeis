@@ -229,43 +229,6 @@ snapshots["test_api_create[ScopeViewSet] 1"] = {
     SELECT (__tree.tree_depth) AS "tree_depth", (__tree.tree_path) AS "tree_path", (__tree.tree_ordering) AS "tree_ordering", "emeis_core_scope"."parent_id", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."is_active" FROM "emeis_core_scope" , "__tree" WHERE ("emeis_core_scope"."parent_id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid AND (__tree.tree_pk = emeis_core_scope.id)) ORDER BY ("__tree".tree_ordering) ASC""",
         """INSERT INTO "emeis_core_scope" ("parent_id", "created_at", "modified_at", "created_by_user_id", "metainfo", "id", "name", "full_name", "description", "is_active") VALUES (NULL, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'2017-05-21T00:00:00+00:00\'::timestamptz, \'9336ebf2-5087-d91c-818e-e6e9ec29f8c1\'::uuid, \'{}\', \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid, hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Pamela Horton\',\'\',\'\']), hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Pamela Horton\',\'Pamela Horton\',\'Pamela Horton\']), hstore(ARRAY[\'en\',\'de\',\'fr\'], ARRAY[\'Effort meet relationship far. Option program interesting station. First where during teach country talk across.
 Argue move appear catch toward help wind. Material minute ago get.','','']), true)""",
-        """
-    WITH RECURSIVE __rank_table(
-        
-        "id",
-        "parent_id",
-        "rank_order"
-    ) AS (
-        SELECT "emeis_core_scope"."id", "emeis_core_scope"."parent_id", ROW_NUMBER() OVER (ORDER BY "emeis_core_scope"."name" ASC) AS "rank_order" FROM "emeis_core_scope"
-    ),
-    __tree (
-        
-        "tree_depth",
-        "tree_path",
-        "tree_ordering",
-        "tree_pk"
-    ) AS (
-        SELECT
-            
-            0,
-            array[T.id],
-            array[T.rank_order],
-            T."id"
-        FROM __rank_table T
-        WHERE T."parent_id" IS NULL
-
-        UNION ALL
-
-        SELECT
-            
-            __tree.tree_depth + 1,
-            __tree.tree_path || T.id,
-            __tree.tree_ordering || T.rank_order,
-            T."id"
-        FROM __rank_table T
-        JOIN __tree ON T."parent_id" = __tree.tree_pk
-    )
-    SELECT (__tree.tree_depth) AS "tree_depth", (__tree.tree_path) AS "tree_path", (__tree.tree_ordering) AS "tree_ordering", "emeis_core_scope"."parent_id", "emeis_core_scope"."created_at", "emeis_core_scope"."modified_at", "emeis_core_scope"."created_by_user_id", "emeis_core_scope"."metainfo", "emeis_core_scope"."id", "emeis_core_scope"."name", "emeis_core_scope"."full_name", "emeis_core_scope"."description", "emeis_core_scope"."is_active" FROM "emeis_core_scope" , "__tree" WHERE ("emeis_core_scope"."id" = \'f561aaf6-ef0b-f14d-4208-bb46a4ccb3ad\'::uuid AND (__tree.tree_pk = emeis_core_scope.id)) ORDER BY ("__tree".tree_ordering) ASC LIMIT 21""",
     ],
     "request": {
         "CONTENT_LENGTH": "614",
