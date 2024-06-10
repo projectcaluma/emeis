@@ -1,3 +1,25 @@
+# v2.0.0
+
+## Refactor (Breaking change!)
+
+* refactor: drop django-mptt in favour of django-tree-queries
+
+Django-Tree-Queries works with recursive CTEs (common table expressions) to deal
+with hierarchical relationships, generally achieving the same result, but without
+the `right`, `left` and `tree_id` fields.
+
+Django-MPTT has been unmaintained for several years, and we&#39;re suspecting some
+subtle bugs in it that we can&#39;t really reproduce or verify right now. Anyway it&#39;s
+a good time to get rid of it.
+
+Note: Some old migrations needed to be changed, as we cannot refer to
+MPTT fields anymore. They were essentially regular foreign keys however,
+so this won&#39;t break the database.
+
+BREAKING! This breaks if Emeis is used as a Django app directly, and depends on
+any of the MPTT API / features. ([`61a30e0`](https://github.com/projectcaluma/emeis/commit/61a30e018736c77c0b815f5c4315f7773c824804))
+
+
 # v1.3.4 (16 December 2024)
 
 ## Fix
