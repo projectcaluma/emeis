@@ -12,6 +12,8 @@ from rest_framework.status import (
     HTTP_405_METHOD_NOT_ALLOWED,
 )
 
+from emeis.core.serializers import ScopeSerializer
+
 
 def test_me_200(db, acl, client):
     client.force_authenticate(user=acl.user)
@@ -332,3 +334,23 @@ def test_sorted_scopes_when_forced_language(
     ]
 
     assert received_names == ["eins", "zwei"]
+
+
+@pytest.mark.parametrize(
+    "has_parent, is_in_db, expect_level",
+    [
+        (False, False, 0),
+        (False, True, 0),
+        (True, False, 1),
+        (True, True, 1),
+    ],
+)
+def test_serializer_level(db, scope_factory, has_parent, is_in_db, expect_level):
+    scope = scope_factory(parent=scope_factory() if has_parent else None)
+    if not is_in_db:
+        scope.pk = None
+
+    ser = ScopeSerializer(instance=scope)
+
+    level = ser.data["level"]
+    assert level == expect_level

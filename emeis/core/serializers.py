@@ -91,7 +91,13 @@ class ScopeSerializer(BaseSerializer):
         # Sometimes, the model object may come out of a non-django-tree-queries
         # QS, and thus would not have the `tree_*` attributes amended. Then we
         # need to go the "slow path"
-        return obj.ancestors().count()
+        if not obj.pk and obj.parent_id:
+            # unsaved object, sometimes used in unit tests etc
+            return self.get_level(obj.parent) + 1
+
+        if obj.parent_id:
+            return obj.ancestors().count()
+        return 0
 
     class Meta:
         model = Scope
