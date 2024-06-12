@@ -149,3 +149,136 @@ def test_update_full_name_of_child(db, scope_factory):
 
     grandchild.refresh_from_db()
     assert str(grandchild.full_name) == "r » s » c » g"
+
+
+@pytest.fixture
+def simple_tree_structure(db, scope_factory):
+    # root1
+    #    - sub1sub1
+    #        - sub1sub1sub1
+    #        - sub1sub1sub2
+    #    - sub1sub2
+    # root2
+    #    - sub2sub1
+    #    - sub2sub2
+    root1 = scope_factory(name="root1")
+    root2 = scope_factory(name="root2")
+    sub1sub1 = scope_factory(parent=root1, name="sub1sub1")
+    sub1sub2 = scope_factory(parent=root1, name="sub1sub2")
+    sub1sub1sub1 = scope_factory(parent=sub1sub1, name="sub1sub1sub1")
+    sub1sub1sub2 = scope_factory(parent=sub1sub1, name="sub1sub1sub2")
+
+    sub2sub1 = scope_factory(parent=root2, name="sub2sub1")
+    sub2sub2 = scope_factory(parent=root2, name="sub2sub2")
+    return {
+        "root1": root1,
+        "root2": root2,
+        "sub1sub1": sub1sub1,
+        "sub1sub2": sub1sub2,
+        "sub1sub1sub1": sub1sub1sub1,
+        "sub1sub1sub2": sub1sub1sub2,
+        "sub2sub1": sub2sub1,
+        "sub2sub2": sub2sub2,
+    }
+
+
+@pytest.mark.parametrize(
+    "include_self, expect_count",
+    [
+        (True, 5),
+        (False, 3),
+    ],
+)
+def test_scope_ancestors(db, simple_tree_structure, include_self, expect_count):
+    qs = Scope.objects.filter(
+        pk__in=[
+            simple_tree_structure["sub2sub2"].pk,
+            simple_tree_structure["sub1sub1sub2"].pk,
+        ]
+    )
+
+    ancestors_qs = qs.all_ancestors(include_self=include_self)
+    # the direct and indirect ancestors must be there
+    assert simple_tree_structure["root2"] in ancestors_qs
+    assert simple_tree_structure["root1"] in ancestors_qs
+    assert simple_tree_structure["sub1sub1"] in ancestors_qs
+
+    if include_self:
+        assert simple_tree_structure["sub2sub2"] in ancestors_qs
+        assert simple_tree_structure["sub1sub1sub2"] in ancestors_qs
+    else:
+        assert simple_tree_structure["sub2sub2"] not in ancestors_qs
+        assert simple_tree_structure["sub1sub1sub2"] not in ancestors_qs
+
+    # ... and nothing else
+    assert ancestors_qs.count() == expect_count
+
+
+@pytest.mark.parametrize(
+    "include_self, expect_count",
+    [
+        (True, 6),
+        (False, 4),
+    ],
+)
+def test_scope_descendants(db, simple_tree_structure, include_self, expect_count):
+    qs = Scope.objects.filter(
+        pk__in=[simple_tree_structure["sub1sub1"].pk, simple_tree_structure["root2"].pk]
+    )
+
+    descendants_qs = qs.all_descendants(include_self=include_self)
+    # the direct and indirect descendants must be there
+    assert simple_tree_structure["sub1sub1sub1"] in descendants_qs
+    assert simple_tree_structure["sub1sub1sub2"] in descendants_qs
+    assert simple_tree_structure["sub2sub1"] in descendants_qs
+    assert simple_tree_structure["sub2sub2"] in descendants_qs
+
+    if include_self:
+        assert simple_tree_structure["sub1sub1"] in descendants_qs
+        assert simple_tree_structure["root2"] in descendants_qs
+    else:
+        assert simple_tree_structure["sub1sub1"] not in descendants_qs
+        assert simple_tree_structure["root2"] not in descendants_qs
+
+    # ... and nothing else
+    assert descendants_qs.count() == expect_count
+
+
+def test_get_root(db, simple_tree_structure):
+    assert (
+        simple_tree_structure["sub1sub2"].get_root() == simple_tree_structure["root1"]
+    )
+    assert (
+        simple_tree_structure["sub1sub1"].get_root() == simple_tree_structure["root1"]
+    )
+    assert (
+        simple_tree_structure["sub2sub2"].get_root() == simple_tree_structure["root2"]
+    )
+    assert (
+        simple_tree_structure["sub2sub1"].get_root() == simple_tree_structure["root2"]
+    )
+    assert (
+        simple_tree_structure["sub1sub1sub2"].get_root()
+        == simple_tree_structure["root1"]
+    )
+
+
+def test_all_roots(db, simple_tree_structure):
+    qs1 = Scope.objects.filter(
+        pk__in=[
+            simple_tree_structure["sub1sub1sub1"].pk,
+            simple_tree_structure["sub1sub2"].pk,
+        ]
+    ).all_roots()
+    assert qs1.count() == 1
+    assert qs1.filter(pk=simple_tree_structure["root1"].pk).exists()
+
+    qs2 = Scope.objects.filter(
+        pk__in=[
+            simple_tree_structure["sub1sub1sub1"].pk,
+            simple_tree_structure["sub2sub2"].pk,
+        ]
+    ).all_roots()
+    assert qs2.count() == 2
+    assert qs2.filter(pk=simple_tree_structure["root1"].pk).exists()
+    assert qs2.filter(pk=simple_tree_structure["root2"].pk).exists()

@@ -1,5 +1,7 @@
+import operator
 import unicodedata
 import uuid
+from functools import reduce
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, UserManager
@@ -158,6 +160,58 @@ class User(UUIDModel, AbstractBaseUser):
         return True
 
 
+class ScopeQuerySet(TreeQuerySet):
+    # django-tree-queries sadly does not (yet?) support ancestors query
+    # for QS - only for single nodes. So we're providing all_descendants()
+    # and all_ancestors() queryset methods.
+
+    def all_descendants(self, include_self=False):
+        """Return a QS that contains all descendants of the given QS.
+
+        This is a workaround for django-tree-queries, which currently does
+        not support this query (it can only do it on single nodes).
+
+        This is in contrast to .descendants(), which can only give the descendants
+        of one model instance.
+        """
+        descendants_q = reduce(
+            operator.or_,
+            [
+                models.Q(
+                    pk__in=entry.descendants(include_self=include_self).values("pk")
+                )
+                for entry in self
+            ],
+            models.Q(),
+        )
+        return self.model.objects.filter(descendants_q)
+
+    def all_ancestors(self, include_self=False):
+        """Return a QS that contains all ancestors of the given QS.
+
+        This is a workaround for django-tree-queries, which currently does
+        not support this query (it can only do it on single nodes).
+
+        This is in contrast to .ancestors(), which can only give the ancestors
+        of one model instance.
+        """
+
+        descendants_q = reduce(
+            operator.or_,
+            [
+                models.Q(pk__in=entry.ancestors(include_self=include_self).values("pk"))
+                for entry in self
+            ],
+            models.Q(),
+        )
+        return self.model.objects.filter(descendants_q)
+
+    def all_roots(self):
+        return Scope.objects.all().filter(
+            pk__in=[scope.ancestors(include_self=True).first().pk for scope in self]
+        )
+
+
 class Scope(TreeNode, UUIDModel):
     name = LocalizedCharField(_("scope name"), blank=False, null=False, required=False)
 
@@ -170,7 +224,10 @@ class Scope(TreeNode, UUIDModel):
     )
     is_active = models.BooleanField(default=True)
 
-    objects = TreeQuerySet.as_manager(with_tree_fields=True)
+    objects = ScopeQuerySet.as_manager(with_tree_fields=True)
+
+    def get_root(self):
+        return self.ancestors(include_self=True).first()
 
     def save(self, *args, **kwargs):
         # django-tree-queries does validation in TreeNode.clean(), which is not
