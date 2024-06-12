@@ -1,3 +1,18 @@
+# v2.1.0
+
+## Feature
+
+* feat(models): (re)introduce some convenience methods for working with scope trees
+
+The Django-MPTT module provided some useful methods that are not available anymore
+with django-tree-queries. Luckily, it&#39;s relatively easy to provide workarounds.
+
+Note that they might not have the same performance/efficiency as the
+MPTT variants, and could possibly be built in a better way. However,
+let&#39;s keep it to the motto &#34;first make it right, then fast, then
+pretty&#34; ([`e2f38f1`](https://github.com/projectcaluma/emeis/commit/e2f38f13f8a69e5e4ac74611e0ceed50e5d81f50))
+
+
 # v2.0.0
 
 ## Refactor (Breaking change!)
