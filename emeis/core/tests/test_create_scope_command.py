@@ -156,7 +156,7 @@ def test_create_success(
     count_before = Scope.objects.count()
     call_command("create_scope", *cmd_args)
 
-    new_scope = Scope.objects.all().order_siblings_by("created_at").last()
+    new_scope = Scope.objects.all().order_by("created_at").last()
     new_acl = ACL.objects.all().order_by("created_at").last()
 
     def replace_expectations(in_str):

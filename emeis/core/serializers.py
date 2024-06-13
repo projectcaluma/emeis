@@ -80,24 +80,12 @@ class ScopeSerializer(BaseSerializer):
     level = serializers.SerializerMethodField()
 
     def get_level(self, obj):
-        depth = getattr(obj, "tree_depth", None)
-        if depth is not None:
-            return depth
-
-        # Note: This should only happen on CREATE, never in GET (Either list,
-        # detail, or include!) In CREATE, it's a new object that doesn't come
-        # from a QS
-
-        # Sometimes, the model object may come out of a non-django-tree-queries
-        # QS, and thus would not have the `tree_*` attributes amended. Then we
-        # need to go the "slow path"
         if not obj.pk and obj.parent_id:
-            # unsaved object, sometimes used in unit tests etc
+            # unsaved object, sometimes used in unit tests etc. Can't rely on
+            # `all_parents` being set just yet
             return self.get_level(obj.parent) + 1
 
-        if obj.parent_id:
-            return obj.ancestors().count()
-        return 0
+        return len(obj.all_parents)
 
     class Meta:
         model = Scope
