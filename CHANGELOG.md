@@ -1,3 +1,12 @@
+# v2.2.0
+
+## Bugfix / Refactor
+
+
+* refactor: drop django-tree-queries & implement array-based tree functions
+  This brings a massive performance improvement compared to 2.1.0
+  ([`30ed6c43f293c5e45bbacbd735580142fa567e78 `](https://github.com/projectcaluma/emeis/commit/30ed6c43f293c5e45bbacbd735580142fa567e78 ))
+
 # v2.1.0
 
 ## Feature
