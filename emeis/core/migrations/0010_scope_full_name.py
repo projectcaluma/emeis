@@ -10,7 +10,7 @@ def set_full_name(apps, schema_editor):
     scope_model = apps.get_model("emeis_core.scope")
     for scope in scope_model.objects.all().iterator():
         # explicitly trigger the set_full_name signal handler
-        models.set_full_name(instance=scope, sender=set_full_name)
+        models.set_full_name_and_parents(instance=scope, sender=set_full_name)
         scope.save()
 
 

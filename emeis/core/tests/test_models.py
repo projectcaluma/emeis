@@ -41,7 +41,7 @@ def test_scope_model(db):
     parent_scope.parent = scope
     with pytest.raises(ValidationError) as excinfo:
         parent_scope.save()
-    assert excinfo.match("A node cannot be made a descendant of itself.")
+    assert excinfo.match("A node cannot be made a descendant or parent of itself")
 
 
 def test_scope_deletion(db, scope_factory):
@@ -126,7 +126,7 @@ def test_scope_fullname_when_forced_language(db, language, scope_factory, settin
             parent=child, name={"de": "DE GRANDCHILD", "fr": "FR GRANDCHILD"}
         )
 
-        # Trigger pre_save `set_full_name()` hook
+        # Trigger pre_save `set_full_name_and_parents()` hook
         grandchild.save()
         assert grandchild.full_name.de == "DE ROOT » DE CHILD » DE GRANDCHILD"
         assert grandchild.full_name.fr == ""
@@ -189,7 +189,7 @@ def simple_tree_structure(db, scope_factory):
         (False, 3),
     ],
 )
-def test_scope_ancestors(db, simple_tree_structure, include_self, expect_count):
+def test_scope_qs_ancestors(db, simple_tree_structure, include_self, expect_count):
     qs = Scope.objects.filter(
         pk__in=[
             simple_tree_structure["sub2sub2"].pk,
@@ -221,7 +221,7 @@ def test_scope_ancestors(db, simple_tree_structure, include_self, expect_count):
         (False, 4),
     ],
 )
-def test_scope_descendants(db, simple_tree_structure, include_self, expect_count):
+def test_scope_qs_descendants(db, simple_tree_structure, include_self, expect_count):
     qs = Scope.objects.filter(
         pk__in=[simple_tree_structure["sub1sub1"].pk, simple_tree_structure["root2"].pk]
     )
@@ -262,6 +262,8 @@ def test_get_root(db, simple_tree_structure):
         == simple_tree_structure["root1"]
     )
 
+    assert simple_tree_structure["root1"].get_root() == simple_tree_structure["root1"]
+
 
 def test_all_roots(db, simple_tree_structure):
     qs1 = Scope.objects.filter(
@@ -282,3 +284,71 @@ def test_all_roots(db, simple_tree_structure):
     assert qs2.count() == 2
     assert qs2.filter(pk=simple_tree_structure["root1"].pk).exists()
     assert qs2.filter(pk=simple_tree_structure["root2"].pk).exists()
+
+
+def test_scope_factory_all_parents(simple_tree_structure):
+    # This tests more the factory than anything else, but it's important we
+    # validate our assumptions to guarantee the other tests do the right thing
+    root1 = simple_tree_structure["root1"]
+    root2 = simple_tree_structure["root2"]
+    sub1sub1 = simple_tree_structure["sub1sub1"]
+    sub1sub2 = simple_tree_structure["sub1sub2"]
+    sub1sub1sub1 = simple_tree_structure["sub1sub1sub1"]
+    sub1sub1sub2 = simple_tree_structure["sub1sub1sub2"]
+    sub2sub1 = simple_tree_structure["sub2sub1"]
+    sub2sub2 = simple_tree_structure["sub2sub2"]
+
+    assert root1.all_parents == []
+    assert root2.all_parents == []
+    assert sub1sub1.all_parents == [root1.pk]
+    assert sub1sub2.all_parents == [root1.pk]
+    assert sub1sub1sub1.all_parents == [root1.pk, sub1sub1.pk]
+    assert sub1sub1sub2.all_parents == [root1.pk, sub1sub1.pk]
+    assert sub2sub1.all_parents == [root2.pk]
+    assert sub2sub2.all_parents == [root2.pk]
+
+
+def test_scope_ancestors(simple_tree_structure):
+    root1 = simple_tree_structure["root1"]
+    sub1sub1 = simple_tree_structure["sub1sub1"]
+    sub1sub1sub1 = simple_tree_structure["sub1sub1sub1"]
+
+    assert root1.ancestors().count() == 0
+    assert list(root1.ancestors(include_self=True)) == [root1]
+    assert root1 in root1.ancestors(include_self=True)
+
+    assert list(sub1sub1sub1.ancestors()) == [root1, sub1sub1]
+    assert set(sub1sub1sub1.ancestors(include_self=True)) == set(
+        [
+            sub1sub1,
+            sub1sub1sub1,
+            root1,
+        ]
+    )
+
+
+def test_scope_descendants(simple_tree_structure):
+    root1 = simple_tree_structure["root1"]
+    sub1sub1 = simple_tree_structure["sub1sub1"]
+    sub1sub2 = simple_tree_structure["sub1sub2"]
+    sub1sub1sub1 = simple_tree_structure["sub1sub1sub1"]
+    sub1sub1sub2 = simple_tree_structure["sub1sub1sub2"]
+
+    assert set(root1.descendants()) == set(
+        [
+            sub1sub1,
+            sub1sub2,
+            sub1sub1sub1,
+            sub1sub1sub2,
+        ]
+    )
+
+    assert set(root1.descendants(include_self=True)) == set(
+        [
+            root1,
+            sub1sub1,
+            sub1sub2,
+            sub1sub1sub1,
+            sub1sub1sub2,
+        ]
+    )

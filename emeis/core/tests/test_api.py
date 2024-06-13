@@ -221,15 +221,13 @@ def test_api_destroy(fixture, admin_client, snapshot, viewset):
 
 
 @pytest.mark.parametrize(
-    "set_new_parent_to, expect_error",
+    "set_new_parent_to",
     [
-        ("self", "A node cannot be made a descendant of itself."),
-        ("child", "A node cannot be made a descendant of itself."),
+        ("self"),
+        ("child"),
     ],
 )
-def test_validate_circular_parents(
-    admin_client, scope_factory, set_new_parent_to, expect_error
-):
+def test_validate_circular_parents(admin_client, scope_factory, set_new_parent_to):
     scope_1 = scope_factory()
     scope_2 = scope_factory(parent=scope_1)
     scope_3 = scope_factory(parent=scope_2)
@@ -251,4 +249,4 @@ def test_validate_circular_parents(
     with pytest.raises(Exception) as excinfo:
         admin_client.patch(url, data)
 
-    assert excinfo.match(expect_error)
+    assert excinfo.match("A node cannot be made a descendant or parent of itself")

@@ -189,12 +189,7 @@ class MultilingualDefaultOrdering:
 
         new_ordering = [_order_field_suffix_if_needed(field) for field in ordering]
 
-        if qs.model is models.Scope:
-            # django-tree-queries only supports ordering within siblings, not across
-            # everything. And uses another method for it
-            qs = qs.order_siblings_by(*new_ordering)
-        else:
-            qs = qs.order_by(*new_ordering)
+        qs = qs.order_by(*new_ordering)
         return qs
 
 

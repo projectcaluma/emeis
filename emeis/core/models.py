@@ -1,18 +1,20 @@
-import operator
 import unicodedata
 import uuid
-from functools import reduce
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, UserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.contrib.postgres.aggregates import ArrayAgg
+from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.indexes import GinIndex
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Exists, OuterRef, Q, Subquery
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.utils import timezone, translation
 from django.utils.translation import gettext_lazy as _
 from localized_fields.fields import LocalizedCharField, LocalizedTextField
-from tree_queries.models import TreeNode, TreeQuerySet
 
 
 def make_uuid():
@@ -160,59 +162,34 @@ class User(UUIDModel, AbstractBaseUser):
         return True
 
 
-class ScopeQuerySet(TreeQuerySet):
-    # django-tree-queries sadly does not (yet?) support ancestors query
-    # for QS - only for single nodes. So we're providing all_descendants()
-    # and all_ancestors() queryset methods.
-
+class ScopeQuerySet(models.QuerySet):
     def all_descendants(self, include_self=False):
-        """Return a QS that contains all descendants of the given QS.
+        """Return a QS that contains all descendants."""
+        expr = Q(all_parents__overlap=self.aggregate(all_pks=ArrayAgg("pk"))["all_pks"])
 
-        This is a workaround for django-tree-queries, which currently does
-        not support this query (it can only do it on single nodes).
+        if include_self:
+            expr = expr | Q(pk__in=self)
 
-        This is in contrast to .descendants(), which can only give the descendants
-        of one model instance.
-        """
-        descendants_q = reduce(
-            operator.or_,
-            [
-                models.Q(
-                    pk__in=entry.descendants(include_self=include_self).values("pk")
-                )
-                for entry in self
-            ],
-            models.Q(),
-        )
-        return self.model.objects.filter(descendants_q)
+        return Scope.objects.filter(expr)
 
     def all_ancestors(self, include_self=False):
-        """Return a QS that contains all ancestors of the given QS.
+        """Return a QS that contains all ancestors."""
 
-        This is a workaround for django-tree-queries, which currently does
-        not support this query (it can only do it on single nodes).
+        filter_qs = self.filter(all_parents__contains=[OuterRef("pk")])
 
-        This is in contrast to .ancestors(), which can only give the ancestors
-        of one model instance.
-        """
+        new_qs = Scope.objects.all().annotate(_is_ancestor=Exists(Subquery(filter_qs)))
+        expr = Q(_is_ancestor=True)
 
-        descendants_q = reduce(
-            operator.or_,
-            [
-                models.Q(pk__in=entry.ancestors(include_self=include_self).values("pk"))
-                for entry in self
-            ],
-            models.Q(),
-        )
-        return self.model.objects.filter(descendants_q)
+        if include_self:
+            expr = expr | Q(pk__in=self)
+
+        return new_qs.filter(expr)
 
     def all_roots(self):
-        return Scope.objects.all().filter(
-            pk__in=[scope.ancestors(include_self=True).first().pk for scope in self]
-        )
+        return self.all_ancestors(include_self=True).filter(parent__isnull=True)
 
 
-class Scope(TreeNode, UUIDModel):
+class Scope(UUIDModel):
     name = LocalizedCharField(_("scope name"), blank=False, null=False, required=False)
 
     full_name = LocalizedCharField(
@@ -224,26 +201,67 @@ class Scope(TreeNode, UUIDModel):
     )
     is_active = models.BooleanField(default=True)
 
-    objects = ScopeQuerySet.as_manager(with_tree_fields=True)
+    objects = ScopeQuerySet.as_manager()
+
+    parent = models.ForeignKey(
+        "Scope",
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="children",
+    )
+
+    all_parents = ArrayField(models.UUIDField(null=False), default=list)
+
+    def ancestors(self, include_self=False):
+        expr = Q(pk__in=self.all_parents)
+        if include_self:
+            expr = expr | Q(pk=self.pk)
+        return Scope.objects.all().filter(expr)
+
+    def descendants(self, include_self=False):
+        expr = Q(all_parents__contains=[self.pk])
+
+        if include_self:
+            expr = expr | Q(pk=self.pk)
+
+        return Scope.objects.all().filter(expr)
 
     def get_root(self):
-        return self.ancestors(include_self=True).first()
+        if self.parent_id:
+            return Scope.objects.get(pk=self.all_parents[0])
+        else:
+            return self
 
     def save(self, *args, **kwargs):
-        # django-tree-queries does validation in TreeNode.clean(), which is not
-        # called by DRF (only by django forms), so we have to do this here
-        self.clean()
+        self._ensure_no_loop()
         return super().save(*args, **kwargs)
+
+    def _ensure_no_loop(self):
+        parent = self.parent
+        while parent:
+            if parent == self:
+                raise ValidationError(
+                    "A node cannot be made a descendant or parent of itself"
+                )
+            parent = parent.parent
 
     def __str__(self):
         return f"{type(self).__name__} ({self.full_name}, pk={self.pk})"
 
     class Meta:
         ordering = ["name"]
+        indexes = [GinIndex(fields=["all_parents"])]
 
 
 @receiver(pre_save, sender=Scope)
-def set_full_name(instance, sender, **kwargs):
+def set_full_name_and_parents(instance, sender, **kwargs):
+    """Update the `full_name` and `all_parents` properties of the Scope.
+
+    The full name depends on the complete list of parents of the Scope.
+    And to ensure correct behaviour in the queries, the `all_parents`
+    attribute needs to be updated as well
+    """
     if kwargs.get("raw"):  # pragma: no cover
         # Raw is set while loading fixtures. In those
         # cases we don't want to mess with data that
@@ -255,6 +273,9 @@ def set_full_name(instance, sender, **kwargs):
 
     forced_lang = settings.EMEIS_FORCE_MODEL_LOCALE.get("scope", None)
 
+    old_all_parents = [*instance.all_parents]
+    old_full_name = {**instance.full_name}
+
     if forced_lang:
         # If scope is forced monolingual, do not fill non-forced language fields
         languages = [forced_lang]
@@ -263,13 +284,19 @@ def set_full_name(instance, sender, **kwargs):
         with translation.override(lang):
             instance.full_name[lang] = str(instance.name)
 
+    parent_ids = []
     parent = instance.parent
     while parent:
+        parent_ids.append(parent.pk)
         for lang in languages:
             with translation.override(lang):
                 new_fullname = f"{parent.name} {sep} {instance.full_name[lang]}"
                 instance.full_name[lang] = new_fullname
         parent = parent.parent
+
+    # make it root-first
+    parent_ids.reverse()
+    instance.all_parents = parent_ids
 
     if forced_lang:
         # Ensure only the "forced" language full_name is set, and nothing else
@@ -277,11 +304,14 @@ def set_full_name(instance, sender, **kwargs):
         instance.full_name.clear()
         instance.full_name[forced_lang] = full_name
 
-    # Force update of all children (recursively)
-    for child in instance.children.all():
-        # save() triggers the set_full_name signal handler, which will
-        # recurse all the way down, updating the full_name
-        child.save()
+    if old_all_parents != instance.all_parents or old_full_name != dict(
+        instance.full_name
+    ):
+        # Something changed - force update all children (recursively)
+        for child in instance.children.all():
+            # save() triggers the signal handler, which will
+            # recurse all the way down, updating the full_name
+            child.save()
 
 
 class Role(SlugModel):
