@@ -16,7 +16,6 @@ ENV HOME=/home/emeis
 ENV PYTHONUNBUFFERED=1
 ENV DJANGO_SETTINGS_MODULE emeis.settings
 ENV APP_HOME=/app
-ENV UWSGI_INI /app/uwsgi.ini
 
 ARG REQUIREMENTS=requirements-prod.txt
 COPY requirements-base.txt requirements-prod.txt requirements-dev.txt $APP_HOME/
@@ -28,4 +27,4 @@ COPY . $APP_HOME
 
 EXPOSE 8000
 
-CMD /bin/sh -c "wait-for-it.sh $DATABASE_HOST:${DATABASE_PORT:-5432} -- ./manage.py migrate && uwsgi"
+CMD /bin/sh -c "wait-for-it.sh $DATABASE_HOST:${DATABASE_PORT:-5432} -- ./manage.py migrate && gunicorn --workers 10 --access-logfile - --limit-request-line 16384 --bind :8000 emeis.wsgi"
