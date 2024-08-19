@@ -7,9 +7,9 @@ django-localized-fields==6.7
 django-postgres-extra==2.0.8
 djangorestframework==3.14.0
 djangorestframework-jsonapi==6.1.0
+gunicorn==23.0.0
 mozilla-django-oidc==3.0.0
 pyexcel==0.7.0
 pyexcel-xlsx==0.6.0
 requests==2.31.0
-uwsgi==2.0.23
 openpyxl==3.0.10 # TODO: dependency of `pyexcel-xlsx` Remove as soon as https://github.com/pyexcel/pyexcel-xlsx/issues/52 is resolved.
