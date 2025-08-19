@@ -18,7 +18,11 @@ test: ## Test the backend
 
 .PHONY: lint
 lint: ## Lint the backend
-	@docker compose run emeis sh -c "black --check . && flake8"
+	@docker compose run emeis ruff check .
+
+.PHONY: format
+format: ## Format the backend
+	@docker compose run emeis ruff format .
 
 .PHONY: bash
 bash: ## Shell into the backend

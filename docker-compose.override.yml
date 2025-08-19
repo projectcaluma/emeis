@@ -15,7 +15,7 @@ services:
       [
         "/bin/sh",
         "-c",
-        "wait-for-it.sh db:5432 -- ./manage.py migrate && ./manage.py runserver_plus --keep-meta-shutdown --nostatic 0.0.0.0:8000",
+        "wait-for-it db:5432 -- ./manage.py migrate && ./manage.py runserver_plus --keep-meta-shutdown --nostatic 0.0.0.0:8000",
       ]
     environment:
       - ENV=dev

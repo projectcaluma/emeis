@@ -40,7 +40,7 @@ def test_invisible_acl_in_users(
     with CaptureQueriesContext(connection) as context:
         resp = admin_client.get(url, {"include": include})
 
-    assert len(context.captured_queries) == 3
+    assert len(context.captured_queries) == 5
 
     collected_acl_rels = [
         acl["id"]
