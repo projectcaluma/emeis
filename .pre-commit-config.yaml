@@ -1,23 +1,11 @@
 repos:
   - repo: local
     hooks:
-    - id: black
+    - id: ruff
       stages: [commit]
-      name: black
+      name: ruff
       language: system
-      entry: black
-      types: [python]
-    - id: isort
-      stages: [commit]
-      name: isort
-      language: system
-      entry: isort --profile black
-      types: [python]
-    - id: flake8
-      stages: [commit]
-      name: flake8
-      language: system
-      entry: flake8
+      entry: ruff format .
       types: [python]
     - id: gitlint
       stages: [commit-msg]

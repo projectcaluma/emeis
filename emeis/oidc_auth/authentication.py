@@ -28,8 +28,7 @@ class OIDCUser:
             self.user = self.create_user(claims)
         else:
             raise RuntimeError(
-                f"No user with username {username} found, and "
-                "OIDC_CREATE_USER is False"
+                f"No user with username {username} found, and OIDC_CREATE_USER is False"
             )
 
     @property

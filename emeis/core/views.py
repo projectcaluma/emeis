@@ -126,7 +126,7 @@ class UserViewSet(BaseViewset):
         sheet["C1"] = _("Email")
         sheet["D1"] = _("Roles and scopes")
 
-        for row, user in enumerate(queryset.iterator(), start=2):
+        for row, user in enumerate(queryset, start=2):
             acl_string = "\n".join(
                 [
                     f"{acl.role.name}: {acl.scope.full_name}"

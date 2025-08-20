@@ -2,8 +2,8 @@
 
 import django.contrib.postgres.fields
 import django.contrib.postgres.indexes
-from django.db import migrations, models
 import django.db.models.deletion
+from django.db import migrations, models
 
 
 def set_all_parents(apps, schema_editor):
