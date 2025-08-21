@@ -1,3 +1,10 @@
+# v2.2.1 (21 August 2025)
+
+## Fix
+
+* fix: update dependencies ([`b2ddfd1`](https://github.com/projectcaluma/emeis/commit/b2ddfd1442485392fcf37351d20ae95e28cd624d))
+
+
 # v2.2.0
 
 ## Bugfix / Refactor
