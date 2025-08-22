@@ -1,3 +1,10 @@
+# v2.2.2 (22 August 2025)
+
+## Fix
+
+* fix: update install requirements ([`57e8974`](https://github.com/projectcaluma/emeis/commit/57e8974f5a7bac9d1728bc05fce50f364e371eaf))
+
+
 # v2.2.1 (21 August 2025)
 
 ## Fix
