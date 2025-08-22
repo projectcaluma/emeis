@@ -36,7 +36,9 @@ def get_language_code():
 class BaseModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
     modified_at = models.DateTimeField(auto_now=True, db_index=True)
-    created_by_user = models.ForeignKey("User", null=True, on_delete=models.SET_NULL)
+    created_by_user = models.ForeignKey(
+        "User", null=True, on_delete=models.SET_NULL, related_name="+"
+    )
     metainfo = models.JSONField(_("metainfo"), default=dict)
 
     class Meta:
