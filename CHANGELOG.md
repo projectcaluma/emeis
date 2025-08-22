@@ -1,3 +1,10 @@
+# v2.2.3 (22 August 2025)
+
+## Fix
+
+* fix: update django-environ ([`8e54d12`](https://github.com/projectcaluma/emeis/commit/8e54d1216bb1d3c018235b29ed6203d96feea52f))
+
+
 # v2.2.2 (22 August 2025)
 
 ## Fix
