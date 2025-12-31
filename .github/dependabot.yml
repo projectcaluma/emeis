@@ -8,9 +8,12 @@ updates:
     time: "12:00"
     timezone: "Europe/Zurich"
   ignore:
-  - dependency-name: django
-    versions:
-    - ">=3"
+    - dependency-name: django
+      versions:
+        - ">4"
+    - dependency-name: python-semantic-release
+      versions:
+        - ">=8"
   commit-message:
     prefix: chore
     include: scope
@@ -24,8 +27,15 @@ updates:
   ignore:
   - dependency-name: python
     versions:
-    # Django 3.2 LTS only supports Python up to 3.10
-    - ">3.10"
+    # Django 4.2 LTS only supports Python up to 3.12
+    - ">3.12"
   commit-message:
     prefix: chore
     include: scope
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: friday
+    time: "12:00"
+    timezone: "Europe/Zurich"
