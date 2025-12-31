@@ -2,4 +2,4 @@
 
 __title__ = "emeis"
 __description__ = "user management"
-__version__ = "2.2.3"
+__version__ = "2.2.4"

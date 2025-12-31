@@ -1,3 +1,9 @@
+# v2.2.4 (31 December 2025)
+### Fix
+
+* **refactor**: remove pkg_resources dependency ([`3961e8c`](https://github.com/derrabauke/emeis/commit/3961e8c))
+
+
 # v2.2.3 (22 August 2025)
 
 ## Fix
