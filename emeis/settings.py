@@ -1,10 +1,10 @@
 import os
 import re
+from importlib import resources
 from warnings import warn
 
 import environ
 from django.conf import global_settings
-from pkg_resources import resource_filename
 
 env = environ.Env()
 django_root = environ.Path(__file__) - 2
@@ -272,7 +272,7 @@ ADMINS = parse_admins(env.list("ADMINS", default=[]))
 
 USER_EXPORT_TEMPLATE_PATH = env.str(
     "USER_EXPORT_TEMPLATE_PATH",
-    default=resource_filename("emeis.core", "templates/user_list.xlsx"),
+    default=str(resources.files("emeis.core").joinpath("templates/user_list.xlsx")),
 )
 
 # Cors headers
