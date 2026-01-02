@@ -11,7 +11,7 @@ pytest-cov==6.2.1
 pytest-django==4.11.1
 pytest-env==1.1.5
 # pytest-factoryboy needs to stay at 2.1.0 because of wrong interpretation of parameters with "__"
-pytest-factoryboy==2.1.0
+pytest-factoryboy==2.8.1
 pytest-freezer==0.4.9
 pytest-mock==3.14.1
 pytest-randomly==3.16.0
