@@ -3,7 +3,7 @@ django_extensions==4.1
 factory-boy==3.3.3
 gitlint==0.19.1
 hypothesis==6.138.2
-ipython==9.4.0
+ipython==9.8.0
 pdbpp==0.11.7
 pre_commit~=4.3.0
 pytest==8.4.1
