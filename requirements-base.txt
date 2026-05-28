@@ -12,5 +12,5 @@ mozilla-django-oidc==4.0.1
 pyexcel==0.7.0
 pyexcel-xlsx==0.6.0
 psycopg==3.2.9
-requests==2.32.5
+requests==2.34.2
 openpyxl==3.0.10 # TODO: dependency of `pyexcel-xlsx` Remove as soon as https://github.com/pyexcel/pyexcel-xlsx/issues/52 is resolved.
