@@ -1,4 +1,4 @@
-FROM python:3.11
+FROM python:3.12
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends libpq-dev wget build-essential wait-for-it \
